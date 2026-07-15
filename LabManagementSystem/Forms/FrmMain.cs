@@ -53,7 +53,7 @@ namespace LabManagementSystem
         private void btnAddPatient_Click(object sender, EventArgs e)
         {
 
-          
+
 
             OpenForm(new FrmAddPatient());
 
@@ -61,14 +61,14 @@ namespace LabManagementSystem
 
         private void btnSearchPatient_Click(object sender, EventArgs e)
         {
-            
+
             OpenForm(new FrmSearchPatient());
 
         }
 
         private void bnAddVisit_Click(object sender, EventArgs e)
         {
-           
+
             OpenForm(new FrmAddVisit());
 
         }
@@ -80,6 +80,11 @@ namespace LabManagementSystem
         }
 
         private void pnlContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
