@@ -13,7 +13,7 @@ namespace LabManagementSystem
         {
 
         }
-        private void OpenForm(Form childForm)
+        public void OpenForm(Form childForm)
         {
             pnlContent.Controls.Clear();
 
@@ -31,6 +31,7 @@ namespace LabManagementSystem
         private void btnPatients_Click(object sender, EventArgs e)
         {
             pnlPatients.Visible = !pnlPatients.Visible;
+
         }
 
         private void pnlMenu_Paint(object sender, PaintEventArgs e)
@@ -53,7 +54,7 @@ namespace LabManagementSystem
         private void btnAddPatient_Click(object sender, EventArgs e)
         {
 
-          
+
 
             OpenForm(new FrmAddPatient());
 
@@ -61,14 +62,22 @@ namespace LabManagementSystem
 
         private void btnSearchPatient_Click(object sender, EventArgs e)
         {
-            
-            OpenForm(new FrmSearchPatient());
+
+            // OpenForm(new FrmSearchPatient());
+            FrmSearchPatient frm = new FrmSearchPatient();
+
+            frm.AddPatientClicked += () =>
+            {
+                OpenForm(new FrmAddPatient());
+            };
+
+            OpenForm(frm);
 
         }
 
         private void bnAddVisit_Click(object sender, EventArgs e)
         {
-           
+
             OpenForm(new FrmAddVisit());
 
         }
@@ -80,6 +89,11 @@ namespace LabManagementSystem
         }
 
         private void pnlContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

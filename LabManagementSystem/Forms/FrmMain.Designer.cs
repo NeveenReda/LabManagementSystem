@@ -62,7 +62,7 @@
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1022, 38);
+            pnlHeader.Size = new Size(1262, 38);
             pnlHeader.TabIndex = 0;
             // 
             // label1
@@ -70,11 +70,12 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.RoyalBlue;
-            label1.Location = new Point(491, -3);
+            label1.Location = new Point(790, -3);
             label1.Name = "label1";
             label1.Size = new Size(381, 41);
             label1.TabIndex = 0;
             label1.Text = "معمل الراعى وام النور بالبرشا";
+            label1.Click += label1_Click;
             // 
             // pnlContent
             // 
@@ -82,11 +83,10 @@
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pnlContent.ForeColor = Color.White;
-            pnlContent.Location = new Point(0, 0);
+            pnlContent.Location = new Point(0, 38);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(1262, 673);
+            pnlContent.Size = new Size(1022, 635);
             pnlContent.TabIndex = 1;
-          pnlContent.Visible = true;
             pnlContent.Paint += pnlContent_Paint;
             // 
             // pnlMenu
@@ -101,9 +101,9 @@
             pnlMenu.Controls.Add(pnlPatients);
             pnlMenu.Controls.Add(btnPatients);
             pnlMenu.Dock = DockStyle.Right;
-            pnlMenu.Location = new Point(1022, 0);
+            pnlMenu.Location = new Point(1022, 38);
             pnlMenu.Name = "pnlMenu";
-            pnlMenu.Size = new Size(240, 673);
+            pnlMenu.Size = new Size(240, 635);
             pnlMenu.TabIndex = 2;
             pnlMenu.Paint += pnlMenu_Paint;
             // 
@@ -327,7 +327,6 @@
             Controls.Add(pnlContent);
             Controls.Add(pnlMenu);
             Controls.Add(pnlHeader);
-
             MinimumSize = new Size(1280, 720);
             Name = "FrmMain";
             StartPosition = FormStartPosition.CenterScreen;
