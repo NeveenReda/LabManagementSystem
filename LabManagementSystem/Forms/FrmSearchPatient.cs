@@ -12,9 +12,26 @@ namespace LabManagementSystem.Forms
 {
     public partial class FrmSearchPatient : Form
     {
+        public event Action? AddPatientClicked;
         public FrmSearchPatient()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AddPatientClicked?.Invoke();
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

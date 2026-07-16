@@ -26,7 +26,7 @@ namespace LabManagementSystem.Forms
             cmboGender.DataSource = db.Genders.ToList();
             cmboGender.DisplayMember = "Name";
             cmboGender.ValueMember = "Id";
-            //-----------
+            ///////////////////////////////////////
             string today = DateTime.Today.ToString("yyyyMMdd");
 
             var lastPatient = db.Patients
@@ -50,12 +50,17 @@ namespace LabManagementSystem.Forms
             }
             txtPatientCode.Text = medicalCode;
             txtPatientCode.ReadOnly = true;
+            ////////////////////////////////////////////////
 
         }
 
         private void textBox7_TextChanged(object sender, EventArgs e)
         {
-
+            if (int.TryParse(txtPatientAgeOnRegister.Text, out int age))
+            {
+                int birthYear = DateTime.Today.Year - age;
+                DOB.Value = new DateTime(birthYear, 1, 1);
+            }
         }
 
         private void label9_Click(object sender, EventArgs e)
@@ -95,6 +100,26 @@ namespace LabManagementSystem.Forms
         }
 
         private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void address_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlData_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void DOB_ValueChanged(object sender, EventArgs e)
         {
 
         }
