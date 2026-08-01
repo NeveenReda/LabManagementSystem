@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace LabManagementSystem.Forms
 {
-    public partial class FrmAddVisit : Form
+    public partial class FrmTest : Form
     {
-        public FrmAddVisit()
+        public FrmTest()
         {
             InitializeComponent();
-        }
-
-        private void pnlData_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }
