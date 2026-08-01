@@ -37,7 +37,7 @@
             txtDoctorName = new TextBox();
             label6 = new Label();
             pnlData = new Panel();
-            btnSearch = new Button();
+            btnAddPatient = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             label9 = new Label();
             label8 = new Label();
@@ -136,7 +136,7 @@
             // 
             pnlData.BackColor = SystemColors.Window;
             pnlData.BorderStyle = BorderStyle.FixedSingle;
-            pnlData.Controls.Add(btnSearch);
+            pnlData.Controls.Add(btnAddPatient);
             pnlData.Controls.Add(tableLayoutPanel1);
             pnlData.Controls.Add(button1);
             pnlData.Dock = DockStyle.Top;
@@ -147,19 +147,20 @@
             pnlData.TabIndex = 5;
             pnlData.Paint += pnlData_Paint;
             // 
-            // btnSearch
+            // btnAddPatient
             // 
-            btnSearch.BackColor = Color.RoyalBlue;
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(1222, 8);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(154, 42);
-            btnSearch.TabIndex = 21;
-            btnSearch.Text = "إضافة مريض ➕  ";
-            btnSearch.UseVisualStyleBackColor = false;
+            btnAddPatient.BackColor = Color.RoyalBlue;
+            btnAddPatient.FlatAppearance.BorderSize = 0;
+            btnAddPatient.FlatStyle = FlatStyle.Flat;
+            btnAddPatient.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddPatient.ForeColor = Color.White;
+            btnAddPatient.Location = new Point(1222, 8);
+            btnAddPatient.Name = "btnAddPatient";
+            btnAddPatient.Size = new Size(154, 42);
+            btnAddPatient.TabIndex = 21;
+            btnAddPatient.Text = "إضافة مريض ➕  ";
+            btnAddPatient.UseVisualStyleBackColor = false;
+            btnAddPatient.Click += btnAddPatient_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -340,6 +341,7 @@
             Name = "FrmAddVisit";
             RightToLeft = RightToLeft.Yes;
             Text = "FrmAddVisit";
+            Load += FrmAddVisit_Load;
             pnlData.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
@@ -374,6 +376,6 @@
         private TextBox textBox4;
         private TextBox textBox3;
         private TextBox textBox2;
-        private Button btnSearch;
+        private Button btnAddPatient;
     }
 }

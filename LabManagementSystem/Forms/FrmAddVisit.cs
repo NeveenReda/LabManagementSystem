@@ -12,6 +12,8 @@ namespace LabManagementSystem.Forms
 {
     public partial class FrmAddVisit : Form
     {
+        public event Action? AddPatientClicked;//declare an action
+
         public FrmAddVisit()
         {
             InitializeComponent();
@@ -20,6 +22,16 @@ namespace LabManagementSystem.Forms
         private void pnlData_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void FrmAddVisit_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddPatient_Click(object sender, EventArgs e)
+        {
+            AddPatientClicked?.Invoke();
         }
     }
 }
