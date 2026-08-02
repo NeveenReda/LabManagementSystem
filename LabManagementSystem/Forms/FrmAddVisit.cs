@@ -30,6 +30,10 @@ namespace LabManagementSystem.Forms
             //tableLayoutPanel1.SetColumn(btnAddPatient, 2);
             //tableLayoutPanel1.SetColumn(label3, 0);
             tblAnalysis.SetColumnSpan(dgvVisitDetails, 3);
+            txtPatientName.ReadOnly = true;
+            txtTotal.ReadOnly = true;
+            txtAfterDiscount.ReadOnly = true;
+            txtRemaining.ReadOnly = true;
         }
 
         private void btnAddPatient_Click(object sender, EventArgs e)

@@ -32,7 +32,7 @@
             label3 = new Label();
             txtPatientCode = new TextBox();
             label4 = new Label();
-            txtPatientName = new TextBox();
+            txtTotal = new TextBox();
             lblDoctorNAme = new Label();
             txtDoctorName = new TextBox();
             label6 = new Label();
@@ -48,8 +48,8 @@
             DateOfVisit = new DateTimePicker();
             label9 = new Label();
             label8 = new Label();
-            textBox4 = new TextBox();
-            textBox3 = new TextBox();
+            txtRemaining = new TextBox();
+            txtAfterDiscount = new TextBox();
             textBox2 = new TextBox();
             label1 = new Label();
             label11 = new Label();
@@ -59,7 +59,7 @@
             label5 = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             btnAddPatient = new Button();
-            textBox5 = new TextBox();
+            txtPatientName = new TextBox();
             label12 = new Label();
             label2 = new Label();
             pnlTitle = new Panel();
@@ -111,12 +111,12 @@
             label4.TabIndex = 3;
             label4.Text = "الاجمالى";
             // 
-            // txtPatientName
+            // txtTotal
             // 
-            txtPatientName.Location = new Point(179, 3);
-            txtPatientName.Name = "txtPatientName";
-            txtPatientName.Size = new Size(240, 38);
-            txtPatientName.TabIndex = 2;
+            txtTotal.Location = new Point(179, 3);
+            txtTotal.Name = "txtTotal";
+            txtTotal.Size = new Size(240, 38);
+            txtTotal.TabIndex = 2;
             // 
             // lblDoctorNAme
             // 
@@ -251,13 +251,13 @@
             tableLayoutPanel1.Controls.Add(DateOfVisit, 1, 4);
             tableLayoutPanel1.Controls.Add(label9, 2, 4);
             tableLayoutPanel1.Controls.Add(label8, 2, 3);
-            tableLayoutPanel1.Controls.Add(textBox4, 3, 4);
-            tableLayoutPanel1.Controls.Add(textBox3, 3, 3);
+            tableLayoutPanel1.Controls.Add(txtRemaining, 3, 4);
+            tableLayoutPanel1.Controls.Add(txtAfterDiscount, 3, 3);
             tableLayoutPanel1.Controls.Add(textBox2, 3, 1);
             tableLayoutPanel1.Controls.Add(label1, 0, 3);
             tableLayoutPanel1.Controls.Add(label3, 0, 0);
             tableLayoutPanel1.Controls.Add(label4, 2, 0);
-            tableLayoutPanel1.Controls.Add(txtPatientName, 3, 0);
+            tableLayoutPanel1.Controls.Add(txtTotal, 3, 0);
             tableLayoutPanel1.Controls.Add(lblDoctorNAme, 0, 1);
             tableLayoutPanel1.Controls.Add(txtDoctorName, 1, 1);
             tableLayoutPanel1.Controls.Add(label6, 2, 1);
@@ -318,19 +318,19 @@
             label8.TabIndex = 25;
             label8.Text = "الاجمالى بعد الخصم";
             // 
-            // textBox4
+            // txtRemaining
             // 
-            textBox4.Location = new Point(179, 207);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(240, 38);
-            textBox4.TabIndex = 6;
+            txtRemaining.Location = new Point(179, 207);
+            txtRemaining.Name = "txtRemaining";
+            txtRemaining.Size = new Size(240, 38);
+            txtRemaining.TabIndex = 6;
             // 
-            // textBox3
+            // txtAfterDiscount
             // 
-            textBox3.Location = new Point(179, 153);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(240, 38);
-            textBox3.TabIndex = 24;
+            txtAfterDiscount.Location = new Point(179, 153);
+            txtAfterDiscount.Name = "txtAfterDiscount";
+            txtAfterDiscount.Size = new Size(240, 38);
+            txtAfterDiscount.TabIndex = 24;
             // 
             // textBox2
             // 
@@ -398,7 +398,7 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 291F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 194F));
             tableLayoutPanel2.Controls.Add(btnAddPatient, 3, 0);
-            tableLayoutPanel2.Controls.Add(textBox5, 2, 0);
+            tableLayoutPanel2.Controls.Add(txtPatientName, 2, 0);
             tableLayoutPanel2.Controls.Add(txtPatientCode, 0, 0);
             tableLayoutPanel2.Controls.Add(label12, 1, 0);
             tableLayoutPanel2.Location = new Point(589, 3);
@@ -423,12 +423,12 @@
             btnAddPatient.UseVisualStyleBackColor = false;
             btnAddPatient.Click += btnAddPatient_Click;
             // 
-            // textBox5
+            // txtPatientName
             // 
-            textBox5.Location = new Point(242, 3);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(241, 38);
-            textBox5.TabIndex = 3;
+            txtPatientName.Location = new Point(242, 3);
+            txtPatientName.Name = "txtPatientName";
+            txtPatientName.Size = new Size(241, 38);
+            txtPatientName.TabIndex = 3;
             // 
             // label12
             // 
@@ -491,7 +491,7 @@
         private Label label3;
         private TextBox txtPatientCode;
         private Label label4;
-        private TextBox txtPatientName;
+        private TextBox txtTotal;
         private Label lblDoctorNAme;
         private TextBox txtDoctorName;
         private Label label6;
@@ -507,8 +507,8 @@
         private Label label5;
         private Label label9;
         private Label label8;
-        private TextBox textBox4;
-        private TextBox textBox3;
+        private TextBox txtRemaining;
+        private TextBox txtAfterDiscount;
         private TextBox textBox2;
         private TableLayoutPanel tblAnalysis;
         private Button button2;
@@ -520,7 +520,7 @@
         private DateTimePicker DateOfVisit;
         private Button btnAddPatient;
         private TableLayoutPanel tableLayoutPanel2;
-        private TextBox textBox5;
+        private TextBox txtPatientName;
         private Label label12;
     }
 }
