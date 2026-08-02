@@ -26,12 +26,25 @@ namespace LabManagementSystem.Forms
 
         private void FrmAddVisit_Load(object sender, EventArgs e)
         {
-
+            //tableLayoutPanel1.SetColumn(txtPatientCode, 1);
+            //tableLayoutPanel1.SetColumn(btnAddPatient, 2);
+            //tableLayoutPanel1.SetColumn(label3, 0);
+            tblAnalysis.SetColumnSpan(dgvVisitDetails, 3);
         }
 
         private void btnAddPatient_Click(object sender, EventArgs e)
         {
             AddPatientClicked?.Invoke();
+        }
+
+        private void tblAnalysis_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtPatientCode_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
