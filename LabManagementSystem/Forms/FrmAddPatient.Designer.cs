@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             pnlTitle = new Panel();
-            label2 = new Label();
+            lblTitle = new Label();
             pnlData = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             label3 = new Label();
@@ -58,23 +58,23 @@
             // pnlTitle
             // 
             pnlTitle.BackColor = Color.Gainsboro;
-            pnlTitle.Controls.Add(label2);
+            pnlTitle.Controls.Add(lblTitle);
             pnlTitle.Dock = DockStyle.Top;
             pnlTitle.Location = new Point(0, 0);
             pnlTitle.Name = "pnlTitle";
             pnlTitle.Size = new Size(1829, 70);
             pnlTitle.TabIndex = 1;
             // 
-            // label2
+            // lblTitle
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.RoyalBlue;
-            label2.Location = new Point(843, 19);
-            label2.Name = "label2";
-            label2.Size = new Size(246, 38);
-            label2.TabIndex = 2;
-            label2.Text = "شاشة إضافة مريض";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = Color.RoyalBlue;
+            lblTitle.Location = new Point(843, 19);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(246, 38);
+            lblTitle.TabIndex = 2;
+            lblTitle.Text = "شاشة إضافة مريض";
             // 
             // pnlData
             // 
@@ -315,7 +315,7 @@
 
         #endregion
         private Panel pnlTitle;
-        private Label label2;
+        private Label lblTitle;
         private Panel pnlData;
         private Label label9;
         private TextBox txtPatientAgeOnRegister;
