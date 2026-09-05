@@ -30,7 +30,7 @@ namespace LabManagementSystem
 
         private void btnPatients_Click(object sender, EventArgs e)
         {
-            pnlPatients.Visible = !pnlPatients.Visible;
+            pnlPatients.Visible = !pnlPatients.Visible;//if panel is visible that means true=!true that means false(togle????? )
 
         }
 
@@ -94,7 +94,12 @@ namespace LabManagementSystem
 
         private void btnSearchVisit_Click(object sender, EventArgs e)
         {
-            OpenForm(new FrmSearchVisit());
+            FrmSearchVisit frm = new FrmSearchVisit();
+            frm.AddvisitClicked += () =>
+            {
+                OpenForm(new FrmAddVisit());
+            };
+            OpenForm(frm);
 
         }
 

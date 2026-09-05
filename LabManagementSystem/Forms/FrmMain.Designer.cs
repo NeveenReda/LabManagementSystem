@@ -32,12 +32,12 @@
             label1 = new Label();
             pnlContent = new Panel();
             pnlMenu = new Panel();
-            btnPurchases = new Button();
             btnReports = new Button();
+            btnPurchases = new Button();
             pnlSettings = new Panel();
-            btnSettingLab = new Button();
-            btnSettingOutLab = new Button();
             btnSettingProducts = new Button();
+            btnSettingOutLab = new Button();
+            btnSettingLab = new Button();
             btnSettings = new Button();
             pnlVisits = new Panel();
             btnSearchVisit = new Button();
@@ -92,8 +92,8 @@
             // pnlMenu
             // 
             pnlMenu.BackColor = Color.RoyalBlue;
-            pnlMenu.Controls.Add(btnPurchases);
             pnlMenu.Controls.Add(btnReports);
+            pnlMenu.Controls.Add(btnPurchases);
             pnlMenu.Controls.Add(pnlSettings);
             pnlMenu.Controls.Add(btnSettings);
             pnlMenu.Controls.Add(pnlVisits);
@@ -107,20 +107,6 @@
             pnlMenu.TabIndex = 2;
             pnlMenu.Paint += pnlMenu_Paint;
             // 
-            // btnPurchases
-            // 
-            btnPurchases.Dock = DockStyle.Top;
-            btnPurchases.FlatAppearance.BorderSize = 0;
-            btnPurchases.FlatStyle = FlatStyle.Flat;
-            btnPurchases.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPurchases.ForeColor = Color.White;
-            btnPurchases.Location = new Point(0, 510);
-            btnPurchases.Name = "btnPurchases";
-            btnPurchases.Size = new Size(240, 50);
-            btnPurchases.TabIndex = 4;
-            btnPurchases.Text = "💰 الطلبيات";
-            btnPurchases.UseVisualStyleBackColor = true;
-            // 
             // btnReports
             // 
             btnReports.Dock = DockStyle.Top;
@@ -128,39 +114,53 @@
             btnReports.FlatStyle = FlatStyle.Flat;
             btnReports.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnReports.ForeColor = Color.White;
-            btnReports.Location = new Point(0, 460);
+            btnReports.Location = new Point(0, 539);
             btnReports.Name = "btnReports";
             btnReports.Size = new Size(240, 50);
             btnReports.TabIndex = 3;
             btnReports.Text = "📊 التقارير";
             btnReports.UseVisualStyleBackColor = true;
             // 
+            // btnPurchases
+            // 
+            btnPurchases.Dock = DockStyle.Top;
+            btnPurchases.FlatAppearance.BorderSize = 0;
+            btnPurchases.FlatStyle = FlatStyle.Flat;
+            btnPurchases.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPurchases.ForeColor = Color.White;
+            btnPurchases.Location = new Point(0, 489);
+            btnPurchases.Name = "btnPurchases";
+            btnPurchases.Size = new Size(240, 50);
+            btnPurchases.TabIndex = 4;
+            btnPurchases.Text = "💰 الطلبيات";
+            btnPurchases.UseVisualStyleBackColor = true;
+            // 
             // pnlSettings
             // 
-            pnlSettings.Controls.Add(btnSettingLab);
-            pnlSettings.Controls.Add(btnSettingOutLab);
             pnlSettings.Controls.Add(btnSettingProducts);
+            pnlSettings.Controls.Add(btnSettingOutLab);
+            pnlSettings.Controls.Add(btnSettingLab);
             pnlSettings.Dock = DockStyle.Top;
-            pnlSettings.Location = new Point(0, 350);
+            pnlSettings.Location = new Point(0, 344);
             pnlSettings.Name = "pnlSettings";
             pnlSettings.Padding = new Padding(25, 0, 0, 0);
-            pnlSettings.Size = new Size(240, 110);
+            pnlSettings.Size = new Size(240, 145);
             pnlSettings.TabIndex = 1;
             pnlSettings.Visible = false;
             // 
-            // btnSettingLab
+            // btnSettingProducts
             // 
-            btnSettingLab.Dock = DockStyle.Top;
-            btnSettingLab.FlatAppearance.BorderSize = 0;
-            btnSettingLab.FlatStyle = FlatStyle.Flat;
-            btnSettingLab.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSettingLab.ForeColor = Color.White;
-            btnSettingLab.Location = new Point(25, 100);
-            btnSettingLab.Name = "btnSettingLab";
-            btnSettingLab.Size = new Size(215, 50);
-            btnSettingLab.TabIndex = 8;
-            btnSettingLab.Text = "📋  التحاليل";
-            btnSettingLab.UseVisualStyleBackColor = true;
+            btnSettingProducts.Dock = DockStyle.Bottom;
+            btnSettingProducts.FlatAppearance.BorderSize = 0;
+            btnSettingProducts.FlatStyle = FlatStyle.Flat;
+            btnSettingProducts.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSettingProducts.ForeColor = Color.White;
+            btnSettingProducts.Location = new Point(25, 95);
+            btnSettingProducts.Name = "btnSettingProducts";
+            btnSettingProducts.Size = new Size(215, 50);
+            btnSettingProducts.TabIndex = 10;
+            btnSettingProducts.Text = "📦 المنتجات";
+            btnSettingProducts.UseVisualStyleBackColor = true;
             // 
             // btnSettingOutLab
             // 
@@ -176,19 +176,19 @@
             btnSettingOutLab.Text = "  🏥المعامل الخارجيه ";
             btnSettingOutLab.UseVisualStyleBackColor = true;
             // 
-            // btnSettingProducts
+            // btnSettingLab
             // 
-            btnSettingProducts.Dock = DockStyle.Top;
-            btnSettingProducts.FlatAppearance.BorderSize = 0;
-            btnSettingProducts.FlatStyle = FlatStyle.Flat;
-            btnSettingProducts.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSettingProducts.ForeColor = Color.White;
-            btnSettingProducts.Location = new Point(25, 0);
-            btnSettingProducts.Name = "btnSettingProducts";
-            btnSettingProducts.Size = new Size(215, 50);
-            btnSettingProducts.TabIndex = 10;
-            btnSettingProducts.Text = "📦 المنتجات";
-            btnSettingProducts.UseVisualStyleBackColor = true;
+            btnSettingLab.Dock = DockStyle.Top;
+            btnSettingLab.FlatAppearance.BorderSize = 0;
+            btnSettingLab.FlatStyle = FlatStyle.Flat;
+            btnSettingLab.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSettingLab.ForeColor = Color.White;
+            btnSettingLab.Location = new Point(25, 0);
+            btnSettingLab.Name = "btnSettingLab";
+            btnSettingLab.Size = new Size(215, 50);
+            btnSettingLab.TabIndex = 9;
+            btnSettingLab.Text = "📋  التحاليل";
+            btnSettingLab.UseVisualStyleBackColor = true;
             // 
             // btnSettings
             // 
@@ -199,7 +199,7 @@
             btnSettings.ForeColor = Color.White;
             btnSettings.Location = new Point(0, 300);
             btnSettings.Name = "btnSettings";
-            btnSettings.Size = new Size(240, 50);
+            btnSettings.Size = new Size(240, 44);
             btnSettings.TabIndex = 2;
             btnSettings.Text = "⚙️ الإعدادات";
             btnSettings.UseVisualStyleBackColor = true;
@@ -361,8 +361,8 @@
         private Button btnAddPatient;
         private Button btnSearchVisit;
         private Button bnAddVisit;
-        private Button btnSettingLab;
         private Button btnSettingOutLab;
         private Button btnSettingProducts;
+        private Button btnSettingLab;
     }
 }

@@ -21,32 +21,37 @@ namespace LabManagementSystem.Forms
             InitializeComponent();
             lblTitle.Text = "شاشة اضافة مريض";
 
+
         }
 
-        public FrmAddPatient(Patient patient)
+        public FrmAddPatient(Patient patient)//this constructor for update patient
         {
             InitializeComponent();
+            ////////////////////////////////
             this.patient = patient;
             lblTitle.Text = "تعديل بيانات المريض";
+            LoadGender();
+            txtPatientName.Text = this.patient.Name;
+            txtPatienPhone.Text = this.patient.Phone;
+            txtPatientCode.Text = this.patient.MedicalCode;
+            txtPatientAgeOnRegister.Text=this.patient.AgeAtRecord.ToString();
+            DOB.Value = this.patient.DateOfBirth??DateTime.Today;
+            address.Text = this.patient.Address;
+            cmboGender.SelectedValue = this.patient.GenderId;
 
-            txtPatientName.Text = patient.Name;
-            txtPatienPhone.Text = patient.Phone;
-            txtPatientCode.Text = patient.MedicalCode;
-            txtPatientAgeOnRegister.Text=patient.AgeAtRecord.ToString();
-
-            DOB.Value = patient.DateOfBirth??DateTime.Today;
-            address.Text = patient.Address;
-
-            cmboGender.SelectedValue = patient.GenderId;
-
-            // Fill the rest of the controls...
         }
         private void FrmAddPatient_Load(object sender, EventArgs e)
         {
             //fill combo
-            cmboGender.DataSource = db.Genders.ToList();
-            cmboGender.DisplayMember = "Name";
-            cmboGender.ValueMember = "Id";
+
+            LoadGender();
+            // If editing a patient
+            if (patient != null)
+            {
+                cmboGender.SelectedValue = patient.GenderId;
+            }
+
+
             ///////////////////////////////////////
             string today = DateTime.Today.ToString("yyyyMMdd");
 
@@ -98,7 +103,7 @@ namespace LabManagementSystem.Forms
         {
             if (patient == null)
             {
-                Patient patient = new Patient();
+                patient = new Patient();
 
                 patient.MedicalCode = txtPatientCode.Text;
                 patient.Name = txtPatientName.Text;
@@ -118,13 +123,14 @@ namespace LabManagementSystem.Forms
             {
                 // Fill properties
                  var patientFromDb = db.Patients.Find(patient.Id);
-                patientFromDb.MedicalCode = txtPatientCode.Text;
-                patientFromDb.Name = txtPatientName.Text;
-                patientFromDb.Phone = txtPatienPhone.Text;
-                patientFromDb.DateOfBirth = DOB.Value;
-                patientFromDb.AgeAtRecord = int.Parse(txtPatientAgeOnRegister.Text);
-                patientFromDb.Address = address.Text;
-                patientFromDb.GenderId = (int)cmboGender.SelectedValue;
+                this.patient = patientFromDb;
+               this.patient.MedicalCode = txtPatientCode.Text;
+                this.patient.Name = txtPatientName.Text;
+                this.patient.Phone = txtPatienPhone.Text;
+                this.patient.DateOfBirth = DOB.Value;
+                this.patient.AgeAtRecord = int.Parse(txtPatientAgeOnRegister.Text);
+                this.patient.Address = address.Text;
+                this.patient.GenderId = (int)cmboGender.SelectedValue;
                 db.SaveChanges();
                 MessageBox.Show("تم تعديل المريض بنجاح");
 
@@ -154,6 +160,13 @@ namespace LabManagementSystem.Forms
         private void DOB_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void LoadGender()
+        {
+            cmboGender.DataSource=db.Genders.ToList();
+            cmboGender.DisplayMember= "Name";
+            cmboGender.ValueMember="Id";
         }
     }
 }

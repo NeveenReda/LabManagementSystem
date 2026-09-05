@@ -28,8 +28,32 @@ namespace LabManagementSystem.Forms
             dgvPatients.AlternatingRowsDefaultCellStyle.ForeColor = Color.Black;
             dgvPatients.AlternatingRowsDefaultCellStyle.BackColor = Color.White;
 
-        }
+            dgvPatients.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            dgvPatients.MultiSelect = true;
+            dgvPatients.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithAutoHeaderText;
 
+
+        }
+        private void SearchPatients()
+        {
+            string search = txtSearch.Text.Trim();
+
+            var patients = db.Patients
+                .Include(p => p.Gender)
+                .Where(p => p.Name.Contains(search) || p.MedicalCode.Contains(search))
+                .Select(p => new
+                {
+                    p.Id,
+                    p.MedicalCode,
+                    p.Name,
+                    p.Phone,
+                    Gender = p.Gender.Name,
+                    p.AgeAtRecord
+                })
+                .ToList();
+
+            dgvPatients.DataSource = patients;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             AddPatientClicked?.Invoke();
@@ -59,7 +83,7 @@ namespace LabManagementSystem.Forms
             {
                 dgvPatients.DataSource = null;
                 return;
-            }         
+            }
             var patients = db.Patients
                 .Include(p => p.Gender)
                 .Where(p => p.Name.Contains(search) || p.MedicalCode.Contains(search))
@@ -90,7 +114,7 @@ namespace LabManagementSystem.Forms
             /////////////////////
             //for edit delete icons
             colEdit.Image = Image.FromFile("imgs/edit.png");
-           colDelete.Image = Image.FromFile("imgs/delete.png");
+            colDelete.Image = Image.FromFile("imgs/delete.png");
         }
 
         private void pnlTitle_Paint(object sender, PaintEventArgs e)
@@ -110,19 +134,24 @@ namespace LabManagementSystem.Forms
             Patient patient = db.Patients.Find(patientId);
 
             if (e.RowIndex < 0) return;
-            if (dgvPatients.Columns[e.ColumnIndex].Name=="colEdit")
+            if (dgvPatients.Columns[e.ColumnIndex].Name == "colEdit")
             {
                 //MessageBox.Show("Edit is clicked");
-               
+
                 FrmAddPatient frm = new FrmAddPatient(patient);
                 frm.ShowDialog();
             }
-            if (dgvPatients.Columns[e.ColumnIndex].Name=="colDelete")
+            if (dgvPatients.Columns[e.ColumnIndex].Name == "colDelete")
             {
                 db.Patients.Remove(patient);
                 db.SaveChanges();
                 MessageBox.Show("تم حذف المريض بنجاح");
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            SearchPatients();
         }
     }
 }
