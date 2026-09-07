@@ -39,33 +39,41 @@
             pnlData = new Panel();
             tblAnalysis = new TableLayoutPanel();
             dgvVisitDetails = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
+            colLabName = new DataGridViewTextBoxColumn();
+            colPrice = new DataGridViewTextBoxColumn();
+            colExternal = new DataGridViewTextBoxColumn();
+            colDelete = new DataGridViewImageColumn();
             label10 = new Label();
-            cmboGender = new ComboBox();
             button3 = new Button();
-            button2 = new Button();
+            cmbolabs = new ComboBox();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            btnAddLab = new Button();
+            btnSave = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
-            label7 = new Label();
-            DateOfVisit = new DateTimePicker();
             label9 = new Label();
             label8 = new Label();
+            DateOfVisit = new DateTimePicker();
             txtRemaining = new TextBox();
             txtAfterDiscount = new TextBox();
-            textBox2 = new TextBox();
-            label1 = new Label();
+            textDiscountValue = new TextBox();
             label11 = new Label();
-            address = new TextBox();
-            txtNotes = new TextBox();
-            textBox1 = new TextBox();
-            label5 = new Label();
+            textDiscountPercentage = new TextBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             btnAddPatient = new Button();
             txtPatientName = new TextBox();
             label12 = new Label();
-            label2 = new Label();
+            txtNotes = new TextBox();
+            label1 = new Label();
+            label7 = new Label();
+            label5 = new Label();
+            txtPayment = new TextBox();
+            lbltxt = new Label();
             pnlTitle = new Panel();
             pnlData.SuspendLayout();
             tblAnalysis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvVisitDetails).BeginInit();
+            tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             pnlTitle.SuspendLayout();
@@ -100,6 +108,7 @@
             txtPatientCode.Size = new Size(213, 38);
             txtPatientCode.TabIndex = 0;
             txtPatientCode.TextChanged += txtPatientCode_TextChanged;
+            txtPatientCode.Leave += txtPatientCode_Leave;
             // 
             // label4
             // 
@@ -156,7 +165,7 @@
             pnlData.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pnlData.Location = new Point(0, 70);
             pnlData.Name = "pnlData";
-            pnlData.Size = new Size(1829, 436);
+            pnlData.Size = new Size(1829, 714);
             pnlData.TabIndex = 5;
             pnlData.Paint += pnlData_Paint;
             // 
@@ -164,36 +173,88 @@
             // 
             tblAnalysis.AutoSize = true;
             tblAnalysis.ColumnCount = 3;
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 17.296114F));
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 21.94855F));
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60.7553368F));
+            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 52.0525436F));
+            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.9868641F));
+            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.96059F));
             tblAnalysis.Controls.Add(dgvVisitDetails, 0, 1);
             tblAnalysis.Controls.Add(label10, 0, 0);
-            tblAnalysis.Controls.Add(cmboGender, 1, 0);
             tblAnalysis.Controls.Add(button3, 2, 2);
-            tblAnalysis.Controls.Add(button2, 2, 0);
+            tblAnalysis.Controls.Add(cmbolabs, 1, 0);
+            tblAnalysis.Controls.Add(tableLayoutPanel3, 2, 0);
             tblAnalysis.Dock = DockStyle.Top;
             tblAnalysis.Location = new Point(0, 268);
             tblAnalysis.Name = "tblAnalysis";
             tblAnalysis.RowCount = 3;
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 399F));
+            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 3.12101912F));
+            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 96.87898F));
+            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 13F));
             tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tblAnalysis.Size = new Size(1827, 489);
+            tblAnalysis.Size = new Size(1827, 1519);
             tblAnalysis.TabIndex = 22;
             tblAnalysis.Paint += tblAnalysis_Paint;
             // 
             // dgvVisitDetails
             // 
+            dgvVisitDetails.AllowUserToAddRows = false;
             dgvVisitDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvVisitDetails.Columns.AddRange(new DataGridViewColumn[] { colId, colLabName, colPrice, colExternal, colDelete });
             dgvVisitDetails.Dock = DockStyle.Fill;
-            dgvVisitDetails.Location = new Point(1514, 48);
+            dgvVisitDetails.Location = new Point(879, 50);
             dgvVisitDetails.Name = "dgvVisitDetails";
+            dgvVisitDetails.ReadOnly = true;
+            dgvVisitDetails.RowHeadersVisible = false;
             dgvVisitDetails.RowHeadersWidth = 51;
-            dgvVisitDetails.Size = new Size(310, 39);
+            dgvVisitDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvVisitDetails.Size = new Size(945, 1452);
             dgvVisitDetails.TabIndex = 24;
+            dgvVisitDetails.CellContentClick += dgvVisitDetails_CellContentClick;
+            // 
+            // colId
+            // 
+            colId.DataPropertyName = "Id";
+            colId.HeaderText = "م";
+            colId.MinimumWidth = 6;
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Width = 125;
+            // 
+            // colLabName
+            // 
+            colLabName.DataPropertyName = "Name";
+            colLabName.HeaderText = "اسم التحليل";
+            colLabName.MinimumWidth = 6;
+            colLabName.Name = "colLabName";
+            colLabName.ReadOnly = true;
+            colLabName.Width = 125;
+            // 
+            // colPrice
+            // 
+            colPrice.DataPropertyName = "Price";
+            colPrice.HeaderText = "السعر";
+            colPrice.MinimumWidth = 6;
+            colPrice.Name = "colPrice";
+            colPrice.ReadOnly = true;
+            colPrice.Width = 125;
+            // 
+            // colExternal
+            // 
+            colExternal.DataPropertyName = "ExternalType";
+            colExternal.HeaderText = "نوع المعمل";
+            colExternal.MinimumWidth = 6;
+            colExternal.Name = "colExternal";
+            colExternal.ReadOnly = true;
+            colExternal.Width = 125;
+            // 
+            // colDelete
+            // 
+            colDelete.HeaderText = "حذف";
+            colDelete.MinimumWidth = 6;
+            colDelete.Name = "colDelete";
+            colDelete.ReadOnly = true;
+            colDelete.Resizable = DataGridViewTriState.True;
+            colDelete.SortMode = DataGridViewColumnSortMode.Automatic;
+            colDelete.Width = 125;
             // 
             // label10
             // 
@@ -205,40 +266,69 @@
             label10.TabIndex = 2;
             label10.Text = "التحليل :";
             // 
-            // cmboGender
-            // 
-            cmboGender.Font = new Font("Tahoma", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cmboGender.FormattingEnabled = true;
-            cmboGender.Location = new Point(1268, 3);
-            cmboGender.Name = "cmboGender";
-            cmboGender.Size = new Size(240, 36);
-            cmboGender.TabIndex = 15;
-            // 
             // button3
             // 
             button3.BackColor = Color.MediumSeaGreen;
             button3.FlatStyle = FlatStyle.Flat;
             button3.ForeColor = Color.White;
-            button3.Location = new Point(973, 93);
+            button3.Location = new Point(520, 1508);
             button3.Name = "button3";
-            button3.Size = new Size(134, 48);
+            button3.Size = new Size(134, 8);
             button3.TabIndex = 25;
             button3.Text = "حفظ";
             button3.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // cmbolabs
             // 
-            button2.BackColor = Color.RoyalBlue;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(989, 3);
-            button2.Name = "button2";
-            button2.Size = new Size(118, 36);
-            button2.TabIndex = 23;
-            button2.Text = "إضافة ➕  ";
-            button2.UseVisualStyleBackColor = false;
+            cmbolabs.Font = new Font("Tahoma", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbolabs.FormattingEnabled = true;
+            cmbolabs.Location = new Point(660, 3);
+            cmbolabs.Name = "cmbolabs";
+            cmbolabs.Size = new Size(213, 30);
+            cmbolabs.TabIndex = 15;
+            cmbolabs.SelectedIndexChanged += cmbolabs_SelectedIndexChanged;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 2;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Controls.Add(btnAddLab, 0, 0);
+            tableLayoutPanel3.Controls.Add(btnSave, 1, 0);
+            tableLayoutPanel3.Location = new Point(404, 3);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Size = new Size(250, 41);
+            tableLayoutPanel3.TabIndex = 27;
+            // 
+            // btnAddLab
+            // 
+            btnAddLab.BackColor = Color.RoyalBlue;
+            btnAddLab.FlatAppearance.BorderSize = 0;
+            btnAddLab.FlatStyle = FlatStyle.Flat;
+            btnAddLab.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddLab.ForeColor = Color.White;
+            btnAddLab.Location = new Point(129, 3);
+            btnAddLab.Name = "btnAddLab";
+            btnAddLab.Size = new Size(118, 35);
+            btnAddLab.TabIndex = 23;
+            btnAddLab.Text = "إضافة ➕  ";
+            btnAddLab.UseVisualStyleBackColor = false;
+            btnAddLab.Click += btnAddLab_Click;
+            // 
+            // btnSave
+            // 
+            btnSave.BackColor = Color.MediumSeaGreen;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(3, 3);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(119, 35);
+            btnSave.TabIndex = 26;
+            btnSave.Text = "حفظ";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -247,14 +337,12 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 76.1818161F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 164F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 421F));
-            tableLayoutPanel1.Controls.Add(label7, 0, 4);
-            tableLayoutPanel1.Controls.Add(DateOfVisit, 1, 4);
             tableLayoutPanel1.Controls.Add(label9, 2, 4);
             tableLayoutPanel1.Controls.Add(label8, 2, 3);
+            tableLayoutPanel1.Controls.Add(DateOfVisit, 1, 3);
             tableLayoutPanel1.Controls.Add(txtRemaining, 3, 4);
             tableLayoutPanel1.Controls.Add(txtAfterDiscount, 3, 3);
-            tableLayoutPanel1.Controls.Add(textBox2, 3, 1);
-            tableLayoutPanel1.Controls.Add(label1, 0, 3);
+            tableLayoutPanel1.Controls.Add(textDiscountValue, 3, 1);
             tableLayoutPanel1.Controls.Add(label3, 0, 0);
             tableLayoutPanel1.Controls.Add(label4, 2, 0);
             tableLayoutPanel1.Controls.Add(txtTotal, 3, 0);
@@ -262,11 +350,13 @@
             tableLayoutPanel1.Controls.Add(txtDoctorName, 1, 1);
             tableLayoutPanel1.Controls.Add(label6, 2, 1);
             tableLayoutPanel1.Controls.Add(label11, 2, 2);
-            tableLayoutPanel1.Controls.Add(address, 3, 2);
-            tableLayoutPanel1.Controls.Add(txtNotes, 1, 3);
-            tableLayoutPanel1.Controls.Add(textBox1, 1, 2);
-            tableLayoutPanel1.Controls.Add(label5, 0, 2);
+            tableLayoutPanel1.Controls.Add(textDiscountPercentage, 3, 2);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 0);
+            tableLayoutPanel1.Controls.Add(txtNotes, 1, 2);
+            tableLayoutPanel1.Controls.Add(label1, 0, 2);
+            tableLayoutPanel1.Controls.Add(label7, 0, 3);
+            tableLayoutPanel1.Controls.Add(label5, 0, 4);
+            tableLayoutPanel1.Controls.Add(txtPayment, 1, 4);
             tableLayoutPanel1.Dock = DockStyle.Top;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -274,35 +364,17 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50.7042236F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 49.2957764F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 54F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 63F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 48F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 69F));
             tableLayoutPanel1.Size = new Size(1827, 268);
             tableLayoutPanel1.TabIndex = 20;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.ForeColor = Color.FromArgb(55, 71, 79);
-            label7.Location = new Point(1697, 204);
-            label7.Name = "label7";
-            label7.RightToLeft = RightToLeft.Yes;
-            label7.Size = new Size(127, 31);
-            label7.TabIndex = 26;
-            label7.Text = "تاريخ الزيارة";
-            // 
-            // DateOfVisit
-            // 
-            DateOfVisit.Location = new Point(1112, 207);
-            DateOfVisit.Name = "DateOfVisit";
-            DateOfVisit.Size = new Size(417, 38);
-            DateOfVisit.TabIndex = 27;
+            tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.ForeColor = Color.FromArgb(55, 71, 79);
-            label9.Location = new Point(510, 204);
+            label9.Location = new Point(510, 198);
             label9.Name = "label9";
             label9.Size = new Size(73, 31);
             label9.TabIndex = 7;
@@ -314,13 +386,20 @@
             label8.ForeColor = Color.FromArgb(55, 71, 79);
             label8.Location = new Point(451, 150);
             label8.Name = "label8";
-            label8.Size = new Size(132, 54);
+            label8.Size = new Size(132, 48);
             label8.TabIndex = 25;
             label8.Text = "الاجمالى بعد الخصم";
             // 
+            // DateOfVisit
+            // 
+            DateOfVisit.Location = new Point(1112, 153);
+            DateOfVisit.Name = "DateOfVisit";
+            DateOfVisit.Size = new Size(417, 38);
+            DateOfVisit.TabIndex = 27;
+            // 
             // txtRemaining
             // 
-            txtRemaining.Location = new Point(179, 207);
+            txtRemaining.Location = new Point(179, 201);
             txtRemaining.Name = "txtRemaining";
             txtRemaining.Size = new Size(240, 38);
             txtRemaining.TabIndex = 6;
@@ -331,23 +410,15 @@
             txtAfterDiscount.Name = "txtAfterDiscount";
             txtAfterDiscount.Size = new Size(240, 38);
             txtAfterDiscount.TabIndex = 24;
+            txtAfterDiscount.TextChanged += txtAfterDiscount_TextChanged;
             // 
-            // textBox2
+            // textDiscountValue
             // 
-            textBox2.Location = new Point(179, 59);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(240, 38);
-            textBox2.TabIndex = 23;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.ForeColor = Color.FromArgb(55, 71, 79);
-            label1.Location = new Point(1724, 150);
-            label1.Name = "label1";
-            label1.Size = new Size(100, 31);
-            label1.TabIndex = 21;
-            label1.Text = "ملاحظات";
+            textDiscountValue.Location = new Point(179, 59);
+            textDiscountValue.Name = "textDiscountValue";
+            textDiscountValue.Size = new Size(240, 38);
+            textDiscountValue.TabIndex = 23;
+            textDiscountValue.TextChanged += textDiscountValue_TextChanged;
             // 
             // label11
             // 
@@ -359,36 +430,13 @@
             label11.TabIndex = 19;
             label11.Text = "نسبة الخصم %";
             // 
-            // address
+            // textDiscountPercentage
             // 
-            address.Location = new Point(179, 114);
-            address.Name = "address";
-            address.Size = new Size(240, 38);
-            address.TabIndex = 18;
-            // 
-            // txtNotes
-            // 
-            txtNotes.Location = new Point(1289, 153);
-            txtNotes.Name = "txtNotes";
-            txtNotes.Size = new Size(240, 38);
-            txtNotes.TabIndex = 20;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(1289, 114);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(240, 38);
-            textBox1.TabIndex = 21;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.ForeColor = Color.FromArgb(55, 71, 79);
-            label5.Location = new Point(1733, 111);
-            label5.Name = "label5";
-            label5.Size = new Size(91, 31);
-            label5.TabIndex = 22;
-            label5.Text = "المدفوع";
+            textDiscountPercentage.Location = new Point(179, 114);
+            textDiscountPercentage.Name = "textDiscountPercentage";
+            textDiscountPercentage.Size = new Size(240, 38);
+            textDiscountPercentage.TabIndex = 18;
+            textDiscountPercentage.TextChanged += textDiscountPercentage_TextChanged;
             // 
             // tableLayoutPanel2
             // 
@@ -440,21 +488,68 @@
             label12.TabIndex = 2;
             label12.Text = "اسم المريض";
             // 
-            // label2
+            // txtNotes
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.RoyalBlue;
-            label2.Location = new Point(843, 19);
-            label2.Name = "label2";
-            label2.Size = new Size(224, 38);
-            label2.TabIndex = 2;
-            label2.Text = "شاشة إضافة زيارة";
+            txtNotes.Location = new Point(1289, 114);
+            txtNotes.Name = "txtNotes";
+            txtNotes.Size = new Size(240, 38);
+            txtNotes.TabIndex = 20;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = Color.FromArgb(55, 71, 79);
+            label1.Location = new Point(1724, 111);
+            label1.Name = "label1";
+            label1.Size = new Size(100, 31);
+            label1.TabIndex = 21;
+            label1.Text = "ملاحظات";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = Color.FromArgb(55, 71, 79);
+            label7.Location = new Point(1697, 150);
+            label7.Name = "label7";
+            label7.RightToLeft = RightToLeft.Yes;
+            label7.Size = new Size(127, 31);
+            label7.TabIndex = 26;
+            label7.Text = "تاريخ الزيارة";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.ForeColor = Color.FromArgb(55, 71, 79);
+            label5.Location = new Point(1733, 198);
+            label5.Name = "label5";
+            label5.Size = new Size(91, 31);
+            label5.TabIndex = 22;
+            label5.Text = "المدفوع";
+            // 
+            // txtPayment
+            // 
+            txtPayment.Location = new Point(1289, 201);
+            txtPayment.Name = "txtPayment";
+            txtPayment.Size = new Size(240, 38);
+            txtPayment.TabIndex = 21;
+            txtPayment.TextChanged += txtPayment_TextChanged;
+            // 
+            // lbltxt
+            // 
+            lbltxt.AutoSize = true;
+            lbltxt.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbltxt.ForeColor = Color.RoyalBlue;
+            lbltxt.Location = new Point(843, 19);
+            lbltxt.Name = "lbltxt";
+            lbltxt.Size = new Size(224, 38);
+            lbltxt.TabIndex = 2;
+            lbltxt.Text = "شاشة إضافة زيارة";
+            lbltxt.Click += lbltxt_Click;
             // 
             // pnlTitle
             // 
             pnlTitle.BackColor = Color.Gainsboro;
-            pnlTitle.Controls.Add(label2);
+            pnlTitle.Controls.Add(lbltxt);
             pnlTitle.Dock = DockStyle.Top;
             pnlTitle.Location = new Point(0, 0);
             pnlTitle.Name = "pnlTitle";
@@ -477,6 +572,7 @@
             tblAnalysis.ResumeLayout(false);
             tblAnalysis.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvVisitDetails).EndInit();
+            tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
@@ -498,21 +594,21 @@
         private Panel pnlData;
         private TableLayoutPanel tableLayoutPanel1;
         private Label label11;
-        private TextBox address;
-        private Label label2;
+        private TextBox textDiscountPercentage;
+        private Label lbltxt;
         private Panel pnlTitle;
         private Label label1;
         private TextBox txtNotes;
-        private TextBox textBox1;
+        private TextBox txtPayment;
         private Label label5;
         private Label label9;
         private Label label8;
         private TextBox txtRemaining;
         private TextBox txtAfterDiscount;
-        private TextBox textBox2;
+        private TextBox textDiscountValue;
         private TableLayoutPanel tblAnalysis;
-        private Button button2;
-        private ComboBox cmboGender;
+        private Button btnAddLab;
+        private ComboBox cmbolabs;
         private Label label10;
         private DataGridView dgvVisitDetails;
         private Button button3;
@@ -522,5 +618,12 @@
         private TableLayoutPanel tableLayoutPanel2;
         private TextBox txtPatientName;
         private Label label12;
+        private Button btnSave;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn colLabName;
+        private DataGridViewTextBoxColumn colPrice;
+        private DataGridViewTextBoxColumn colExternal;
+        private DataGridViewImageColumn colDelete;
+        private TableLayoutPanel tableLayoutPanel3;
     }
 }

@@ -32,27 +32,26 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlTitle = new Panel();
             label1 = new Label();
+            btnSearch = new Button();
             txtSearch = new TextBox();
             pnlSearch = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
-            picSearch = new PictureBox();
-            btnSearch = new Button();
             lblSearch = new Label();
+            button1 = new Button();
             pnlBottom = new Panel();
             label3 = new Label();
-            dgvPatients = new DataGridView();
-            colId = new DataGridViewTextBoxColumn();
-            colMedicalCode = new DataGridViewTextBoxColumn();
-            colName = new DataGridViewTextBoxColumn();
-            colPhone = new DataGridViewTextBoxColumn();
-            colGender = new DataGridViewTextBoxColumn();
-            colAge = new DataGridViewTextBoxColumn();
-            colEdit = new DataGridViewImageColumn();
             colDelete = new DataGridViewImageColumn();
+            colEdit = new DataGridViewImageColumn();
+            colAge = new DataGridViewTextBoxColumn();
+            colGender = new DataGridViewTextBoxColumn();
+            colPhone = new DataGridViewTextBoxColumn();
+            colName = new DataGridViewTextBoxColumn();
+            colMedicalCode = new DataGridViewTextBoxColumn();
+            colId = new DataGridViewTextBoxColumn();
+            dgvPatients = new DataGridView();
             pnlTitle.SuspendLayout();
             pnlSearch.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picSearch).BeginInit();
             pnlBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPatients).BeginInit();
             SuspendLayout();
@@ -61,6 +60,7 @@
             // 
             pnlTitle.BackColor = Color.Gainsboro;
             pnlTitle.Controls.Add(label1);
+            pnlTitle.Controls.Add(btnSearch);
             pnlTitle.Dock = DockStyle.Top;
             pnlTitle.Location = new Point(0, 0);
             pnlTitle.Name = "pnlTitle";
@@ -73,12 +73,27 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.RoyalBlue;
-            label1.Location = new Point(656, 9);
+            label1.Location = new Point(812, 10);
             label1.Name = "label1";
             label1.Size = new Size(286, 38);
             label1.TabIndex = 1;
             label1.Text = "شاشة البحث عن مريض";
             label1.Click += label1_Click;
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.RoyalBlue;
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearch.ForeColor = Color.White;
+            btnSearch.Location = new Point(565, 12);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(183, 42);
+            btnSearch.TabIndex = 4;
+            btnSearch.Text = "إضافة مريض ➕  ";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += button1_Click;
             // 
             // txtSearch
             // 
@@ -106,9 +121,8 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 274F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 902F));
             tableLayoutPanel1.Controls.Add(txtSearch, 1, 0);
-            tableLayoutPanel1.Controls.Add(picSearch, 2, 0);
-            tableLayoutPanel1.Controls.Add(btnSearch, 3, 0);
             tableLayoutPanel1.Controls.Add(lblSearch, 0, 0);
+            tableLayoutPanel1.Controls.Add(button1, 2, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -117,32 +131,6 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(1841, 70);
             tableLayoutPanel1.TabIndex = 2;
-            // 
-            // picSearch
-            // 
-            picSearch.Image = Properties.Resources.searchIcon1;
-            picSearch.Location = new Point(1133, 3);
-            picSearch.Name = "picSearch";
-            picSearch.Size = new Size(40, 36);
-            picSearch.SizeMode = PictureBoxSizeMode.StretchImage;
-            picSearch.TabIndex = 2;
-            picSearch.TabStop = false;
-            picSearch.Click += pictureBox1_Click;
-            // 
-            // btnSearch
-            // 
-            btnSearch.BackColor = Color.RoyalBlue;
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(745, 3);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(154, 42);
-            btnSearch.TabIndex = 4;
-            btnSearch.Text = "إضافة مريض ➕  ";
-            btnSearch.UseVisualStyleBackColor = false;
-            btnSearch.Click += button1_Click;
             // 
             // lblSearch
             // 
@@ -154,6 +142,21 @@
             lblSearch.Size = new Size(239, 28);
             lblSearch.TabIndex = 2;
             lblSearch.Text = "بحث بالاسم او كود المريض";
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.RoyalBlue;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(1038, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(135, 35);
+            button1.TabIndex = 6;
+            button1.Text = "بحث";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click_1;
             // 
             // pnlBottom
             // 
@@ -172,6 +175,70 @@
             label3.Size = new Size(123, 20);
             label3.TabIndex = 0;
             label3.Text = "إجمالي المرضى : 0";
+            // 
+            // colDelete
+            // 
+            colDelete.HeaderText = "حذف";
+            colDelete.MinimumWidth = 6;
+            colDelete.Name = "colDelete";
+            colDelete.ReadOnly = true;
+            colDelete.Resizable = DataGridViewTriState.True;
+            // 
+            // colEdit
+            // 
+            colEdit.HeaderText = "تعديل";
+            colEdit.MinimumWidth = 6;
+            colEdit.Name = "colEdit";
+            colEdit.ReadOnly = true;
+            colEdit.Resizable = DataGridViewTriState.True;
+            // 
+            // colAge
+            // 
+            colAge.DataPropertyName = "AgeAtRecord";
+            colAge.HeaderText = "السن";
+            colAge.MinimumWidth = 6;
+            colAge.Name = "colAge";
+            colAge.ReadOnly = true;
+            // 
+            // colGender
+            // 
+            colGender.DataPropertyName = "Gender";
+            colGender.HeaderText = "النوع";
+            colGender.MinimumWidth = 6;
+            colGender.Name = "colGender";
+            colGender.ReadOnly = true;
+            // 
+            // colPhone
+            // 
+            colPhone.DataPropertyName = "Phone";
+            colPhone.HeaderText = "رقم الموبايل";
+            colPhone.MinimumWidth = 6;
+            colPhone.Name = "colPhone";
+            colPhone.ReadOnly = true;
+            // 
+            // colName
+            // 
+            colName.DataPropertyName = "Name";
+            colName.HeaderText = "اسم المريض";
+            colName.MinimumWidth = 6;
+            colName.Name = "colName";
+            colName.ReadOnly = true;
+            // 
+            // colMedicalCode
+            // 
+            colMedicalCode.DataPropertyName = "MedicalCode";
+            colMedicalCode.HeaderText = "كود المريض";
+            colMedicalCode.MinimumWidth = 6;
+            colMedicalCode.Name = "colMedicalCode";
+            colMedicalCode.ReadOnly = true;
+            // 
+            // colId
+            // 
+            colId.DataPropertyName = "Id";
+            colId.HeaderText = "م";
+            colId.MinimumWidth = 6;
+            colId.Name = "colId";
+            colId.ReadOnly = true;
             // 
             // dgvPatients
             // 
@@ -212,70 +279,6 @@
             dgvPatients.TabIndex = 5;
             dgvPatients.CellContentClick += dgvPatients_CellContentClick_1;
             // 
-            // colId
-            // 
-            colId.DataPropertyName = "Id";
-            colId.HeaderText = "م";
-            colId.MinimumWidth = 6;
-            colId.Name = "colId";
-            colId.ReadOnly = true;
-            // 
-            // colMedicalCode
-            // 
-            colMedicalCode.DataPropertyName = "MedicalCode";
-            colMedicalCode.HeaderText = "كود المريض";
-            colMedicalCode.MinimumWidth = 6;
-            colMedicalCode.Name = "colMedicalCode";
-            colMedicalCode.ReadOnly = true;
-            // 
-            // colName
-            // 
-            colName.DataPropertyName = "Name";
-            colName.HeaderText = "اسم المريض";
-            colName.MinimumWidth = 6;
-            colName.Name = "colName";
-            colName.ReadOnly = true;
-            // 
-            // colPhone
-            // 
-            colPhone.DataPropertyName = "Phone";
-            colPhone.HeaderText = "رقم الموبايل";
-            colPhone.MinimumWidth = 6;
-            colPhone.Name = "colPhone";
-            colPhone.ReadOnly = true;
-            // 
-            // colGender
-            // 
-            colGender.DataPropertyName = "Gender";
-            colGender.HeaderText = "النوع";
-            colGender.MinimumWidth = 6;
-            colGender.Name = "colGender";
-            colGender.ReadOnly = true;
-            // 
-            // colAge
-            // 
-            colAge.DataPropertyName = "AgeAtRecord";
-            colAge.HeaderText = "السن";
-            colAge.MinimumWidth = 6;
-            colAge.Name = "colAge";
-            colAge.ReadOnly = true;
-            // 
-            // colEdit
-            // 
-            colEdit.HeaderText = "تعديل";
-            colEdit.MinimumWidth = 6;
-            colEdit.Name = "colEdit";
-            colEdit.ReadOnly = true;
-            colEdit.Resizable = DataGridViewTriState.True;
-            // 
-            // colDelete
-            // 
-            colDelete.HeaderText = "حذف";
-            colDelete.MinimumWidth = 6;
-            colDelete.Name = "colDelete";
-            colDelete.ReadOnly = true;
-            colDelete.Resizable = DataGridViewTriState.True;
-            // 
             // FrmSearchPatient
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -296,7 +299,6 @@
             pnlSearch.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picSearch).EndInit();
             pnlBottom.ResumeLayout(false);
             pnlBottom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPatients).EndInit();
@@ -310,20 +312,19 @@
         private Panel pnlSearch;
         private TextBox txtSearch;
         private Button btnSearch;
-        private PictureBox picSearch;
         private Label lblSearch;
         private TableLayoutPanel tableLayoutPanel1;
         private Panel pnlBottom;
         private Label label3;
-        private DataGridView dgvPatients;
-        private DataGridViewTextBoxColumn colId;
-        private DataGridViewTextBoxColumn colMedicalCode;
-        private DataGridViewTextBoxColumn colName;
-        private DataGridViewTextBoxColumn colPhone;
-        private DataGridViewTextBoxColumn colGender;
-        private DataGridViewTextBoxColumn colAge;
-        private DataGridViewImageColumn colEdit;
         private DataGridViewImageColumn colDelete;
-      
+        private DataGridViewImageColumn colEdit;
+        private DataGridViewTextBoxColumn colAge;
+        private DataGridViewTextBoxColumn colGender;
+        private DataGridViewTextBoxColumn colPhone;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colMedicalCode;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridView dgvPatients;
+        private Button button1;
     }
 }
