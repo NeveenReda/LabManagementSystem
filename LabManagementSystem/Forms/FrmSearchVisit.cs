@@ -56,14 +56,22 @@ namespace LabManagementSystem.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string code= txtSearchCode.Text.Trim();
-            string name= txtSearchName.Text.Trim();
+            string code = txtSearchCode.Text.Trim();
+            string name = txtSearchName.Text.Trim();
+            DateTime dateFrom= dtSearchDateFrom.Value.Date;
+           DateTime dateTo= dtSearchDateTo.Value.Date.AddDays(1);
+            if(dateFrom>dateTo)
+            {
+                MessageBox.Show("تاريخ البداية يجب أن يكون قبل تاريخ النهاية");
+                return;
+            }
 
-            var visits= db.Visits
+            var visits = db.Visits
                 .Include(v => v.Patient)
                 .Where(v => (string.IsNullOrEmpty(code) || v.Patient.MedicalCode.Contains(code)) &&
-                            (string.IsNullOrEmpty(name) || v.Patient.Name.Contains(name)))
-                .Select(v => new
+                            (string.IsNullOrEmpty(name) || v.Patient.Name.Contains(name))&& v.VisitDate>=dateFrom &&v.VisitDate<dateTo)
+                            
+                            .Select(v => new
                 {
                     v.Id,
                     MedicalCode = v.Patient.MedicalCode,
@@ -88,6 +96,11 @@ namespace LabManagementSystem.Forms
 
             // Results found
             dgvvisits.DataSource = visits;
+        }
+
+        private void txt_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
