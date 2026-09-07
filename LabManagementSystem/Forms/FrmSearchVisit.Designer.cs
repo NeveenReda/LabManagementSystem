@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             colDelete = new DataGridViewImageColumn();
             colAge = new DataGridViewTextBoxColumn();
             colGender = new DataGridViewTextBoxColumn();
@@ -42,8 +42,8 @@
             dgvvisits = new DataGridView();
             btnSearch = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
-            textBox3 = new TextBox();
-            txt = new TextBox();
+            dtSearchDateFrom = new DateTimePicker();
+            dtSearchDateTo = new DateTimePicker();
             label6 = new Label();
             label5 = new Label();
             txtSearchName = new TextBox();
@@ -142,24 +142,24 @@
             dgvvisits.AllowUserToResizeRows = false;
             dgvvisits.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvvisits.BackgroundColor = SystemColors.Control;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvvisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvvisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvvisits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvvisits.Columns.AddRange(new DataGridViewColumn[] { colId, colMedicalCode, colName, colPhone, colGender, colAge, colEdit, colDelete });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvvisits.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvvisits.DefaultCellStyle = dataGridViewCellStyle4;
             dgvvisits.Dock = DockStyle.Fill;
             dgvvisits.EnableHeadersVisualStyles = false;
             dgvvisits.Location = new Point(0, 130);
@@ -194,14 +194,14 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 113F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 117F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 315F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 183F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 259F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 173F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 263F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 304F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 168F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 285F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 169F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 267F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 141F));
-            tableLayoutPanel1.Controls.Add(textBox3, 7, 0);
-            tableLayoutPanel1.Controls.Add(txt, 5, 0);
+            tableLayoutPanel1.Controls.Add(dtSearchDateFrom, 7, 0);
+            tableLayoutPanel1.Controls.Add(dtSearchDateTo, 5, 0);
             tableLayoutPanel1.Controls.Add(label6, 6, 0);
             tableLayoutPanel1.Controls.Add(label5, 4, 0);
             tableLayoutPanel1.Controls.Add(txtSearchName, 3, 0);
@@ -218,19 +218,19 @@
             tableLayoutPanel1.Size = new Size(1841, 70);
             tableLayoutPanel1.TabIndex = 2;
             // 
-            // textBox3
+            // dtSearchDateFrom
             // 
-            textBox3.Location = new Point(144, 3);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(257, 27);
-            textBox3.TabIndex = 11;
+            dtSearchDateFrom.Location = new Point(155, 3);
+            dtSearchDateFrom.Name = "dtSearchDateFrom";
+            dtSearchDateFrom.Size = new Size(250, 27);
+            dtSearchDateFrom.TabIndex = 11;
             // 
-            // txt
+            // dtSearchDateTo
             // 
-            txt.Location = new Point(581, 3);
-            txt.Name = "txt";
-            txt.Size = new Size(252, 27);
-            txt.TabIndex = 7;
+            dtSearchDateTo.Location = new Point(609, 3);
+            dtSearchDateTo.Name = "dtSearchDateTo";
+            dtSearchDateTo.Size = new Size(250, 27);
+            dtSearchDateTo.TabIndex = 10;
             // 
             // label6
             // 
@@ -248,7 +248,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.FromArgb(55, 71, 79);
-            label5.Location = new Point(859, 0);
+            label5.Location = new Point(870, 0);
             label5.Name = "label5";
             label5.Size = new Size(157, 28);
             label5.TabIndex = 6;
@@ -256,9 +256,9 @@
             // 
             // txtSearchName
             // 
-            txtSearchName.Location = new Point(1031, 3);
+            txtSearchName.Location = new Point(1033, 3);
             txtSearchName.Name = "txtSearchName";
-            txtSearchName.Size = new Size(300, 27);
+            txtSearchName.Size = new Size(298, 27);
             txtSearchName.TabIndex = 5;
             txtSearchName.TextChanged += textBox1_TextChanged;
             // 
@@ -392,11 +392,11 @@
         private Panel pnlTitle;
         private Panel pnlBottom;
         private Label label2;
-        private TextBox txt;
         private Label label6;
         private Label label5;
         private TextBox txtSearchName;
-        private TextBox textBox3;
         private Button button1;
+        private DateTimePicker dtSearchDateFrom;
+        private DateTimePicker dtSearchDateTo;
     }
 }
