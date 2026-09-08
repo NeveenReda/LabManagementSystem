@@ -41,6 +41,11 @@ namespace LabManagementSystem.Forms
             dgvvisits.AutoGenerateColumns = false;
             colEdit.Image = Image.FromFile("imgs/edit.png");
             colDelete.Image = Image.FromFile("imgs/delete.png");
+            //////////////////
+            chkSearchByDate.Checked = false;
+
+            dtSearchDateTo.Enabled = false;
+            dtSearchDateFrom.Enabled = false;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -56,43 +61,47 @@ namespace LabManagementSystem.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string code = txtSearchCode.Text.Trim();
-            string name = txtSearchName.Text.Trim();
-            DateTime dateFrom= dtSearchDateFrom.Value.Date;
-           DateTime dateTo= dtSearchDateTo.Value.Date.AddDays(1);
-            if(dateFrom>dateTo)
-            {
-                MessageBox.Show("تاريخ البداية يجب أن يكون قبل تاريخ النهاية");
-                return;
-            }
+                string code = txtSearchCode.Text.Trim();
+                string name = txtSearchName.Text.Trim();
 
-            var visits = db.Visits
+                var query = db.Visits
                 .Include(v => v.Patient)
-                .Where(v => (string.IsNullOrEmpty(code) || v.Patient.MedicalCode.Contains(code)) &&
-                            (string.IsNullOrEmpty(name) || v.Patient.Name.Contains(name))&& v.VisitDate>=dateFrom &&v.VisitDate<dateTo)
-                            
-                            .Select(v => new
+                .Where(v =>
+                    (string.IsNullOrEmpty(code) || v.Patient.MedicalCode.Contains(code)) &&
+                    (string.IsNullOrEmpty(name) || v.Patient.Name.Contains(name))
+                );
+             if (chkSearchByDate.Checked)
                 {
-                    v.Id,
-                    MedicalCode = v.Patient.MedicalCode,
+                DateTime dateFrom = dtSearchDateFrom.Value.Date;
+                DateTime dateTo = dtSearchDateTo.Value.Date;
 
-                    Name = v.Patient.Name,
-                    Phone = v.Patient.Phone,
+                if (dateFrom > dateTo)
+                {
+                    MessageBox.Show("تاريخ البداية يجب أن يكون قبل تاريخ النهاية");
+                    return;
+                }
 
-                    Gender = v.Patient.Gender.Name,
-                    AgeAtRecord = v.Patient.AgeAtRecord,
-                    v.VisitDate
-                })
-                .ToList();
+                DateTime dateToExclusive = dateTo.AddDays(1);
 
-            // No results
-            if (visits.Count == 0)
-            {
-                dgvvisits.DataSource = null;
-
-                MessageBox.Show("لا توجد زيارات لهذا المريض");
-                return;
+                query = query.Where(v =>
+                    v.VisitDate >= dateFrom &&
+                    v.VisitDate < dateToExclusive
+                );
             }
+            var visits = query
+            .Select(v => new
+            {
+                v.Id,
+                MedicalCode = v.Patient.MedicalCode,
+                Name = v.Patient.Name,
+                Phone = v.Patient.Phone,
+                Gender = v.Patient.Gender.Name,
+                AgeAtRecord = v.Patient.AgeAtRecord,
+                v.VisitDate
+            })
+            .ToList();
+
+            
 
             // Results found
             dgvvisits.DataSource = visits;
@@ -101,6 +110,27 @@ namespace LabManagementSystem.Forms
         private void txt_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgvvisits_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dtSearchDateTo_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvvisits_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void chkSearchByDate_CheckedChanged(object sender, EventArgs e)
+        {
+            dtSearchDateTo.Enabled = chkSearchByDate.Checked;
+            dtSearchDateFrom.Enabled = chkSearchByDate.Checked;
         }
     }
 }
