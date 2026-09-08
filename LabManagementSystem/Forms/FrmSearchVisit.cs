@@ -124,9 +124,27 @@ namespace LabManagementSystem.Forms
 
         private void dgvvisits_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-
+            int visitId = int.Parse(dgvvisits.Rows[e.RowIndex].Cells["colId"].Value.ToString());
+            var visit=db.Visits.Find(visitId);
+            if (dgvvisits.Columns[e.ColumnIndex].Name=="colEdit")
+            {
+                FrmAddVisit frm=new FrmAddVisit(visit);
+                frm.ShowDialog();
+            }
+            if (dgvvisits.Columns[e.ColumnIndex].Name == "colDelete")
+            {
+                db.Visits.Remove(visit);
+                db.SaveChanges();
+              //  LoadVisits();
+                MessageBox.Show("تم حذف الزياره بنجاح");
+            }
         }
-
+        //private void LoadVisits()
+        //{
+        //    dgvvisits.DataSource = db.Visits
+        //        .Include(v => v.Patient)
+        //        .ToList();
+        //}
         private void chkSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
             dtSearchDateTo.Enabled = chkSearchByDate.Checked;
