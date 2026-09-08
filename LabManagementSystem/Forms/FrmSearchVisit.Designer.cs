@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             colDelete = new DataGridViewImageColumn();
             colAge = new DataGridViewTextBoxColumn();
             colGender = new DataGridViewTextBoxColumn();
@@ -42,9 +42,14 @@
             dgvvisits = new DataGridView();
             btnSearch = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
-            dtSearchDateFrom = new DateTimePicker();
+            tableLayoutPanel5 = new TableLayoutPanel();
             dtSearchDateTo = new DateTimePicker();
+            tableLayoutPanel4 = new TableLayoutPanel();
             label6 = new Label();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            dtSearchDateFrom = new DateTimePicker();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            chkSearchByDate = new CheckBox();
             label5 = new Label();
             txtSearchName = new TextBox();
             txtSearchCode = new TextBox();
@@ -57,6 +62,10 @@
             pnlBottom = new Panel();
             ((System.ComponentModel.ISupportInitialize)dgvvisits).BeginInit();
             tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             pnlSearch.SuspendLayout();
             pnlTitle.SuspendLayout();
             pnlBottom.SuspendLayout();
@@ -142,27 +151,27 @@
             dgvvisits.AllowUserToResizeRows = false;
             dgvvisits.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvvisits.BackgroundColor = SystemColors.Control;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgvvisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvvisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvvisits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvvisits.Columns.AddRange(new DataGridViewColumn[] { colId, colMedicalCode, colName, colPhone, colGender, colAge, colEdit, colDelete });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvvisits.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvvisits.DefaultCellStyle = dataGridViewCellStyle2;
             dgvvisits.Dock = DockStyle.Fill;
             dgvvisits.EnableHeadersVisualStyles = false;
-            dgvvisits.Location = new Point(0, 130);
+            dgvvisits.Location = new Point(0, 119);
             dgvvisits.MultiSelect = false;
             dgvvisits.Name = "dgvvisits";
             dgvvisits.ReadOnly = true;
@@ -170,8 +179,9 @@
             dgvvisits.RowHeadersWidth = 51;
             dgvvisits.RowTemplate.Height = 45;
             dgvvisits.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvvisits.Size = new Size(1841, 524);
+            dgvvisits.Size = new Size(1841, 535);
             dgvvisits.TabIndex = 9;
+            dgvvisits.CellContentClick += dgvvisits_CellContentClick_1;
             // 
             // btnSearch
             // 
@@ -194,16 +204,16 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 113F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 117F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 304F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 168F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 285F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 169F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 267F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 265F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 163F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 329F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 91F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 345F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 141F));
-            tableLayoutPanel1.Controls.Add(dtSearchDateFrom, 7, 0);
-            tableLayoutPanel1.Controls.Add(dtSearchDateTo, 5, 0);
-            tableLayoutPanel1.Controls.Add(label6, 6, 0);
-            tableLayoutPanel1.Controls.Add(label5, 4, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel5, 7, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 6, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 5, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 4, 0);
             tableLayoutPanel1.Controls.Add(txtSearchName, 3, 0);
             tableLayoutPanel1.Controls.Add(txtSearchCode, 1, 0);
             tableLayoutPanel1.Controls.Add(lblSearch, 0, 0);
@@ -218,47 +228,115 @@
             tableLayoutPanel1.Size = new Size(1841, 70);
             tableLayoutPanel1.TabIndex = 2;
             // 
-            // dtSearchDateFrom
+            // tableLayoutPanel5
             // 
-            dtSearchDateFrom.Location = new Point(155, 3);
-            dtSearchDateFrom.Name = "dtSearchDateFrom";
-            dtSearchDateFrom.Size = new Size(250, 27);
-            dtSearchDateFrom.TabIndex = 11;
+            tableLayoutPanel5.ColumnCount = 1;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.Controls.Add(dtSearchDateTo, 0, 1);
+            tableLayoutPanel5.Location = new Point(144, 3);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 2;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.Size = new Size(339, 64);
+            tableLayoutPanel5.TabIndex = 10;
             // 
             // dtSearchDateTo
             // 
-            dtSearchDateTo.Location = new Point(609, 3);
+            dtSearchDateTo.Location = new Point(3, 35);
             dtSearchDateTo.Name = "dtSearchDateTo";
-            dtSearchDateTo.Size = new Size(250, 27);
-            dtSearchDateTo.TabIndex = 10;
+            dtSearchDateTo.Size = new Size(333, 27);
+            dtSearchDateTo.TabIndex = 11;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 1;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.Controls.Add(label6, 0, 1);
+            tableLayoutPanel4.Location = new Point(500, 3);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 2;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.Size = new Size(74, 64);
+            tableLayoutPanel4.TabIndex = 10;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(55, 71, 79);
-            label6.Location = new Point(413, 0);
+            label6.Location = new Point(33, 32);
             label6.Name = "label6";
-            label6.Size = new Size(161, 28);
+            label6.Size = new Size(38, 25);
             label6.TabIndex = 10;
-            label6.Text = "بحث بالتاريخ الى :";
+            label6.Text = "الى";
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 1;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel3.Controls.Add(dtSearchDateFrom, 0, 1);
+            tableLayoutPanel3.Location = new Point(597, 3);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 2;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Size = new Size(306, 64);
+            tableLayoutPanel3.TabIndex = 10;
+            // 
+            // dtSearchDateFrom
+            // 
+            dtSearchDateFrom.Location = new Point(3, 35);
+            dtSearchDateFrom.Name = "dtSearchDateFrom";
+            dtSearchDateFrom.Size = new Size(300, 27);
+            dtSearchDateFrom.TabIndex = 10;
+            dtSearchDateFrom.ValueChanged += dtSearchDateTo_ValueChanged;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 1;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(chkSearchByDate, 0, 0);
+            tableLayoutPanel2.Controls.Add(label5, 0, 1);
+            tableLayoutPanel2.Location = new Point(909, 3);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 56.25F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 43.75F));
+            tableLayoutPanel2.Size = new Size(157, 64);
+            tableLayoutPanel2.TabIndex = 10;
+            // 
+            // chkSearchByDate
+            // 
+            chkSearchByDate.AutoSize = true;
+            chkSearchByDate.Font = new Font("Bodoni MT Black", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            chkSearchByDate.ForeColor = SystemColors.ActiveCaptionText;
+            chkSearchByDate.Location = new Point(36, 3);
+            chkSearchByDate.Name = "chkSearchByDate";
+            chkSearchByDate.Size = new Size(118, 28);
+            chkSearchByDate.TabIndex = 7;
+            chkSearchByDate.Text = "البحث بالتاريخ";
+            chkSearchByDate.UseVisualStyleBackColor = true;
+            chkSearchByDate.CheckedChanged += chkSearchByDate_CheckedChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = Color.FromArgb(55, 71, 79);
-            label5.Location = new Point(870, 0);
+            label5.Location = new Point(119, 36);
             label5.Name = "label5";
-            label5.Size = new Size(157, 28);
+            label5.Size = new Size(35, 25);
             label5.TabIndex = 6;
-            label5.Text = "بحث بالتاريخ من :";
+            label5.Text = "من";
             // 
             // txtSearchName
             // 
-            txtSearchName.Location = new Point(1033, 3);
+            txtSearchName.Location = new Point(1072, 3);
             txtSearchName.Name = "txtSearchName";
-            txtSearchName.Size = new Size(298, 27);
+            txtSearchName.Size = new Size(259, 27);
             txtSearchName.TabIndex = 5;
             txtSearchName.TextChanged += textBox1_TextChanged;
             // 
@@ -311,7 +389,7 @@
             pnlSearch.BackColor = Color.White;
             pnlSearch.Controls.Add(tableLayoutPanel1);
             pnlSearch.Dock = DockStyle.Top;
-            pnlSearch.Location = new Point(0, 60);
+            pnlSearch.Location = new Point(0, 49);
             pnlSearch.Name = "pnlSearch";
             pnlSearch.Size = new Size(1841, 70);
             pnlSearch.TabIndex = 7;
@@ -335,7 +413,7 @@
             pnlTitle.Dock = DockStyle.Top;
             pnlTitle.Location = new Point(0, 0);
             pnlTitle.Name = "pnlTitle";
-            pnlTitle.Size = new Size(1841, 60);
+            pnlTitle.Size = new Size(1841, 49);
             pnlTitle.TabIndex = 6;
             // 
             // pnlBottom
@@ -363,6 +441,12 @@
             ((System.ComponentModel.ISupportInitialize)dgvvisits).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
             pnlSearch.ResumeLayout(false);
             pnlTitle.ResumeLayout(false);
             pnlTitle.PerformLayout();
@@ -392,11 +476,16 @@
         private Panel pnlTitle;
         private Panel pnlBottom;
         private Label label2;
-        private Label label6;
         private Label label5;
         private TextBox txtSearchName;
         private Button button1;
-        private DateTimePicker dtSearchDateFrom;
         private DateTimePicker dtSearchDateTo;
+        private DateTimePicker dtSearchDateFrom;
+        private TableLayoutPanel tableLayoutPanel2;
+        private CheckBox chkSearchByDate;
+        private TableLayoutPanel tableLayoutPanel3;
+        private TableLayoutPanel tableLayoutPanel5;
+        private TableLayoutPanel tableLayoutPanel4;
+        private Label label6;
     }
 }
