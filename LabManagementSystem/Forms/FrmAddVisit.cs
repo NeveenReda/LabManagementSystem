@@ -27,11 +27,17 @@ namespace LabManagementSystem.Forms
             //dgvVisitDetails.MultiSelect = true;
             //dgvVisitDetails.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithAutoHeaderText;
         }
-        public FrmAddVisit(Visit visit)
+        public FrmAddVisit(Visit visit)//this constructor for update visit
         {
             InitializeComponent();
+            ////////////
             this.visit = visit;
-            /////................
+            txtNotes.Text = this.visit.Notes;
+            txtDoctorName.Text = this.visit.DrName;
+            txtPatientCode.Text = this.visit.Patient.MedicalCode;
+            txtPayment.Text = this.visit.Payments;
+
+          
 
         }
 
