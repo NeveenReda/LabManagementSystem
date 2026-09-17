@@ -7,6 +7,12 @@
     <Compile Update="Forms\FrmAddVisit.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\FrmExternalLab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmLabResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
