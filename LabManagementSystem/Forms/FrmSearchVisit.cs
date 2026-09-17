@@ -39,13 +39,14 @@ namespace LabManagementSystem.Forms
         private void FrmSearchVisit_Load(object sender, EventArgs e)
         {
             dgvvisits.AutoGenerateColumns = false;
-            colEdit.Image = Image.FromFile("imgs/edit.png");
-            colDelete.Image = Image.FromFile("imgs/delete.png");
+            //colEdit.Image = Image.FromFile("imgs/edit.png");
+            //colDelete.Image = Image.FromFile("imgs/delete.png");
             //////////////////
             chkSearchByDate.Checked = false;
 
             dtSearchDateTo.Enabled = false;
             dtSearchDateFrom.Enabled = false;
+           
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -65,7 +66,7 @@ namespace LabManagementSystem.Forms
                 string name = txtSearchName.Text.Trim();
 
                 var query = db.Visits
-                .Include(v => v.Patient)
+                .Include(v => v.Patient)//patient is a navigation proerty
                 .Where(v =>
                     (string.IsNullOrEmpty(code) || v.Patient.MedicalCode.Contains(code)) &&
                     (string.IsNullOrEmpty(name) || v.Patient.Name.Contains(name))
@@ -89,19 +90,47 @@ namespace LabManagementSystem.Forms
                 );
             }
             var visits = query
-            .Select(v => new
-            {
-                v.Id,
-                MedicalCode = v.Patient.MedicalCode,
-                Name = v.Patient.Name,
-                Phone = v.Patient.Phone,
-                Gender = v.Patient.Gender.Name,
-                AgeAtRecord = v.Patient.AgeAtRecord,
-                v.VisitDate
-            })
-            .ToList();
+   .Select(v => new
+   {
+       v.Id,
+       Name = v.Patient.Name,
+       v.VisitDate,
+       LabsCount = v.VisitLabs.Count,
+       v.TotalPrice,
+       v.DiscountValue,
+       v.DiscountPercent,
+       v.NetPrice
+   })
+   .OrderByDescending(v => v.VisitDate)
+   .ToList();
 
-            
+            dgvvisits.DataSource = visits;
+
+            dgvvisits.Columns["colVisitDate"]
+                .DefaultCellStyle.Format = "dd/MM/yyyy";
+
+            //var visits = query
+            //.Select(v => new
+            //{
+            //    v.Id,
+
+            //    // MedicalCode = v.Patient.MedicalCode,
+            //    Name = v.Patient.Name,
+            //  v.VisitDate,
+            //    v.TotalPrice,
+            //    //totola number of labs
+            //    LabsCount = v.VisitLabs.Count,
+            //    v.DiscountValue,
+            //    v.DiscountPercent,
+            //    v.NetPrice,
+            // //   Phone = v.Patient.Phone,
+            // //  Gender = v.Patient.Gender.Name,
+            //  //  AgeAtRecord = v.Patient.AgeAtRecord,
+
+            //}).OrderByDescending(v => v.VisitDate)
+            //.ToList();
+
+
 
             // Results found
             dgvvisits.DataSource = visits;
@@ -124,19 +153,38 @@ namespace LabManagementSystem.Forms
 
         private void dgvvisits_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            int visitId = int.Parse(dgvvisits.Rows[e.RowIndex].Cells["colId"].Value.ToString());
-            var visit=db.Visits.Find(visitId);
-            if (dgvvisits.Columns[e.ColumnIndex].Name=="colEdit")
+            if (e.RowIndex < 0)
+                return;
+
+            int visitId = Convert.ToInt32(
+                dgvvisits.Rows[e.RowIndex].Cells["colId"].Value
+            );
+
+            if (dgvvisits.Columns[e.ColumnIndex].Name == "colEdit")
             {
-                FrmAddVisit frm=new FrmAddVisit(visit);
+                var visit = db.Visits
+                    .Include(v => v.Patient)
+                    .Include(v => v.Payments)
+                    .FirstOrDefault(v => v.Id == visitId);
+
+                if (visit == null)
+                    return;
+
+                FrmAddVisit frm = new FrmAddVisit(visit);
                 frm.ShowDialog();
             }
+
             if (dgvvisits.Columns[e.ColumnIndex].Name == "colDelete")
             {
+                var visit = db.Visits.Find(visitId);
+
+                if (visit == null)
+                    return;
+
                 db.Visits.Remove(visit);
                 db.SaveChanges();
-              //  LoadVisits();
-                MessageBox.Show("تم حذف الزياره بنجاح");
+
+                MessageBox.Show("تم حذف الزيارة بنجاح");
             }
         }
         //private void LoadVisits()

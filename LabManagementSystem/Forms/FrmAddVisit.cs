@@ -31,13 +31,22 @@ namespace LabManagementSystem.Forms
         {
             InitializeComponent();
             ////////////
+            //this.visit = visit;
+            //txtNotes.Text = this.visit.Notes;
+            //txtDoctorName.Text = this.visit.DrName;
+            //txtPatientCode.Text = this.visit.Patient.MedicalCode;
+            //txtPayment.Text = this.visit.Payments;
+
             this.visit = visit;
+
             txtNotes.Text = this.visit.Notes;
             txtDoctorName.Text = this.visit.DrName;
             txtPatientCode.Text = this.visit.Patient.MedicalCode;
-            txtPayment.Text = this.visit.Payments;
 
-          
+            txtPayment.Text = this.visit.Payments
+                .Sum(p => p.Amount)
+                .ToString("0.00");
+
 
         }
 
@@ -66,7 +75,13 @@ namespace LabManagementSystem.Forms
 
             colDelete.Image = Image.FromFile("imgs/delete.png");
 
-        }
+            //////////////////
+            ////////////grid font size
+            dgvVisitDetails.DefaultCellStyle.Font = new Font("Arial", 9);
+
+            dgvVisitDetails.ColumnHeadersDefaultCellStyle.Font =
+                new Font("Arial", 12, FontStyle.Bold);
+       }
 
         private void btnAddPatient_Click(object sender, EventArgs e)
         {
@@ -93,59 +108,129 @@ namespace LabManagementSystem.Forms
 
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if(selectedPatient==null)
-            {
-                MessageBox.Show("من فضلك اختار المريض اولا"); return;
-            }
-            if(dgvVisitDetails.Rows.Count==0)
-            {
-                MessageBox.Show("من فضلك ادخل تحليل واحد على الاقل"); return;
-            }
-            Visit vis = new Visit();
-            vis.PatientId=selectedPatient.Id;
-            vis.VisitDate = DateTime.Now;
-            vis.CreateDate= DateTime.Now;
+       private void btnSave_Click(object sender, EventArgs e)
+{
+    if (selectedPatient == null)
+    {
+        MessageBox.Show("من فضلك اختار المريض اولا");
+        return;
+    }
+
+    if (dgvVisitDetails.Rows.Count == 0)
+    {
+        MessageBox.Show("من فضلك ادخل تحليل واحد على الاقل");
+        return;
+    }
+
+    // =========================
+    // 1. Create Visit
+    // =========================
+
+    Visit vis = new Visit();
+
+    vis.PatientId = selectedPatient.Id;
+    vis.VisitDate = DateTime.Now;
+    vis.CreateDate = DateTime.Now;
+
+    vis.DrName = txtDoctorName.Text;
+    vis.Notes = txtNotes.Text;
+
+    vis.TotalPrice = Convert.ToDecimal(txtTotal.Text);
+
+    if (decimal.TryParse(textDiscountPercentage.Text, out decimal discountPercentage))
+        vis.DiscountPercent = discountPercentage;
+
+    if (decimal.TryParse(textDiscountValue.Text, out decimal discountValue))
+        vis.DiscountValue = discountValue;
+
+    vis.NetPrice = decimal.Parse(txtAfterDiscount.Text);
+
+    db.Visits.Add(vis);
+
+    // Save Visit first to get Visit.Id
+    db.SaveChanges();
 
 
-            vis.DrName = txtDoctorName.Text;
-            vis.Notes = txtNotes.Text;
+    // =========================
+    // 2. Create VisitLabs
+    // =========================
 
-            vis.TotalPrice= Convert.ToDecimal(txtTotal.Text);
-            if (decimal.TryParse(textDiscountPercentage.Text, out decimal discountPercentage))
-                visit.DiscountPercent = discountPercentage;
+    foreach (DataGridViewRow row in dgvVisitDetails.Rows)
+    {
+        if (row.IsNewRow)
+            continue;
 
-            if (decimal.TryParse(textDiscountValue.Text, out decimal discountValue))
-                vis.DiscountValue = discountValue;
-
-            vis.NetPrice = decimal.Parse(txtAfterDiscount.Text);
-
-            db.Visits.Add(vis);
-
-            db.SaveChanges();
-
-            MessageBox.Show("تم حفظ الزيارة بنجاح");
-
-            foreach (DataGridViewRow row in dgvVisitDetails.Rows)
-            {
-                if (row.IsNewRow)
-                    continue;
+            
 
                 VisitLab visitLab = new VisitLab();
 
                 visitLab.VisitId = vis.Id;
-                visitLab.LabId = Convert.ToInt32(row.Cells["colId"].Value);
-                visitLab.LabPrice = Convert.ToDecimal(row.Cells["colPrice"].Value);
-                visitLab.IsExternal = Convert.ToBoolean(row.Cells["colExternal"].Value);
 
-                // You need a valid VisitLabStatusId
+                visitLab.LabId =
+                    Convert.ToInt32(row.Cells["colId"].Value);
+
+                visitLab.LabPrice =
+                    Convert.ToDecimal(row.Cells["colPrice"].Value);
+
+                visitLab.IsExternal = false;
+
                 visitLab.VisitLabStatusId = 1;
 
-                vis.VisitLabs.Add(visitLab);
+                db.VisitLabs.Add(visitLab);
+
+                row.Tag = visitLab;
+
+
             }
 
+
+    // Save all VisitLabs
+    db.SaveChanges();
+
+
+    // =========================
+    // 3. Put VisitLabId in Grid
+    // =========================
+
+    foreach (DataGridViewRow row in dgvVisitDetails.Rows)
+    {
+        if (row.IsNewRow)
+            continue;
+
+        VisitLab visitLab = row.Tag as VisitLab;
+
+        if (visitLab != null)
+        {
+            row.Cells["colVisitLabId"].Value = visitLab.Id;
         }
+    }
+
+
+    // =========================
+    // 4. Add Payment ONCE
+    // =========================
+
+    if (decimal.TryParse(txtPayment.Text, out decimal paymentAmount)
+        && paymentAmount > 0)
+    {
+        Payment payment = new Payment
+        {
+            PaymentDate = DateTime.Now,
+            Amount = paymentAmount,
+            VisitId = vis.Id
+        };
+
+        db.Payments.Add(payment);
+    }
+
+
+    // Save Payment
+    db.SaveChanges();
+
+
+    MessageBox.Show("تم حفظ الزيارة بنجاح");
+}
+
 
         private void txtPatientCode_Leave(object sender, EventArgs e)
         {
@@ -196,7 +281,40 @@ namespace LabManagementSystem.Forms
                 CalculateTotal();
                 CalculateAfterDiscount();
             }
+            // Check if clicked column is the external lab button
+            if (e.ColumnIndex == dgvVisitDetails.Columns["colExternal"].Index)
+            {
+                // Get VisitLabId from hidden column
+                if (dgvVisitDetails.Rows[e.RowIndex].Cells["colVisitLabId"].Value == null)
+                {
+                    MessageBox.Show("من فضلك احفظ الزيارة أولاً");
+                    return;
+                }
+
+                int visitLabId = Convert.ToInt32(
+                    dgvVisitDetails.Rows[e.RowIndex].Cells["colVisitLabId"].Value
+                );
+
+                // Open External Lab form
+                FrmExternalLab frm = new FrmExternalLab(visitLabId);
+
+                frm.ShowDialog();
+            }
+
+            ///for lab result
+            if (dgvVisitDetails.Columns[e.ColumnIndex].Name == "colResult")
+            {
+                int visitLabId = Convert.ToInt32(
+                    dgvVisitDetails.Rows[e.RowIndex]
+                        .Cells["colVisitLabId"].Value
+                );
+
+                FrmLabResult frm = new FrmLabResult(visitLabId);
+                frm.ShowDialog();
+            }
+
         }
+        
 
         private void btnAddLab_Click(object sender, EventArgs e)
         {
@@ -214,7 +332,7 @@ namespace LabManagementSystem.Forms
                     return;
                 }
             }
-            dgvVisitDetails.Rows.Add(selectedLab.Id, selectedLab.Name, selectedLab.Price, selectedLab.IsExternal);
+            dgvVisitDetails.Rows.Add(selectedLab.Id, selectedLab.Name, selectedLab.Price, selectedLab.IsExternal,null,null,null,null);
             CalculateTotal();
             CalculateAfterDiscount();
 

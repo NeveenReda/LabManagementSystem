@@ -30,16 +30,20 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            colDelete = new DataGridViewImageColumn();
-            colAge = new DataGridViewTextBoxColumn();
-            colGender = new DataGridViewTextBoxColumn();
-            colPhone = new DataGridViewTextBoxColumn();
-            colName = new DataGridViewTextBoxColumn();
-            colMedicalCode = new DataGridViewTextBoxColumn();
-            colId = new DataGridViewTextBoxColumn();
             label3 = new Label();
-            colEdit = new DataGridViewImageColumn();
             dgvvisits = new DataGridView();
+            colVisitId = new DataGridViewTextBoxColumn();
+            colPatientName = new DataGridViewTextBoxColumn();
+            colVisitDate = new DataGridViewTextBoxColumn();
+            colLabsCount = new DataGridViewTextBoxColumn();
+            colTotalPrice = new DataGridViewTextBoxColumn();
+            colDiscountValue = new DataGridViewTextBoxColumn();
+            colDiscountPercentage = new DataGridViewTextBoxColumn();
+            colNetPrice = new DataGridViewTextBoxColumn();
+            colReport = new DataGridViewButtonColumn();
+            colPayment = new DataGridViewButtonColumn();
+            colEdit = new DataGridViewButtonColumn();
+            colDelete = new DataGridViewButtonColumn();
             btnSearch = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
@@ -71,62 +75,6 @@
             pnlBottom.SuspendLayout();
             SuspendLayout();
             // 
-            // colDelete
-            // 
-            colDelete.HeaderText = "حذف";
-            colDelete.MinimumWidth = 6;
-            colDelete.Name = "colDelete";
-            colDelete.ReadOnly = true;
-            colDelete.Resizable = DataGridViewTriState.True;
-            // 
-            // colAge
-            // 
-            colAge.DataPropertyName = "AgeAtRecord";
-            colAge.HeaderText = "السن";
-            colAge.MinimumWidth = 6;
-            colAge.Name = "colAge";
-            colAge.ReadOnly = true;
-            // 
-            // colGender
-            // 
-            colGender.DataPropertyName = "Gender";
-            colGender.HeaderText = "النوع";
-            colGender.MinimumWidth = 6;
-            colGender.Name = "colGender";
-            colGender.ReadOnly = true;
-            // 
-            // colPhone
-            // 
-            colPhone.DataPropertyName = "Phone";
-            colPhone.HeaderText = "رقم الموبايل";
-            colPhone.MinimumWidth = 6;
-            colPhone.Name = "colPhone";
-            colPhone.ReadOnly = true;
-            // 
-            // colName
-            // 
-            colName.DataPropertyName = "Name";
-            colName.HeaderText = "اسم المريض";
-            colName.MinimumWidth = 6;
-            colName.Name = "colName";
-            colName.ReadOnly = true;
-            // 
-            // colMedicalCode
-            // 
-            colMedicalCode.DataPropertyName = "MedicalCode";
-            colMedicalCode.HeaderText = "كود المريض";
-            colMedicalCode.MinimumWidth = 6;
-            colMedicalCode.Name = "colMedicalCode";
-            colMedicalCode.ReadOnly = true;
-            // 
-            // colId
-            // 
-            colId.DataPropertyName = "Id";
-            colId.HeaderText = "م";
-            colId.MinimumWidth = 6;
-            colId.Name = "colId";
-            colId.ReadOnly = true;
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -135,14 +83,6 @@
             label3.Size = new Size(123, 20);
             label3.TabIndex = 0;
             label3.Text = "إجمالي المرضى : 0";
-            // 
-            // colEdit
-            // 
-            colEdit.HeaderText = "تعديل";
-            colEdit.MinimumWidth = 6;
-            colEdit.Name = "colEdit";
-            colEdit.ReadOnly = true;
-            colEdit.Resizable = DataGridViewTriState.True;
             // 
             // dgvvisits
             // 
@@ -160,7 +100,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvvisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvvisits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvvisits.Columns.AddRange(new DataGridViewColumn[] { colId, colMedicalCode, colName, colPhone, colGender, colAge, colEdit, colDelete });
+            dgvvisits.Columns.AddRange(new DataGridViewColumn[] { colVisitId, colPatientName, colVisitDate, colLabsCount, colTotalPrice, colDiscountValue, colDiscountPercentage, colNetPrice, colReport, colPayment, colEdit, colDelete });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F);
@@ -182,6 +122,106 @@
             dgvvisits.Size = new Size(1841, 535);
             dgvvisits.TabIndex = 9;
             dgvvisits.CellContentClick += dgvvisits_CellContentClick_1;
+            // 
+            // colVisitId
+            // 
+            colVisitId.DataPropertyName = "Id";
+            colVisitId.HeaderText = "كود الزيارة";
+            colVisitId.MinimumWidth = 6;
+            colVisitId.Name = "colVisitId";
+            colVisitId.ReadOnly = true;
+            // 
+            // colPatientName
+            // 
+            colPatientName.DataPropertyName = "Name";
+            colPatientName.HeaderText = "اسم المريض";
+            colPatientName.MinimumWidth = 6;
+            colPatientName.Name = "colPatientName";
+            colPatientName.ReadOnly = true;
+            // 
+            // colVisitDate
+            // 
+            colVisitDate.DataPropertyName = "VisitDate";
+            colVisitDate.HeaderText = "تاريخ الزيارة";
+            colVisitDate.MinimumWidth = 6;
+            colVisitDate.Name = "colVisitDate";
+            colVisitDate.ReadOnly = true;
+            // 
+            // colLabsCount
+            // 
+            colLabsCount.DataPropertyName = "LabsCount";
+            colLabsCount.HeaderText = "عدد التحاليل";
+            colLabsCount.MinimumWidth = 6;
+            colLabsCount.Name = "colLabsCount";
+            colLabsCount.ReadOnly = true;
+            // 
+            // colTotalPrice
+            // 
+            colTotalPrice.DataPropertyName = "TotalPrice";
+            colTotalPrice.HeaderText = "الإجمالي";
+            colTotalPrice.MinimumWidth = 6;
+            colTotalPrice.Name = "colTotalPrice";
+            colTotalPrice.ReadOnly = true;
+            // 
+            // colDiscountValue
+            // 
+            colDiscountValue.DataPropertyName = "DiscountValue";
+            colDiscountValue.HeaderText = "قيمة الخصم";
+            colDiscountValue.MinimumWidth = 6;
+            colDiscountValue.Name = "colDiscountValue";
+            colDiscountValue.ReadOnly = true;
+            // 
+            // colDiscountPercentage
+            // 
+            colDiscountPercentage.DataPropertyName = "DiscountPercent";
+            colDiscountPercentage.HeaderText = "نسبة الخصم";
+            colDiscountPercentage.MinimumWidth = 6;
+            colDiscountPercentage.Name = "colDiscountPercentage";
+            colDiscountPercentage.ReadOnly = true;
+            // 
+            // colNetPrice
+            // 
+            colNetPrice.DataPropertyName = "NetPrice";
+            colNetPrice.HeaderText = "السعر بعد الخصم";
+            colNetPrice.MinimumWidth = 6;
+            colNetPrice.Name = "colNetPrice";
+            colNetPrice.ReadOnly = true;
+            // 
+            // colReport
+            // 
+            colReport.HeaderText = "تقرير";
+            colReport.MinimumWidth = 6;
+            colReport.Name = "colReport";
+            colReport.ReadOnly = true;
+            colReport.Resizable = DataGridViewTriState.True;
+            colReport.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // colPayment
+            // 
+            colPayment.HeaderText = "دفع";
+            colPayment.MinimumWidth = 6;
+            colPayment.Name = "colPayment";
+            colPayment.ReadOnly = true;
+            colPayment.Resizable = DataGridViewTriState.True;
+            colPayment.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // colEdit
+            // 
+            colEdit.HeaderText = "تعديل";
+            colEdit.MinimumWidth = 6;
+            colEdit.Name = "colEdit";
+            colEdit.ReadOnly = true;
+            colEdit.Resizable = DataGridViewTriState.True;
+            colEdit.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // colDelete
+            // 
+            colDelete.HeaderText = "حذف";
+            colDelete.MinimumWidth = 6;
+            colDelete.Name = "colDelete";
+            colDelete.ReadOnly = true;
+            colDelete.Resizable = DataGridViewTriState.True;
+            colDelete.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // btnSearch
             // 
@@ -456,16 +496,7 @@
         }
 
         #endregion
-
-        private DataGridViewImageColumn colDelete;
-        private DataGridViewTextBoxColumn colAge;
-        private DataGridViewTextBoxColumn colGender;
-        private DataGridViewTextBoxColumn colPhone;
-        private DataGridViewTextBoxColumn colName;
-        private DataGridViewTextBoxColumn colMedicalCode;
-        private DataGridViewTextBoxColumn colId;
         private Label label3;
-        private DataGridViewImageColumn colEdit;
         private DataGridView dgvvisits;
         private Button btnSearch;
         private TableLayoutPanel tableLayoutPanel1;
@@ -487,5 +518,18 @@
         private TableLayoutPanel tableLayoutPanel5;
         private TableLayoutPanel tableLayoutPanel4;
         private Label label6;
+        private DataGridViewTextBoxColumn colVisitId;
+        private DataGridViewTextBoxColumn colPatientName;
+        private DataGridViewTextBoxColumn VisitDate;
+        private DataGridViewTextBoxColumn colLabsCount;
+        private DataGridViewTextBoxColumn colTotalPrice;
+        private DataGridViewTextBoxColumn colDiscountValue;
+        private DataGridViewTextBoxColumn colDiscountPercentage;
+        private DataGridViewTextBoxColumn colNetPrice;
+        private DataGridViewButtonColumn colReport;
+        private DataGridViewButtonColumn colPayment;
+        private DataGridViewButtonColumn colEdit;
+        private DataGridViewButtonColumn colDelete;
+        private DataGridViewTextBoxColumn colVisitDate;
     }
 }

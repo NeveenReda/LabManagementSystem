@@ -42,9 +42,10 @@ namespace LabManagementSystem.Forms
         }
         private void FrmAddPatient_Load(object sender, EventArgs e)
         {
-            //fill combo
+            //fill combo of gender
 
             LoadGender();
+
             // If editing a patient
             if (patient != null)
             {
@@ -68,11 +69,11 @@ namespace LabManagementSystem.Forms
             }
             else
             {
-                int serial = int.Parse(lastPatient.MedicalCode.Substring(8));
+                int serial = int.Parse(lastPatient.MedicalCode.Substring(8));//001
 
-                serial++;
+                serial++;//002
 
-                medicalCode = today + serial.ToString("D3");
+                medicalCode = today + serial.ToString("D3");//20261509002
             }
             txtPatientCode.Text = medicalCode;
             txtPatientCode.ReadOnly = true;
