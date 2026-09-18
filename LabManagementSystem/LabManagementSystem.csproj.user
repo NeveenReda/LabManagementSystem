@@ -16,6 +16,9 @@
     <Compile Update="Forms\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\FrmPayments.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\FrmSearchPatient.cs">
       <SubType>Form</SubType>
     </Compile>

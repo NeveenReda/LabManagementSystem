@@ -50,9 +50,14 @@
             label7 = new Label();
             button1 = new Button();
             label1 = new Label();
+            btnAddLab = new Button();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            dataGridView1 = new DataGridView();
             pnlTitle.SuspendLayout();
             pnlData.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // pnlTitle
@@ -80,13 +85,13 @@
             // 
             pnlData.BackColor = SystemColors.Window;
             pnlData.BorderStyle = BorderStyle.FixedSingle;
+            pnlData.Controls.Add(tableLayoutPanel2);
             pnlData.Controls.Add(tableLayoutPanel1);
-            pnlData.Controls.Add(button1);
             pnlData.Dock = DockStyle.Top;
             pnlData.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pnlData.Location = new Point(0, 70);
             pnlData.Name = "pnlData";
-            pnlData.Size = new Size(1829, 436);
+            pnlData.Size = new Size(1829, 593);
             pnlData.TabIndex = 2;
             pnlData.Paint += pnlData_Paint;
             // 
@@ -271,12 +276,13 @@
             // 
             // button1
             // 
+            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             button1.BackColor = Color.MediumSeaGreen;
             button1.FlatStyle = FlatStyle.Flat;
             button1.ForeColor = Color.White;
-            button1.Location = new Point(56, 346);
+            button1.Location = new Point(3, 166);
             button1.Name = "button1";
-            button1.Size = new Size(160, 50);
+            button1.Size = new Size(128, 35);
             button1.TabIndex = 17;
             button1.Text = "حفظ";
             button1.UseVisualStyleBackColor = false;
@@ -290,6 +296,45 @@
             label1.Size = new Size(93, 20);
             label1.TabIndex = 0;
             label1.Text = "اضافة مريض";
+            // 
+            // btnAddLab
+            // 
+            btnAddLab.BackColor = Color.RoyalBlue;
+            btnAddLab.FlatAppearance.BorderSize = 0;
+            btnAddLab.FlatStyle = FlatStyle.Flat;
+            btnAddLab.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddLab.ForeColor = Color.White;
+            btnAddLab.Location = new Point(186, 3);
+            btnAddLab.Name = "btnAddLab";
+            btnAddLab.Size = new Size(118, 35);
+            btnAddLab.TabIndex = 24;
+            btnAddLab.Text = "إضافة ➕  ";
+            btnAddLab.UseVisualStyleBackColor = false;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 85.9459457F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.0540543F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 133F));
+            tableLayoutPanel2.Controls.Add(btnAddLab, 1, 0);
+            tableLayoutPanel2.Controls.Add(dataGridView1, 0, 0);
+            tableLayoutPanel2.Controls.Add(button1, 2, 0);
+            tableLayoutPanel2.Location = new Point(280, 388);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(1371, 204);
+            tableLayoutPanel2.TabIndex = 25;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(310, 3);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(1058, 198);
+            dataGridView1.TabIndex = 25;
             // 
             // FrmAddPatient
             // 
@@ -309,6 +354,8 @@
             pnlData.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -336,5 +383,8 @@
         private TextBox txtPatientCode;
         private Label label3;
         private TableLayoutPanel tableLayoutPanel1;
+        private Button btnAddLab;
+        private TableLayoutPanel tableLayoutPanel2;
+        private DataGridView dataGridView1;
     }
 }
