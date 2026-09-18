@@ -39,8 +39,12 @@ namespace LabManagementSystem.Forms
         private void FrmSearchVisit_Load(object sender, EventArgs e)
         {
             dgvvisits.AutoGenerateColumns = false;
-            //colEdit.Image = Image.FromFile("imgs/edit.png");
-            //colDelete.Image = Image.FromFile("imgs/delete.png");
+            //for edit delete icons
+            colEdit.Image = Image.FromFile("imgs/edit.png");
+            colDelete.Image = Image.FromFile("imgs/delete.png");
+
+            colReport.Image = Image.FromFile("imgs/report.png");
+            colPayment.Image = Image.FromFile("imgs/payment-method.png");
             //////////////////
             chkSearchByDate.Checked = false;
 
@@ -157,7 +161,7 @@ namespace LabManagementSystem.Forms
                 return;
 
             int visitId = Convert.ToInt32(
-                dgvvisits.Rows[e.RowIndex].Cells["colId"].Value
+                dgvvisits.Rows[e.RowIndex].Cells["colVisitId"].Value
             );
 
             if (dgvvisits.Columns[e.ColumnIndex].Name == "colEdit")
@@ -186,6 +190,18 @@ namespace LabManagementSystem.Forms
 
                 MessageBox.Show("تم حذف الزيارة بنجاح");
             }
+            if (dgvvisits.Columns[e.ColumnIndex].Name == "colPayment")
+            {
+                var visit = db.Visits
+                    .Include(v => v.Patient)
+                    .Include(v => v.Payments)
+                    .FirstOrDefault(v => v.Id == visitId);
+                if (visit == null)
+                    return;
+                FrmPayments frm = new FrmPayments(visitId);
+                frm.ShowDialog();
+            }
+
         }
         //private void LoadVisits()
         //{

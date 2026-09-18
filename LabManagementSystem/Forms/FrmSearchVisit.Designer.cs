@@ -40,10 +40,10 @@
             colDiscountValue = new DataGridViewTextBoxColumn();
             colDiscountPercentage = new DataGridViewTextBoxColumn();
             colNetPrice = new DataGridViewTextBoxColumn();
-            colReport = new DataGridViewButtonColumn();
-            colPayment = new DataGridViewButtonColumn();
-            colEdit = new DataGridViewButtonColumn();
-            colDelete = new DataGridViewButtonColumn();
+            colReport = new DataGridViewImageColumn();
+            colPayment = new DataGridViewImageColumn();
+            colEdit = new DataGridViewImageColumn();
+            colDelete = new DataGridViewImageColumn();
             btnSearch = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
@@ -518,18 +518,18 @@
         private TableLayoutPanel tableLayoutPanel5;
         private TableLayoutPanel tableLayoutPanel4;
         private Label label6;
+        private DataGridViewTextBoxColumn VisitDate;
         private DataGridViewTextBoxColumn colVisitId;
         private DataGridViewTextBoxColumn colPatientName;
-        private DataGridViewTextBoxColumn VisitDate;
+        private DataGridViewTextBoxColumn colVisitDate;
         private DataGridViewTextBoxColumn colLabsCount;
         private DataGridViewTextBoxColumn colTotalPrice;
         private DataGridViewTextBoxColumn colDiscountValue;
         private DataGridViewTextBoxColumn colDiscountPercentage;
         private DataGridViewTextBoxColumn colNetPrice;
-        private DataGridViewButtonColumn colReport;
-        private DataGridViewButtonColumn colPayment;
-        private DataGridViewButtonColumn colEdit;
-        private DataGridViewButtonColumn colDelete;
-        private DataGridViewTextBoxColumn colVisitDate;
+        private DataGridViewImageColumn colReport;
+        private DataGridViewImageColumn colPayment;
+        private DataGridViewImageColumn colEdit;
+        private DataGridViewImageColumn colDelete;
     }
 }
