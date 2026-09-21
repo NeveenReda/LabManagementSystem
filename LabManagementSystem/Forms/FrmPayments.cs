@@ -92,7 +92,7 @@ namespace LabManagementSystem.Forms
             txtRemaining.ReadOnly = true;
         }
 
-        private void LoadPayments()
+        private void LoadPayments()//load old payment
         {
             dgvPayments.Rows.Clear();
 
@@ -137,7 +137,7 @@ namespace LabManagementSystem.Forms
         private void btnAddLab_Click(object sender, EventArgs e)
         {
 
-            if (!decimal.TryParse(txtPaid.Text, out decimal amount))
+            if (!decimal.TryParse(txtNewPayment.Text, out decimal amount))
             {
                 MessageBox.Show("من فضلك أدخل مبلغ صحيح");
                 return;
@@ -162,6 +162,7 @@ namespace LabManagementSystem.Forms
                 amount.ToString("0.00"),
                 ""
             );
+            txtNewPayment.Clear();
 
             // تحديث المدفوع والمتبقي
             newPayments.Add(amount);
@@ -175,7 +176,7 @@ namespace LabManagementSystem.Forms
             txtRemaining.Text =
                 (visit!.NetPrice - currentPaid).ToString("0.00");
 
-            txtPaid.Clear();
+          //  txtPaid.Clear();
         }
     }
 }

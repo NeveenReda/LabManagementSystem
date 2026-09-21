@@ -22,6 +22,8 @@ public partial class Visit
     public string? Notes { get; set; }
 
     public DateTime CreateDate { get; set; }
+    public bool IsDeleted { get; set; } = false;
+
 
     public int PatientId { get; set; }
 

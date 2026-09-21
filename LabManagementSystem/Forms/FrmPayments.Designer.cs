@@ -54,6 +54,8 @@
             colPaidAmount = new DataGridViewTextBoxColumn();
             colPaymentNotes = new DataGridViewTextBoxColumn();
             btnAddLab = new Button();
+            label11 = new Label();
+            txtNewPayment = new TextBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPayments).BeginInit();
             SuspendLayout();
@@ -80,7 +82,6 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 98F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 266F));
             tableLayoutPanel1.Controls.Add(textAfterDiscount, 1, 2);
-            tableLayoutPanel1.Controls.Add(txtPaid, 3, 2);
             tableLayoutPanel1.Controls.Add(txtRemaining, 5, 2);
             tableLayoutPanel1.Controls.Add(label7, 4, 1);
             tableLayoutPanel1.Controls.Add(label10, 4, 2);
@@ -97,33 +98,37 @@
             tableLayoutPanel1.Controls.Add(txtVisitCode, 1, 0);
             tableLayoutPanel1.Controls.Add(txtPatientName, 3, 0);
             tableLayoutPanel1.Controls.Add(label2, 0, 1);
+            tableLayoutPanel1.Controls.Add(label11, 2, 3);
+            tableLayoutPanel1.Controls.Add(txtPaid, 3, 2);
+            tableLayoutPanel1.Controls.Add(txtNewPayment, 3, 3);
             tableLayoutPanel1.Location = new Point(160, 106);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RightToLeft = RightToLeft.Yes;
-            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowCount = 4;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 97F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 74F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 43F));
             tableLayoutPanel1.Size = new Size(1160, 244);
             tableLayoutPanel1.TabIndex = 3;
             // 
             // textAfterDiscount
             // 
-            textAfterDiscount.Location = new Point(789, 149);
+            textAfterDiscount.Location = new Point(789, 129);
             textAfterDiscount.Name = "textAfterDiscount";
             textAfterDiscount.Size = new Size(254, 27);
             textAfterDiscount.TabIndex = 23;
             // 
             // txtPaid
             // 
-            txtPaid.Location = new Point(368, 149);
+            txtPaid.Location = new Point(368, 129);
             txtPaid.Name = "txtPaid";
             txtPaid.Size = new Size(252, 27);
             txtPaid.TabIndex = 22;
             // 
             // txtRemaining
             // 
-            txtRemaining.Location = new Point(3, 149);
+            txtRemaining.Location = new Point(3, 129);
             txtRemaining.Name = "txtRemaining";
             txtRemaining.Size = new Size(261, 27);
             txtRemaining.TabIndex = 21;
@@ -133,7 +138,7 @@
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.ForeColor = Color.FromArgb(55, 71, 79);
-            label7.Location = new Point(294, 73);
+            label7.Location = new Point(294, 63);
             label7.Name = "label7";
             label7.Size = new Size(68, 28);
             label7.TabIndex = 14;
@@ -144,7 +149,7 @@
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label10.ForeColor = Color.FromArgb(55, 71, 79);
-            label10.Location = new Point(285, 146);
+            label10.Location = new Point(285, 126);
             label10.Name = "label10";
             label10.Size = new Size(77, 28);
             label10.TabIndex = 17;
@@ -152,7 +157,7 @@
             // 
             // txtDiscount
             // 
-            txtDiscount.Location = new Point(3, 76);
+            txtDiscount.Location = new Point(3, 66);
             txtDiscount.Name = "txtDiscount";
             txtDiscount.Size = new Size(261, 27);
             txtDiscount.TabIndex = 18;
@@ -170,7 +175,7 @@
             // 
             // txtTotal
             // 
-            txtTotal.Location = new Point(368, 76);
+            txtTotal.Location = new Point(368, 66);
             txtTotal.Name = "txtTotal";
             txtTotal.Size = new Size(252, 27);
             txtTotal.TabIndex = 19;
@@ -180,11 +185,11 @@
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label9.ForeColor = Color.FromArgb(55, 71, 79);
-            label9.Location = new Point(705, 146);
+            label9.Location = new Point(655, 126);
             label9.Name = "label9";
-            label9.Size = new Size(78, 28);
+            label9.Size = new Size(128, 28);
             label9.TabIndex = 16;
-            label9.Text = "المدفوع";
+            label9.Text = "المدفوع سابقا";
             // 
             // label3
             // 
@@ -210,7 +215,7 @@
             // 
             // txtLabsCount
             // 
-            txtLabsCount.Location = new Point(789, 76);
+            txtLabsCount.Location = new Point(789, 66);
             txtLabsCount.Name = "txtLabsCount";
             txtLabsCount.Size = new Size(254, 27);
             txtLabsCount.TabIndex = 20;
@@ -220,7 +225,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(55, 71, 79);
-            label8.Location = new Point(1054, 146);
+            label8.Location = new Point(1054, 126);
             label8.Name = "label8";
             label8.Size = new Size(103, 56);
             label8.TabIndex = 15;
@@ -231,7 +236,7 @@
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(55, 71, 79);
-            label6.Location = new Point(644, 73);
+            label6.Location = new Point(644, 63);
             label6.Name = "label6";
             label6.Size = new Size(139, 28);
             label6.TabIndex = 13;
@@ -264,7 +269,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(55, 71, 79);
-            label2.Location = new Point(1082, 73);
+            label2.Location = new Point(1082, 63);
             label2.Name = "label2";
             label2.Size = new Size(75, 56);
             label2.TabIndex = 5;
@@ -288,7 +293,7 @@
             // 
             dgvPayments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvPayments.Columns.AddRange(new DataGridViewColumn[] { colPaymentDate, colPaidAmount, colPaymentNotes });
-            dgvPayments.Location = new Point(519, 365);
+            dgvPayments.Location = new Point(504, 411);
             dgvPayments.Name = "dgvPayments";
             dgvPayments.RightToLeft = RightToLeft.Yes;
             dgvPayments.RowHeadersWidth = 51;
@@ -330,6 +335,24 @@
             btnAddLab.Text = "إضافة ➕  ";
             btnAddLab.UseVisualStyleBackColor = false;
             btnAddLab.Click += btnAddLab_Click;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.ForeColor = Color.FromArgb(55, 71, 79);
+            label11.Location = new Point(674, 200);
+            label11.Name = "label11";
+            label11.Size = new Size(109, 28);
+            label11.TabIndex = 24;
+            label11.Text = "دفعة جديدة";
+            // 
+            // txtNewPayment
+            // 
+            txtNewPayment.Location = new Point(368, 203);
+            txtNewPayment.Name = "txtNewPayment";
+            txtNewPayment.Size = new Size(252, 27);
+            txtNewPayment.TabIndex = 26;
             // 
             // FrmPayments
             // 
@@ -379,5 +402,7 @@
         private DataGridViewTextBoxColumn colPaidAmount;
         private DataGridViewTextBoxColumn colPaymentNotes;
         private Button btnAddLab;
+        private Label label11;
+        private TextBox txtNewPayment;
     }
 }

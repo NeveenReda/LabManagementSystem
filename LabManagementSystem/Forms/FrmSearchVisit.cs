@@ -92,8 +92,12 @@ namespace LabManagementSystem.Forms
                     v.VisitDate >= dateFrom &&
                     v.VisitDate < dateToExclusive
                 );
+
+
+  
             }
-            var visits = query
+            var visits = query.Where(v => !v.IsDeleted)
+
    .Select(v => new
    {
        v.Id,
@@ -166,13 +170,19 @@ namespace LabManagementSystem.Forms
 
             if (dgvvisits.Columns[e.ColumnIndex].Name == "colEdit")
             {
+
                 var visit = db.Visits
-                    .Include(v => v.Patient)
-                    .Include(v => v.Payments)
-                    .FirstOrDefault(v => v.Id == visitId);
+                .Include(v => v.Patient)
+                .Include(v => v.Payments)
+                .Include(v => v.VisitLabs)
+                    .ThenInclude(vl => vl.Lab)
+                .FirstOrDefault(v => v.Id == visitId);
 
                 if (visit == null)
+                {
+                    MessageBox.Show("الزيارة غير موجودة");
                     return;
+                }
 
                 FrmAddVisit frm = new FrmAddVisit(visit);
                 frm.ShowDialog();
@@ -185,10 +195,14 @@ namespace LabManagementSystem.Forms
                 if (visit == null)
                     return;
 
-                db.Visits.Remove(visit);
+                visit.IsDeleted = true;
+
                 db.SaveChanges();
 
                 MessageBox.Show("تم حذف الزيارة بنجاح");
+
+                // Refresh the grid
+                button1_Click(null, null);
             }
             if (dgvvisits.Columns[e.ColumnIndex].Name == "colPayment")
             {
