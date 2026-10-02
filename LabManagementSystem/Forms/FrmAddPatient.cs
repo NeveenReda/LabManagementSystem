@@ -29,8 +29,10 @@ namespace LabManagementSystem.Forms
             InitializeComponent();
             ////////////////////////////////
             this.patient = patient;
+
             lblTitle.Text = "تعديل بيانات المريض";
             LoadGender();
+            txtPatientCode.Text = this.patient.MedicalCode;
             txtPatientName.Text = this.patient.Name;
             txtPatienPhone.Text = this.patient.Phone;
             txtPatientCode.Text = this.patient.MedicalCode;
@@ -38,19 +40,26 @@ namespace LabManagementSystem.Forms
             DOB.Value = this.patient.DateOfBirth??DateTime.Today;
             address.Text = this.patient.Address;
             cmboGender.SelectedValue = this.patient.GenderId;
+           /////////////////
+           txtPatientCode.ReadOnly = true;
 
         }
         private void FrmAddPatient_Load(object sender, EventArgs e)
         {
-            //fill combo
+            //fill combo of gender
 
             LoadGender();
-            // If editing a patient
+
+        
+            // Editing existing patient
             if (patient != null)
             {
                 cmboGender.SelectedValue = patient.GenderId;
-            }
+                txtPatientCode.Text = patient.MedicalCode;
+                txtPatientCode.ReadOnly = true;
 
+                return;
+            }
 
             ///////////////////////////////////////
             string today = DateTime.Today.ToString("yyyyMMdd");
@@ -68,14 +77,14 @@ namespace LabManagementSystem.Forms
             }
             else
             {
-                int serial = int.Parse(lastPatient.MedicalCode.Substring(8));
+                int serial = int.Parse(lastPatient.MedicalCode.Substring(8));//001
 
-                serial++;
+                serial++;//002
 
-                medicalCode = today + serial.ToString("D3");
+                medicalCode = today + serial.ToString("D3");//20261509002
             }
             txtPatientCode.Text = medicalCode;
-            txtPatientCode.ReadOnly = true;
+          
             ////////////////////////////////////////////////
 
         }

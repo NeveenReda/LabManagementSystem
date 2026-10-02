@@ -42,14 +42,16 @@
             colId = new DataGridViewTextBoxColumn();
             colLabName = new DataGridViewTextBoxColumn();
             colPrice = new DataGridViewTextBoxColumn();
-            colExternal = new DataGridViewTextBoxColumn();
+            colExternal = new DataGridViewButtonColumn();
+            colResult = new DataGridViewButtonColumn();
             colDelete = new DataGridViewImageColumn();
-            label10 = new Label();
+            colVisitLabId = new DataGridViewTextBoxColumn();
             button3 = new Button();
             cmbolabs = new ComboBox();
             tableLayoutPanel3 = new TableLayoutPanel();
-            btnAddLab = new Button();
             btnSave = new Button();
+            btnAddLab = new Button();
+            label10 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             label9 = new Label();
             label8 = new Label();
@@ -173,24 +175,24 @@
             // 
             tblAnalysis.AutoSize = true;
             tblAnalysis.ColumnCount = 3;
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 52.0525436F));
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.9868641F));
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.96059F));
+            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 41.26984F));
+            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.3152714F));
+            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 46.4148865F));
             tblAnalysis.Controls.Add(dgvVisitDetails, 0, 1);
-            tblAnalysis.Controls.Add(label10, 0, 0);
             tblAnalysis.Controls.Add(button3, 2, 2);
             tblAnalysis.Controls.Add(cmbolabs, 1, 0);
             tblAnalysis.Controls.Add(tableLayoutPanel3, 2, 0);
+            tblAnalysis.Controls.Add(label10, 0, 0);
             tblAnalysis.Dock = DockStyle.Top;
             tblAnalysis.Location = new Point(0, 268);
             tblAnalysis.Name = "tblAnalysis";
             tblAnalysis.RowCount = 3;
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 3.12101912F));
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 96.87898F));
+            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 1.39720559F));
+            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 98.60279F));
             tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 13F));
             tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tblAnalysis.Size = new Size(1827, 1519);
+            tblAnalysis.Size = new Size(1827, 4093);
             tblAnalysis.TabIndex = 22;
             tblAnalysis.Paint += tblAnalysis_Paint;
             // 
@@ -198,15 +200,15 @@
             // 
             dgvVisitDetails.AllowUserToAddRows = false;
             dgvVisitDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvVisitDetails.Columns.AddRange(new DataGridViewColumn[] { colId, colLabName, colPrice, colExternal, colDelete });
+            dgvVisitDetails.Columns.AddRange(new DataGridViewColumn[] { colId, colLabName, colPrice, colExternal, colResult, colDelete, colVisitLabId });
             dgvVisitDetails.Dock = DockStyle.Fill;
-            dgvVisitDetails.Location = new Point(879, 50);
+            dgvVisitDetails.Location = new Point(1076, 60);
             dgvVisitDetails.Name = "dgvVisitDetails";
             dgvVisitDetails.ReadOnly = true;
             dgvVisitDetails.RowHeadersVisible = false;
             dgvVisitDetails.RowHeadersWidth = 51;
             dgvVisitDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvVisitDetails.Size = new Size(945, 1452);
+            dgvVisitDetails.Size = new Size(748, 4016);
             dgvVisitDetails.TabIndex = 24;
             dgvVisitDetails.CellContentClick += dgvVisitDetails_CellContentClick;
             // 
@@ -240,11 +242,25 @@
             // colExternal
             // 
             colExternal.DataPropertyName = "ExternalType";
-            colExternal.HeaderText = "نوع المعمل";
+            colExternal.HeaderText = "";
             colExternal.MinimumWidth = 6;
             colExternal.Name = "colExternal";
             colExternal.ReadOnly = true;
+            colExternal.Resizable = DataGridViewTriState.True;
+            colExternal.SortMode = DataGridViewColumnSortMode.Automatic;
+            colExternal.Text = "تحويل لمعمل خارجي";
+            colExternal.UseColumnTextForButtonValue = true;
             colExternal.Width = 125;
+            // 
+            // colResult
+            // 
+            colResult.HeaderText = "";
+            colResult.MinimumWidth = 6;
+            colResult.Name = "colResult";
+            colResult.ReadOnly = true;
+            colResult.Text = "نتيجة التحليل";
+            colResult.UseColumnTextForButtonValue = true;
+            colResult.Width = 125;
             // 
             // colDelete
             // 
@@ -256,24 +272,23 @@
             colDelete.SortMode = DataGridViewColumnSortMode.Automatic;
             colDelete.Width = 125;
             // 
-            // label10
+            // colVisitLabId
             // 
-            label10.AutoSize = true;
-            label10.ForeColor = Color.FromArgb(55, 71, 79);
-            label10.Location = new Point(1732, 0);
-            label10.Name = "label10";
-            label10.Size = new Size(92, 31);
-            label10.TabIndex = 2;
-            label10.Text = "التحليل :";
+            colVisitLabId.HeaderText = "VisitLabId";
+            colVisitLabId.MinimumWidth = 6;
+            colVisitLabId.Name = "colVisitLabId";
+            colVisitLabId.ReadOnly = true;
+            colVisitLabId.Visible = false;
+            colVisitLabId.Width = 125;
             // 
             // button3
             // 
             button3.BackColor = Color.MediumSeaGreen;
             button3.FlatStyle = FlatStyle.Flat;
             button3.ForeColor = Color.White;
-            button3.Location = new Point(520, 1508);
+            button3.Location = new Point(711, 4082);
             button3.Name = "button3";
-            button3.Size = new Size(134, 8);
+            button3.Size = new Size(134, 7);
             button3.TabIndex = 25;
             button3.Text = "حفظ";
             button3.UseVisualStyleBackColor = false;
@@ -282,7 +297,7 @@
             // 
             cmbolabs.Font = new Font("Tahoma", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbolabs.FormattingEnabled = true;
-            cmbolabs.Location = new Point(660, 3);
+            cmbolabs.Location = new Point(857, 3);
             cmbolabs.Name = "cmbolabs";
             cmbolabs.Size = new Size(213, 30);
             cmbolabs.TabIndex = 15;
@@ -290,32 +305,19 @@
             // 
             // tableLayoutPanel3
             // 
-            tableLayoutPanel3.ColumnCount = 2;
+            tableLayoutPanel3.ColumnCount = 4;
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 34F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 122F));
+            tableLayoutPanel3.Controls.Add(btnSave, 3, 0);
             tableLayoutPanel3.Controls.Add(btnAddLab, 0, 0);
-            tableLayoutPanel3.Controls.Add(btnSave, 1, 0);
-            tableLayoutPanel3.Location = new Point(404, 3);
+            tableLayoutPanel3.Location = new Point(420, 3);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 1;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.Size = new Size(250, 41);
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Size = new Size(425, 51);
             tableLayoutPanel3.TabIndex = 27;
-            // 
-            // btnAddLab
-            // 
-            btnAddLab.BackColor = Color.RoyalBlue;
-            btnAddLab.FlatAppearance.BorderSize = 0;
-            btnAddLab.FlatStyle = FlatStyle.Flat;
-            btnAddLab.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddLab.ForeColor = Color.White;
-            btnAddLab.Location = new Point(129, 3);
-            btnAddLab.Name = "btnAddLab";
-            btnAddLab.Size = new Size(118, 35);
-            btnAddLab.TabIndex = 23;
-            btnAddLab.Text = "إضافة ➕  ";
-            btnAddLab.UseVisualStyleBackColor = false;
-            btnAddLab.Click += btnAddLab_Click;
             // 
             // btnSave
             // 
@@ -324,11 +326,37 @@
             btnSave.ForeColor = Color.White;
             btnSave.Location = new Point(3, 3);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(119, 35);
+            btnSave.Size = new Size(117, 40);
             btnSave.TabIndex = 26;
             btnSave.Text = "حفظ";
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
+            // 
+            // btnAddLab
+            // 
+            btnAddLab.BackColor = Color.RoyalBlue;
+            btnAddLab.FlatAppearance.BorderSize = 0;
+            btnAddLab.FlatStyle = FlatStyle.Flat;
+            btnAddLab.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddLab.ForeColor = Color.White;
+            btnAddLab.Location = new Point(304, 3);
+            btnAddLab.Name = "btnAddLab";
+            btnAddLab.Size = new Size(118, 35);
+            btnAddLab.TabIndex = 23;
+            btnAddLab.Text = "إضافة ➕  ";
+            btnAddLab.UseVisualStyleBackColor = false;
+            btnAddLab.Click += btnAddLab_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Dock = DockStyle.Right;
+            label10.ForeColor = Color.FromArgb(55, 71, 79);
+            label10.Location = new Point(1076, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(92, 57);
+            label10.TabIndex = 2;
+            label10.Text = "التحليل :";
             // 
             // tableLayoutPanel1
             // 
@@ -619,11 +647,14 @@
         private TextBox txtPatientName;
         private Label label12;
         private Button btnSave;
+        private TableLayoutPanel tableLayoutPanel3;
         private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colLabName;
         private DataGridViewTextBoxColumn colPrice;
-        private DataGridViewTextBoxColumn colExternal;
+        private DataGridViewButtonColumn colExternalLab;
+        private DataGridViewButtonColumn colResult;
         private DataGridViewImageColumn colDelete;
-        private TableLayoutPanel tableLayoutPanel3;
+        private DataGridViewTextBoxColumn colVisitLabId;
+        private DataGridViewButtonColumn colExternal;
     }
 }

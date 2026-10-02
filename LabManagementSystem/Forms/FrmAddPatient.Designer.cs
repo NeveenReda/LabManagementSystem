@@ -31,6 +31,7 @@
             pnlTitle = new Panel();
             lblTitle = new Label();
             pnlData = new Panel();
+            button1 = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             label3 = new Label();
             txtPatientCode = new TextBox();
@@ -48,7 +49,6 @@
             label10 = new Label();
             DateOFRegister = new DateTimePicker();
             label7 = new Label();
-            button1 = new Button();
             label1 = new Label();
             pnlTitle.SuspendLayout();
             pnlData.SuspendLayout();
@@ -80,15 +80,29 @@
             // 
             pnlData.BackColor = SystemColors.Window;
             pnlData.BorderStyle = BorderStyle.FixedSingle;
-            pnlData.Controls.Add(tableLayoutPanel1);
             pnlData.Controls.Add(button1);
+            pnlData.Controls.Add(tableLayoutPanel1);
             pnlData.Dock = DockStyle.Top;
             pnlData.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pnlData.Location = new Point(0, 70);
             pnlData.Name = "pnlData";
-            pnlData.Size = new Size(1829, 436);
+            pnlData.Size = new Size(1829, 593);
             pnlData.TabIndex = 2;
             pnlData.Paint += pnlData_Paint;
+            // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            button1.BackColor = Color.MediumSeaGreen;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(380, 415);
+            button1.Name = "button1";
+            button1.Size = new Size(128, 46);
+            button1.TabIndex = 17;
+            button1.Text = "حفظ";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -269,19 +283,6 @@
             label7.TabIndex = 9;
             label7.Text = "تاريخ الميلاد";
             // 
-            // button1
-            // 
-            button1.BackColor = Color.MediumSeaGreen;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(56, 346);
-            button1.Name = "button1";
-            button1.Size = new Size(160, 50);
-            button1.TabIndex = 17;
-            button1.Text = "حفظ";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -324,7 +325,6 @@
         private Label label5;
         private TextBox txtPatienPhone;
         private Label label4;
-        private Button button1;
         private DateTimePicker DateOFRegister;
         private DateTimePicker DOB;
         private ComboBox cmboGender;
@@ -336,5 +336,6 @@
         private TextBox txtPatientCode;
         private Label label3;
         private TableLayoutPanel tableLayoutPanel1;
+        private Button button1;
     }
 }
