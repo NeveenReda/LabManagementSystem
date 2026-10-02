@@ -35,7 +35,7 @@ namespace LabManagementSystem.Forms
             txtNotes.Text = this.visit.Notes;
             txtDoctorName.Text = this.visit.DrName;
             txtPatientCode.Text = this.visit.Patient.MedicalCode;
-            txtPayment.Text = this.visit.Payments;
+            txtPayment.Text = this.visit.Payments.ToString();
 
           
 
