@@ -52,7 +52,7 @@ namespace LabManagementSystem.Forms
 
         
             // Editing existing patient
-            if (patient != null)
+            if (patient != null)//this.patient
             {
                 cmboGender.SelectedValue = patient.GenderId;
                 txtPatientCode.Text = patient.MedicalCode;

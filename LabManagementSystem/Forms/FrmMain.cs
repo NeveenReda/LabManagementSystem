@@ -28,17 +28,17 @@ namespace LabManagementSystem
 
         }
 
-        private void btnPatients_Click(object sender, EventArgs e)
-        {
-            pnlPatients.Visible = !pnlPatients.Visible;//if panel is visible that means true=!true that means false(togle????? )
-
-        }
+     
 
         private void pnlMenu_Paint(object sender, PaintEventArgs e)
         {
 
         }
+        private void btnPatients_Click(object sender, EventArgs e)
+        {
+            pnlPatients.Visible = !pnlPatients.Visible;//if panel is visible that means true=!true that means false(togle????? )
 
+        }
         private void btnVisits_Click(object sender, EventArgs e)
         {
             pnlVisits.Visible = !pnlVisits.Visible;

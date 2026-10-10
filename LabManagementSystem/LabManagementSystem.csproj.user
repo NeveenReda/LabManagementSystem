@@ -25,8 +25,5 @@
     <Compile Update="Forms\FrmSearchVisit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\FrmTest.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
 </Project>

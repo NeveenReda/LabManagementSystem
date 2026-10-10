@@ -214,6 +214,7 @@ namespace LabManagementSystem.Forms
                     return;
                 FrmPayments frm = new FrmPayments(visitId);
                 frm.ShowDialog();
+
             }
 
         }
@@ -228,5 +229,7 @@ namespace LabManagementSystem.Forms
             dtSearchDateTo.Enabled = chkSearchByDate.Checked;
             dtSearchDateFrom.Enabled = chkSearchByDate.Checked;
         }
+
+        
     }
 }
