@@ -78,7 +78,7 @@ namespace LabManagementSystem
         private void bnAddVisit_Click(object sender, EventArgs e)
         {
 
-          //  OpenForm(new FrmAddVisit());
+            //  OpenForm(new FrmAddVisit());
 
 
             FrmAddVisit frm = new FrmAddVisit();
@@ -111,6 +111,20 @@ namespace LabManagementSystem
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSettingLab_Click(object sender, EventArgs e)
+        {
+            OpenForm(new frmSettingsLab());
+
+            //frmSettingsLab frm = new frmSettingsLab();
+
+            //frm.AddPatientClicked += () =>
+            //{
+            //    OpenForm(new FrmAddPatient());
+            //};
+
+            //OpenForm(frm);
         }
     }
 }

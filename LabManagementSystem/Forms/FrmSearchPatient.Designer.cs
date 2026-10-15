@@ -63,8 +63,9 @@
             pnlTitle.Controls.Add(btnSearch);
             pnlTitle.Dock = DockStyle.Top;
             pnlTitle.Location = new Point(0, 0);
+            pnlTitle.Margin = new Padding(3, 2, 3, 2);
             pnlTitle.Name = "pnlTitle";
-            pnlTitle.Size = new Size(1841, 60);
+            pnlTitle.Size = new Size(1199, 45);
             pnlTitle.TabIndex = 0;
             pnlTitle.Paint += pnlTitle_Paint;
             // 
@@ -73,9 +74,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.RoyalBlue;
-            label1.Location = new Point(812, 10);
+            label1.Location = new Point(710, 8);
             label1.Name = "label1";
-            label1.Size = new Size(286, 38);
+            label1.Size = new Size(225, 30);
             label1.TabIndex = 1;
             label1.Text = "شاشة البحث عن مريض";
             label1.Click += label1_Click;
@@ -87,9 +88,10 @@
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(565, 12);
+            btnSearch.Location = new Point(494, 9);
+            btnSearch.Margin = new Padding(3, 2, 3, 2);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(183, 42);
+            btnSearch.Size = new Size(160, 32);
             btnSearch.TabIndex = 4;
             btnSearch.Text = "إضافة مريض ➕  ";
             btnSearch.UseVisualStyleBackColor = false;
@@ -97,9 +99,11 @@
             // 
             // txtSearch
             // 
-            txtSearch.Location = new Point(1190, 3);
+            txtSearch.Anchor = AnchorStyles.None;
+            txtSearch.Location = new Point(657, 14);
+            txtSearch.Margin = new Padding(3, 2, 3, 2);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(349, 27);
+            txtSearch.Size = new Size(159, 23);
             txtSearch.TabIndex = 3;
             txtSearch.TextChanged += txtSearch_TextChanged;
             // 
@@ -108,51 +112,55 @@
             pnlSearch.BackColor = Color.White;
             pnlSearch.Controls.Add(tableLayoutPanel1);
             pnlSearch.Dock = DockStyle.Top;
-            pnlSearch.Location = new Point(0, 60);
+            pnlSearch.Location = new Point(0, 45);
+            pnlSearch.Margin = new Padding(3, 2, 3, 2);
             pnlSearch.Name = "pnlSearch";
-            pnlSearch.Size = new Size(1841, 70);
+            pnlSearch.Size = new Size(1199, 52);
             pnlSearch.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 4;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 299F));
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 262F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 274F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 902F));
-            tableLayoutPanel1.Controls.Add(txtSearch, 1, 0);
-            tableLayoutPanel1.Controls.Add(lblSearch, 0, 0);
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 535F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 789F));
             tableLayoutPanel1.Controls.Add(button1, 2, 0);
+            tableLayoutPanel1.Controls.Add(lblSearch, 0, 0);
+            tableLayoutPanel1.Controls.Add(txtSearch, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(1841, 70);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 52F));
+            tableLayoutPanel1.Size = new Size(1199, 52);
             tableLayoutPanel1.TabIndex = 2;
             // 
             // lblSearch
             // 
-            lblSearch.AutoSize = true;
+            lblSearch.Anchor = AnchorStyles.None;
             lblSearch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSearch.ForeColor = Color.FromArgb(55, 71, 79);
-            lblSearch.Location = new Point(1599, 0);
+            lblSearch.Location = new Point(1001, 1);
             lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(239, 28);
+            lblSearch.Size = new Size(134, 50);
             lblSearch.TabIndex = 2;
             lblSearch.Text = "بحث بالاسم او كود المريض";
             // 
             // button1
             // 
+            button1.Anchor = AnchorStyles.None;
             button1.BackColor = Color.RoyalBlue;
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(1038, 3);
+            button1.Location = new Point(209, 13);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(135, 35);
+            button1.Size = new Size(118, 26);
             button1.TabIndex = 6;
             button1.Text = "بحث";
             button1.UseVisualStyleBackColor = false;
@@ -162,17 +170,18 @@
             // 
             pnlBottom.Controls.Add(label3);
             pnlBottom.Dock = DockStyle.Bottom;
-            pnlBottom.Location = new Point(0, 654);
+            pnlBottom.Location = new Point(0, 490);
+            pnlBottom.Margin = new Padding(3, 2, 3, 2);
             pnlBottom.Name = "pnlBottom";
-            pnlBottom.Size = new Size(1841, 40);
+            pnlBottom.Size = new Size(1199, 30);
             pnlBottom.TabIndex = 4;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(946, 11);
+            label3.Location = new Point(828, 8);
             label3.Name = "label3";
-            label3.Size = new Size(123, 20);
+            label3.Size = new Size(96, 15);
             label3.TabIndex = 0;
             label3.Text = "إجمالي المرضى : 0";
             // 
@@ -267,7 +276,8 @@
             dgvPatients.DefaultCellStyle = dataGridViewCellStyle2;
             dgvPatients.Dock = DockStyle.Fill;
             dgvPatients.EnableHeadersVisualStyles = false;
-            dgvPatients.Location = new Point(0, 130);
+            dgvPatients.Location = new Point(0, 97);
+            dgvPatients.Margin = new Padding(3, 2, 3, 2);
             dgvPatients.MultiSelect = false;
             dgvPatients.Name = "dgvPatients";
             dgvPatients.ReadOnly = true;
@@ -275,20 +285,21 @@
             dgvPatients.RowHeadersWidth = 51;
             dgvPatients.RowTemplate.Height = 45;
             dgvPatients.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPatients.Size = new Size(1841, 524);
+            dgvPatients.Size = new Size(1199, 393);
             dgvPatients.TabIndex = 5;
             dgvPatients.CellContentClick += dgvPatients_CellContentClick_1;
             // 
             // FrmSearchPatient
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(1841, 694);
+            ClientSize = new Size(1199, 520);
             Controls.Add(dgvPatients);
             Controls.Add(pnlSearch);
             Controls.Add(pnlTitle);
             Controls.Add(pnlBottom);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FrmSearchPatient";
             RightToLeft = RightToLeft.Yes;
             RightToLeftLayout = true;

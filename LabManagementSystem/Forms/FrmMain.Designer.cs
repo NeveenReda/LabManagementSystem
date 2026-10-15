@@ -61,8 +61,9 @@
             pnlHeader.Controls.Add(label1);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Margin = new Padding(3, 2, 3, 2);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1262, 38);
+            pnlHeader.Size = new Size(1106, 30);
             pnlHeader.TabIndex = 0;
             // 
             // label1
@@ -70,9 +71,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.RoyalBlue;
-            label1.Location = new Point(790, -3);
+            label1.Location = new Point(691, -2);
             label1.Name = "label1";
-            label1.Size = new Size(381, 41);
+            label1.Size = new Size(302, 32);
             label1.TabIndex = 0;
             label1.Text = "معمل الراعى وام النور بالبرشا";
             label1.Click += label1_Click;
@@ -83,9 +84,10 @@
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pnlContent.ForeColor = Color.White;
-            pnlContent.Location = new Point(0, 38);
+            pnlContent.Location = new Point(0, 30);
+            pnlContent.Margin = new Padding(3, 2, 3, 2);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(1022, 635);
+            pnlContent.Size = new Size(896, 481);
             pnlContent.TabIndex = 1;
             pnlContent.Paint += pnlContent_Paint;
             // 
@@ -101,9 +103,10 @@
             pnlMenu.Controls.Add(pnlPatients);
             pnlMenu.Controls.Add(btnPatients);
             pnlMenu.Dock = DockStyle.Right;
-            pnlMenu.Location = new Point(1022, 38);
+            pnlMenu.Location = new Point(896, 30);
+            pnlMenu.Margin = new Padding(3, 2, 3, 2);
             pnlMenu.Name = "pnlMenu";
-            pnlMenu.Size = new Size(240, 635);
+            pnlMenu.Size = new Size(210, 481);
             pnlMenu.TabIndex = 2;
             pnlMenu.Paint += pnlMenu_Paint;
             // 
@@ -114,9 +117,10 @@
             btnReports.FlatStyle = FlatStyle.Flat;
             btnReports.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnReports.ForeColor = Color.White;
-            btnReports.Location = new Point(0, 539);
+            btnReports.Location = new Point(0, 406);
+            btnReports.Margin = new Padding(3, 2, 3, 2);
             btnReports.Name = "btnReports";
-            btnReports.Size = new Size(240, 50);
+            btnReports.Size = new Size(210, 38);
             btnReports.TabIndex = 3;
             btnReports.Text = "📊 التقارير";
             btnReports.UseVisualStyleBackColor = true;
@@ -128,9 +132,10 @@
             btnPurchases.FlatStyle = FlatStyle.Flat;
             btnPurchases.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPurchases.ForeColor = Color.White;
-            btnPurchases.Location = new Point(0, 489);
+            btnPurchases.Location = new Point(0, 368);
+            btnPurchases.Margin = new Padding(3, 2, 3, 2);
             btnPurchases.Name = "btnPurchases";
-            btnPurchases.Size = new Size(240, 50);
+            btnPurchases.Size = new Size(210, 38);
             btnPurchases.TabIndex = 4;
             btnPurchases.Text = "💰 الطلبيات";
             btnPurchases.UseVisualStyleBackColor = true;
@@ -141,10 +146,11 @@
             pnlSettings.Controls.Add(btnSettingOutLab);
             pnlSettings.Controls.Add(btnSettingLab);
             pnlSettings.Dock = DockStyle.Top;
-            pnlSettings.Location = new Point(0, 344);
+            pnlSettings.Location = new Point(0, 259);
+            pnlSettings.Margin = new Padding(3, 2, 3, 2);
             pnlSettings.Name = "pnlSettings";
-            pnlSettings.Padding = new Padding(25, 0, 0, 0);
-            pnlSettings.Size = new Size(240, 145);
+            pnlSettings.Padding = new Padding(22, 0, 0, 0);
+            pnlSettings.Size = new Size(210, 109);
             pnlSettings.TabIndex = 1;
             pnlSettings.Visible = false;
             // 
@@ -155,9 +161,10 @@
             btnSettingProducts.FlatStyle = FlatStyle.Flat;
             btnSettingProducts.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSettingProducts.ForeColor = Color.White;
-            btnSettingProducts.Location = new Point(25, 95);
+            btnSettingProducts.Location = new Point(22, 71);
+            btnSettingProducts.Margin = new Padding(3, 2, 3, 2);
             btnSettingProducts.Name = "btnSettingProducts";
-            btnSettingProducts.Size = new Size(215, 50);
+            btnSettingProducts.Size = new Size(188, 38);
             btnSettingProducts.TabIndex = 10;
             btnSettingProducts.Text = "📦 المنتجات";
             btnSettingProducts.UseVisualStyleBackColor = true;
@@ -169,9 +176,10 @@
             btnSettingOutLab.FlatStyle = FlatStyle.Flat;
             btnSettingOutLab.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSettingOutLab.ForeColor = Color.White;
-            btnSettingOutLab.Location = new Point(25, 50);
+            btnSettingOutLab.Location = new Point(22, 38);
+            btnSettingOutLab.Margin = new Padding(3, 2, 3, 2);
             btnSettingOutLab.Name = "btnSettingOutLab";
-            btnSettingOutLab.Size = new Size(215, 50);
+            btnSettingOutLab.Size = new Size(188, 38);
             btnSettingOutLab.TabIndex = 9;
             btnSettingOutLab.Text = "  🏥المعامل الخارجيه ";
             btnSettingOutLab.UseVisualStyleBackColor = true;
@@ -183,12 +191,14 @@
             btnSettingLab.FlatStyle = FlatStyle.Flat;
             btnSettingLab.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSettingLab.ForeColor = Color.White;
-            btnSettingLab.Location = new Point(25, 0);
+            btnSettingLab.Location = new Point(22, 0);
+            btnSettingLab.Margin = new Padding(3, 2, 3, 2);
             btnSettingLab.Name = "btnSettingLab";
-            btnSettingLab.Size = new Size(215, 50);
+            btnSettingLab.Size = new Size(188, 38);
             btnSettingLab.TabIndex = 9;
             btnSettingLab.Text = "📋  التحاليل";
             btnSettingLab.UseVisualStyleBackColor = true;
+            btnSettingLab.Click += btnSettingLab_Click;
             // 
             // btnSettings
             // 
@@ -197,9 +207,10 @@
             btnSettings.FlatStyle = FlatStyle.Flat;
             btnSettings.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSettings.ForeColor = Color.White;
-            btnSettings.Location = new Point(0, 300);
+            btnSettings.Location = new Point(0, 226);
+            btnSettings.Margin = new Padding(3, 2, 3, 2);
             btnSettings.Name = "btnSettings";
-            btnSettings.Size = new Size(240, 44);
+            btnSettings.Size = new Size(210, 33);
             btnSettings.TabIndex = 2;
             btnSettings.Text = "⚙️ الإعدادات";
             btnSettings.UseVisualStyleBackColor = true;
@@ -210,10 +221,11 @@
             pnlVisits.Controls.Add(btnSearchVisit);
             pnlVisits.Controls.Add(bnAddVisit);
             pnlVisits.Dock = DockStyle.Top;
-            pnlVisits.Location = new Point(0, 200);
+            pnlVisits.Location = new Point(0, 151);
+            pnlVisits.Margin = new Padding(3, 2, 3, 2);
             pnlVisits.Name = "pnlVisits";
-            pnlVisits.Padding = new Padding(25, 0, 0, 0);
-            pnlVisits.Size = new Size(240, 100);
+            pnlVisits.Padding = new Padding(22, 0, 0, 0);
+            pnlVisits.Size = new Size(210, 75);
             pnlVisits.TabIndex = 5;
             pnlVisits.Visible = false;
             // 
@@ -224,9 +236,10 @@
             btnSearchVisit.FlatStyle = FlatStyle.Flat;
             btnSearchVisit.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearchVisit.ForeColor = Color.White;
-            btnSearchVisit.Location = new Point(25, 50);
+            btnSearchVisit.Location = new Point(22, 38);
+            btnSearchVisit.Margin = new Padding(3, 2, 3, 2);
             btnSearchVisit.Name = "btnSearchVisit";
-            btnSearchVisit.Size = new Size(215, 50);
+            btnSearchVisit.Size = new Size(188, 38);
             btnSearchVisit.TabIndex = 8;
             btnSearchVisit.Text = "🔍 البحث عن زيارة";
             btnSearchVisit.UseVisualStyleBackColor = true;
@@ -239,9 +252,10 @@
             bnAddVisit.FlatStyle = FlatStyle.Flat;
             bnAddVisit.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bnAddVisit.ForeColor = Color.Cornsilk;
-            bnAddVisit.Location = new Point(25, 0);
+            bnAddVisit.Location = new Point(22, 0);
+            bnAddVisit.Margin = new Padding(3, 2, 3, 2);
             bnAddVisit.Name = "bnAddVisit";
-            bnAddVisit.Size = new Size(215, 50);
+            bnAddVisit.Size = new Size(188, 38);
             bnAddVisit.TabIndex = 9;
             bnAddVisit.Text = "➕ إضافة زيارة";
             bnAddVisit.UseVisualStyleBackColor = true;
@@ -254,9 +268,10 @@
             btnVisits.FlatStyle = FlatStyle.Flat;
             btnVisits.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnVisits.ForeColor = Color.White;
-            btnVisits.Location = new Point(0, 150);
+            btnVisits.Location = new Point(0, 113);
+            btnVisits.Margin = new Padding(3, 2, 3, 2);
             btnVisits.Name = "btnVisits";
-            btnVisits.Size = new Size(240, 50);
+            btnVisits.Size = new Size(210, 38);
             btnVisits.TabIndex = 1;
             btnVisits.Text = "\U0001f9ea الزيارات";
             btnVisits.UseVisualStyleBackColor = true;
@@ -267,10 +282,11 @@
             pnlPatients.Controls.Add(btnSearchPatient);
             pnlPatients.Controls.Add(btnAddPatient);
             pnlPatients.Dock = DockStyle.Top;
-            pnlPatients.Location = new Point(0, 50);
+            pnlPatients.Location = new Point(0, 38);
+            pnlPatients.Margin = new Padding(3, 2, 3, 2);
             pnlPatients.Name = "pnlPatients";
-            pnlPatients.Padding = new Padding(25, 0, 0, 0);
-            pnlPatients.Size = new Size(240, 100);
+            pnlPatients.Padding = new Padding(22, 0, 0, 0);
+            pnlPatients.Size = new Size(210, 75);
             pnlPatients.TabIndex = 0;
             pnlPatients.Visible = false;
             // 
@@ -281,9 +297,10 @@
             btnSearchPatient.FlatStyle = FlatStyle.Flat;
             btnSearchPatient.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearchPatient.ForeColor = Color.White;
-            btnSearchPatient.Location = new Point(25, 50);
+            btnSearchPatient.Location = new Point(22, 38);
+            btnSearchPatient.Margin = new Padding(3, 2, 3, 2);
             btnSearchPatient.Name = "btnSearchPatient";
-            btnSearchPatient.Size = new Size(215, 50);
+            btnSearchPatient.Size = new Size(188, 38);
             btnSearchPatient.TabIndex = 6;
             btnSearchPatient.Text = "🔍 البحث عن مريض";
             btnSearchPatient.UseVisualStyleBackColor = true;
@@ -296,9 +313,10 @@
             btnAddPatient.FlatStyle = FlatStyle.Flat;
             btnAddPatient.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAddPatient.ForeColor = Color.Cornsilk;
-            btnAddPatient.Location = new Point(25, 0);
+            btnAddPatient.Location = new Point(22, 0);
+            btnAddPatient.Margin = new Padding(3, 2, 3, 2);
             btnAddPatient.Name = "btnAddPatient";
-            btnAddPatient.Size = new Size(215, 50);
+            btnAddPatient.Size = new Size(188, 38);
             btnAddPatient.TabIndex = 7;
             btnAddPatient.Text = "➕ إضافة مريض";
             btnAddPatient.UseVisualStyleBackColor = true;
@@ -312,8 +330,9 @@
             btnPatients.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPatients.ForeColor = Color.White;
             btnPatients.Location = new Point(0, 0);
+            btnPatients.Margin = new Padding(3, 2, 3, 2);
             btnPatients.Name = "btnPatients";
-            btnPatients.Size = new Size(240, 50);
+            btnPatients.Size = new Size(210, 38);
             btnPatients.TabIndex = 0;
             btnPatients.Text = "👥 المرضى";
             btnPatients.UseVisualStyleBackColor = true;
@@ -321,13 +340,14 @@
             // 
             // FrmMain
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1262, 673);
+            ClientSize = new Size(1106, 511);
             Controls.Add(pnlContent);
             Controls.Add(pnlMenu);
             Controls.Add(pnlHeader);
-            MinimumSize = new Size(1280, 720);
+            Margin = new Padding(3, 2, 3, 2);
+            MinimumSize = new Size(1122, 550);
             Name = "FrmMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Lab Management System";
