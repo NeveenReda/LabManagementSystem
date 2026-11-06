@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +22,8 @@ public partial class LabContext : DbContext
     public virtual DbSet<ExternalLab> ExternalLabs { get; set; }
 
     public virtual DbSet<Gender> Genders { get; set; }
+
+    public virtual DbSet<LaboratoryProfile> LaboratoryProfiles { get; set; }
 
     public virtual DbSet<Lab> Labs { get; set; }
 
@@ -62,8 +64,12 @@ public partial class LabContext : DbContext
     public virtual DbSet<VisitLabStatus> VisitLabStatuses { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=db43945.public.databaseasp.net;Database=db43945;User Id=db43945;Password=8y@LwB9!6+Hd;TrustServerCertificate=True;");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(Configuration.AppConfig.GetConnectionString());
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -136,6 +142,8 @@ public partial class LabContext : DbContext
 
         modelBuilder.Entity<Need>(entity =>
         {
+            entity.HasIndex(e => e.IsCompleted, "IX_Needs_IsCompleted");
+
             entity.Property(e => e.Notes).HasColumnName("notes");
         });
 
@@ -171,6 +179,8 @@ public partial class LabContext : DbContext
         modelBuilder.Entity<Patient>(entity =>
         {
             entity.HasIndex(e => e.GenderId, "IX_Patients_GenderId");
+            entity.HasIndex(e => e.MedicalCode, "IX_Patients_MedicalCode");
+            entity.HasIndex(e => e.Name, "IX_Patients_Name");
 
             entity.HasOne(d => d.Gender).WithMany(p => p.Patients)
                 .HasForeignKey(d => d.GenderId)
@@ -261,6 +271,7 @@ public partial class LabContext : DbContext
         modelBuilder.Entity<Visit>(entity =>
         {
             entity.HasIndex(e => e.PatientId, "IX_Visits_PatientId");
+            entity.HasIndex(e => e.VisitDate, "IX_Visits_VisitDate");
 
             entity.Property(e => e.DiscountPercent).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.DiscountValue).HasColumnType("decimal(18, 2)");
@@ -317,8 +328,24 @@ public partial class LabContext : DbContext
             entity.Property(e => e.Name).HasDefaultValue("Pending");
         });
 
+        modelBuilder.Entity<LaboratoryProfile>(entity =>
+        {
+            entity.ToTable("LaboratoryProfiles");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.LabName).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.LabNameEn).HasMaxLength(200);
+            entity.Property(e => e.Subtitle).HasMaxLength(300);
+            entity.Property(e => e.Address).HasMaxLength(300);
+            entity.Property(e => e.Phone).HasMaxLength(50);
+            entity.Property(e => e.AdditionalPhone).HasMaxLength(50);
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.DirectorName).HasMaxLength(100);
+            entity.Property(e => e.ReportFooterNote).HasMaxLength(500);
+        });
+
         OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
+

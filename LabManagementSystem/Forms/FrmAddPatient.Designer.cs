@@ -1,16 +1,9 @@
-﻿namespace LabManagementSystem.Forms
+namespace LabManagementSystem.Forms
 {
     partial class FrmAddPatient
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,320 +15,364 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            pnlTitle = new Panel();
+            pnlHeader = new Panel();
             lblTitle = new Label();
-            pnlData = new Panel();
-            button1 = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            label3 = new Label();
+            lblSubtitle = new Label();
+            pnlMainCard = new Panel();
+            tblForm = new TableLayoutPanel();
+            lblCode = new Label();
             txtPatientCode = new TextBox();
-            label4 = new Label();
+            lblName = new Label();
             txtPatientName = new TextBox();
-            label5 = new Label();
+            lblPhone = new Label();
             txtPatienPhone = new TextBox();
-            label6 = new Label();
+            lblGender = new Label();
             cmboGender = new ComboBox();
-            label9 = new Label();
+            lblAge = new Label();
             txtPatientAgeOnRegister = new TextBox();
-            label11 = new Label();
-            address = new TextBox();
+            lblDob = new Label();
             DOB = new DateTimePicker();
-            label10 = new Label();
+            lblAddress = new Label();
+            address = new TextBox();
+            lblRegDate = new Label();
             DateOFRegister = new DateTimePicker();
-            label7 = new Label();
-            label1 = new Label();
-            pnlTitle.SuspendLayout();
-            pnlData.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            pnlActions = new Panel();
+            btnSave = new Button();
+            btnCancel = new Button();
+            pnlHeader.SuspendLayout();
+            pnlMainCard.SuspendLayout();
+            tblForm.SuspendLayout();
+            pnlActions.SuspendLayout();
             SuspendLayout();
             // 
-            // pnlTitle
+            // pnlHeader
             // 
-            pnlTitle.BackColor = Color.Gainsboro;
-            pnlTitle.Controls.Add(lblTitle);
-            pnlTitle.Dock = DockStyle.Top;
-            pnlTitle.Location = new Point(0, 0);
-            pnlTitle.Name = "pnlTitle";
-            pnlTitle.Size = new Size(1829, 70);
-            pnlTitle.TabIndex = 1;
+            pnlHeader.BackColor = Color.FromArgb(23, 43, 77);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Height = 68;
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.ForeColor = Color.RoyalBlue;
-            lblTitle.Location = new Point(843, 19);
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Height = 28;
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(246, 38);
-            lblTitle.TabIndex = 2;
-            lblTitle.Text = "شاشة إضافة مريض";
+            lblTitle.Text = "👤 تسجيل مريض جديد";
+            lblTitle.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // pnlData
+            // lblSubtitle
             // 
-            pnlData.BackColor = SystemColors.Window;
-            pnlData.BorderStyle = BorderStyle.FixedSingle;
-            pnlData.Controls.Add(button1);
-            pnlData.Controls.Add(tableLayoutPanel1);
-            pnlData.Dock = DockStyle.Top;
-            pnlData.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            pnlData.Location = new Point(0, 70);
-            pnlData.Name = "pnlData";
-            pnlData.Size = new Size(1829, 593);
-            pnlData.TabIndex = 2;
-            pnlData.Paint += pnlData_Paint;
+            lblSubtitle.Dock = DockStyle.Bottom;
+            lblSubtitle.Font = new Font("Segoe UI", 9F);
+            lblSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
+            lblSubtitle.Height = 18;
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Text = "إدخال وتحديث البيانات الشخصية والطبية للمريض وتوليد الكود الطبي المعتمد";
+            lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // button1
+            // pnlMainCard
             // 
-            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            button1.BackColor = Color.MediumSeaGreen;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(380, 415);
-            button1.Name = "button1";
-            button1.Size = new Size(128, 46);
-            button1.TabIndex = 17;
-            button1.Text = "حفظ";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            pnlMainCard.BackColor = Color.White;
+            pnlMainCard.Controls.Add(pnlActions);
+            pnlMainCard.Controls.Add(tblForm);
+            pnlMainCard.Dock = DockStyle.Fill;
+            pnlMainCard.Location = new Point(16, 84);
+            pnlMainCard.Name = "pnlMainCard";
+            pnlMainCard.Padding = new Padding(24);
+            pnlMainCard.TabIndex = 1;
             // 
-            // tableLayoutPanel1
+            // tblForm
             // 
-            tableLayoutPanel1.ColumnCount = 4;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.81818F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 76.1818161F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 164F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 421F));
-            tableLayoutPanel1.Controls.Add(label3, 0, 0);
-            tableLayoutPanel1.Controls.Add(txtPatientCode, 1, 0);
-            tableLayoutPanel1.Controls.Add(label4, 2, 0);
-            tableLayoutPanel1.Controls.Add(txtPatientName, 3, 0);
-            tableLayoutPanel1.Controls.Add(label5, 0, 1);
-            tableLayoutPanel1.Controls.Add(txtPatienPhone, 1, 1);
-            tableLayoutPanel1.Controls.Add(label6, 2, 1);
-            tableLayoutPanel1.Controls.Add(cmboGender, 3, 1);
-            tableLayoutPanel1.Controls.Add(label9, 0, 2);
-            tableLayoutPanel1.Controls.Add(txtPatientAgeOnRegister, 1, 2);
-            tableLayoutPanel1.Controls.Add(label11, 2, 2);
-            tableLayoutPanel1.Controls.Add(address, 3, 2);
-            tableLayoutPanel1.Controls.Add(DOB, 1, 3);
-            tableLayoutPanel1.Controls.Add(label10, 2, 3);
-            tableLayoutPanel1.Controls.Add(DateOFRegister, 3, 3);
-            tableLayoutPanel1.Controls.Add(label7, 0, 3);
-            tableLayoutPanel1.Location = new Point(280, 22);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 118F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel1.Size = new Size(1374, 360);
-            tableLayoutPanel1.TabIndex = 20;
-            tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
+            tblForm.ColumnCount = 4;
+            tblForm.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130F));
+            tblForm.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tblForm.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130F));
+            tblForm.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tblForm.Controls.Add(lblCode, 0, 0);
+            tblForm.Controls.Add(txtPatientCode, 1, 0);
+            tblForm.Controls.Add(lblName, 2, 0);
+            tblForm.Controls.Add(txtPatientName, 3, 0);
+            tblForm.Controls.Add(lblPhone, 0, 1);
+            tblForm.Controls.Add(txtPatienPhone, 1, 1);
+            tblForm.Controls.Add(lblGender, 2, 1);
+            tblForm.Controls.Add(cmboGender, 3, 1);
+            tblForm.Controls.Add(lblAge, 0, 2);
+            tblForm.Controls.Add(txtPatientAgeOnRegister, 1, 2);
+            tblForm.Controls.Add(lblDob, 2, 2);
+            tblForm.Controls.Add(DOB, 3, 2);
+            tblForm.Controls.Add(lblAddress, 0, 3);
+            tblForm.Controls.Add(address, 1, 3);
+            tblForm.Controls.Add(lblRegDate, 2, 3);
+            tblForm.Controls.Add(DateOFRegister, 3, 3);
+            tblForm.Dock = DockStyle.Top;
+            tblForm.Height = 240;
+            tblForm.Name = "tblForm";
+            tblForm.RowCount = 4;
+            tblForm.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+            tblForm.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+            tblForm.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+            tblForm.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+            tblForm.TabIndex = 0;
             // 
-            // label3
+            // lblCode
             // 
-            label3.AutoSize = true;
-            label3.ForeColor = Color.FromArgb(55, 71, 79);
-            label3.Location = new Point(1237, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(134, 31);
-            label3.TabIndex = 1;
-            label3.Text = "كود المريض";
+            lblCode.Dock = DockStyle.Fill;
+            lblCode.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblCode.ForeColor = Color.FromArgb(30, 41, 59);
+            lblCode.Location = new Point(660, 0);
+            lblCode.Name = "lblCode";
+            lblCode.Text = "الكود الطبي:";
+            lblCode.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPatientCode
             // 
-            txtPatientCode.Location = new Point(944, 3);
+            txtPatientCode.Dock = DockStyle.Fill;
+            txtPatientCode.Font = new Font("Segoe UI", 10.5F);
+            txtPatientCode.Location = new Point(410, 12);
+            txtPatientCode.Margin = new Padding(8, 12, 8, 12);
             txtPatientCode.Name = "txtPatientCode";
-            txtPatientCode.Size = new Size(240, 38);
+            txtPatientCode.ReadOnly = true;
             txtPatientCode.TabIndex = 0;
             // 
-            // label4
+            // lblName
             // 
-            label4.AutoSize = true;
-            label4.ForeColor = Color.FromArgb(55, 71, 79);
-            label4.Location = new Point(447, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(136, 31);
-            label4.TabIndex = 3;
-            label4.Text = "اسم المريض";
-            label4.Click += label4_Click;
+            lblName.Dock = DockStyle.Fill;
+            lblName.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblName.ForeColor = Color.FromArgb(30, 41, 59);
+            lblName.Location = new Point(272, 0);
+            lblName.Name = "lblName";
+            lblName.Text = "اسم المريض *:";
+            lblName.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPatientName
             // 
-            txtPatientName.Location = new Point(179, 3);
+            txtPatientName.Dock = DockStyle.Fill;
+            txtPatientName.Font = new Font("Segoe UI", 10.5F);
+            txtPatientName.Location = new Point(8, 12);
+            txtPatientName.Margin = new Padding(8, 12, 8, 12);
             txtPatientName.Name = "txtPatientName";
-            txtPatientName.Size = new Size(240, 38);
-            txtPatientName.TabIndex = 2;
-            txtPatientName.TextChanged += textBox2_TextChanged;
+            txtPatientName.TabIndex = 1;
             // 
-            // label5
+            // lblPhone
             // 
-            label5.AutoSize = true;
-            label5.ForeColor = Color.FromArgb(55, 71, 79);
-            label5.Location = new Point(1255, 88);
-            label5.Name = "label5";
-            label5.Size = new Size(116, 31);
-            label5.TabIndex = 5;
-            label5.Text = "رقم الهاتف";
+            lblPhone.Dock = DockStyle.Fill;
+            lblPhone.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblPhone.ForeColor = Color.FromArgb(30, 41, 59);
+            lblPhone.Location = new Point(660, 55);
+            lblPhone.Name = "lblPhone";
+            lblPhone.Text = "رقم الهاتف:";
+            lblPhone.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPatienPhone
             // 
-            txtPatienPhone.Location = new Point(944, 91);
+            txtPatienPhone.Dock = DockStyle.Fill;
+            txtPatienPhone.Font = new Font("Segoe UI", 10.5F);
+            txtPatienPhone.Location = new Point(410, 67);
+            txtPatienPhone.Margin = new Padding(8, 12, 8, 12);
             txtPatienPhone.Name = "txtPatienPhone";
-            txtPatienPhone.Size = new Size(240, 38);
-            txtPatienPhone.TabIndex = 4;
+            txtPatienPhone.TabIndex = 2;
             // 
-            // label6
+            // lblGender
             // 
-            label6.AutoSize = true;
-            label6.ForeColor = Color.FromArgb(55, 71, 79);
-            label6.Location = new Point(521, 88);
-            label6.Name = "label6";
-            label6.Size = new Size(62, 31);
-            label6.TabIndex = 7;
-            label6.Text = "النوع";
+            lblGender.Dock = DockStyle.Fill;
+            lblGender.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblGender.ForeColor = Color.FromArgb(30, 41, 59);
+            lblGender.Location = new Point(272, 55);
+            lblGender.Name = "lblGender";
+            lblGender.Text = "النوع *:";
+            lblGender.TextAlign = ContentAlignment.MiddleRight;
             // 
             // cmboGender
             // 
-            cmboGender.Font = new Font("Tahoma", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cmboGender.FormattingEnabled = true;
-            cmboGender.Location = new Point(179, 91);
+            cmboGender.Dock = DockStyle.Fill;
+            cmboGender.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmboGender.Font = new Font("Segoe UI", 10.5F);
+            cmboGender.Location = new Point(8, 67);
+            cmboGender.Margin = new Padding(8, 12, 8, 12);
             cmboGender.Name = "cmboGender";
-            cmboGender.Size = new Size(240, 36);
-            cmboGender.TabIndex = 14;
+            cmboGender.TabIndex = 3;
             // 
-            // label9
+            // lblAge
             // 
-            label9.AutoSize = true;
-            label9.ForeColor = Color.FromArgb(55, 71, 79);
-            label9.Location = new Point(1270, 176);
-            label9.Name = "label9";
-            label9.Size = new Size(101, 62);
-            label9.TabIndex = 13;
-            label9.Text = "السن عند التسجيل";
-            label9.Click += label9_Click;
+            lblAge.Dock = DockStyle.Fill;
+            lblAge.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblAge.ForeColor = Color.FromArgb(30, 41, 59);
+            lblAge.Location = new Point(660, 110);
+            lblAge.Name = "lblAge";
+            lblAge.Text = "السن الحالي *:";
+            lblAge.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPatientAgeOnRegister
             // 
-            txtPatientAgeOnRegister.Location = new Point(944, 179);
+            txtPatientAgeOnRegister.Dock = DockStyle.Fill;
+            txtPatientAgeOnRegister.Font = new Font("Segoe UI", 10.5F);
+            txtPatientAgeOnRegister.Location = new Point(410, 122);
+            txtPatientAgeOnRegister.Margin = new Padding(8, 12, 8, 12);
             txtPatientAgeOnRegister.Name = "txtPatientAgeOnRegister";
-            txtPatientAgeOnRegister.Size = new Size(240, 38);
-            txtPatientAgeOnRegister.TabIndex = 12;
-            txtPatientAgeOnRegister.TextChanged += textBox7_TextChanged;
+            txtPatientAgeOnRegister.TabIndex = 4;
+            txtPatientAgeOnRegister.TextChanged += txtPatientAgeOnRegister_TextChanged;
             // 
-            // label11
+            // lblDob
             // 
-            label11.AutoSize = true;
-            label11.ForeColor = Color.FromArgb(55, 71, 79);
-            label11.Location = new Point(501, 176);
-            label11.Name = "label11";
-            label11.Size = new Size(82, 31);
-            label11.TabIndex = 19;
-            label11.Text = "العنوان";
-            // 
-            // address
-            // 
-            address.Location = new Point(179, 179);
-            address.Name = "address";
-            address.Size = new Size(240, 38);
-            address.TabIndex = 18;
+            lblDob.Dock = DockStyle.Fill;
+            lblDob.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblDob.ForeColor = Color.FromArgb(30, 41, 59);
+            lblDob.Location = new Point(272, 110);
+            lblDob.Name = "lblDob";
+            lblDob.Text = "تاريخ الميلاد:";
+            lblDob.TextAlign = ContentAlignment.MiddleRight;
             // 
             // DOB
             // 
-            DOB.Location = new Point(767, 297);
+            DOB.Dock = DockStyle.Fill;
+            DOB.Font = new Font("Segoe UI", 10.5F);
+            DOB.Format = DateTimePickerFormat.Short;
+            DOB.Location = new Point(8, 122);
+            DOB.Margin = new Padding(8, 12, 8, 12);
             DOB.Name = "DOB";
-            DOB.Size = new Size(417, 38);
-            DOB.TabIndex = 15;
+            DOB.TabIndex = 5;
             DOB.ValueChanged += DOB_ValueChanged;
             // 
-            // label10
+            // lblAddress
             // 
-            label10.AutoSize = true;
-            label10.ForeColor = Color.FromArgb(55, 71, 79);
-            label10.Location = new Point(439, 294);
-            label10.Name = "label10";
-            label10.Size = new Size(144, 31);
-            label10.TabIndex = 11;
-            label10.Text = "تاريخ التسجيل";
+            lblAddress.Dock = DockStyle.Fill;
+            lblAddress.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblAddress.ForeColor = Color.FromArgb(30, 41, 59);
+            lblAddress.Location = new Point(660, 165);
+            lblAddress.Name = "lblAddress";
+            lblAddress.Text = "العنوان:";
+            lblAddress.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // address
+            // 
+            address.Dock = DockStyle.Fill;
+            address.Font = new Font("Segoe UI", 10.5F);
+            address.Location = new Point(410, 177);
+            address.Margin = new Padding(8, 12, 8, 12);
+            address.Name = "address";
+            address.TabIndex = 6;
+            // 
+            // lblRegDate
+            // 
+            lblRegDate.Dock = DockStyle.Fill;
+            lblRegDate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblRegDate.ForeColor = Color.FromArgb(30, 41, 59);
+            lblRegDate.Location = new Point(272, 165);
+            lblRegDate.Name = "lblRegDate";
+            lblRegDate.Text = "تاريخ التسجيل:";
+            lblRegDate.TextAlign = ContentAlignment.MiddleRight;
             // 
             // DateOFRegister
             // 
-            DateOFRegister.CalendarFont = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            DateOFRegister.Location = new Point(25, 297);
+            DateOFRegister.Dock = DockStyle.Fill;
+            DateOFRegister.Enabled = false;
+            DateOFRegister.Font = new Font("Segoe UI", 10.5F);
+            DateOFRegister.Format = DateTimePickerFormat.Short;
+            DateOFRegister.Location = new Point(8, 177);
+            DateOFRegister.Margin = new Padding(8, 12, 8, 12);
             DateOFRegister.Name = "DateOFRegister";
-            DateOFRegister.Size = new Size(394, 38);
-            DateOFRegister.TabIndex = 16;
+            DateOFRegister.TabIndex = 7;
             // 
-            // label7
+            // pnlActions
             // 
-            label7.AutoSize = true;
-            label7.ForeColor = Color.FromArgb(55, 71, 79);
-            label7.Location = new Point(1243, 294);
-            label7.Name = "label7";
-            label7.RightToLeft = RightToLeft.Yes;
-            label7.Size = new Size(128, 31);
-            label7.TabIndex = 9;
-            label7.Text = "تاريخ الميلاد";
+            pnlActions.Controls.Add(btnCancel);
+            pnlActions.Controls.Add(btnSave);
+            pnlActions.Dock = DockStyle.Top;
+            pnlActions.Height = 70;
+            pnlActions.Name = "pnlActions";
+            pnlActions.Padding = new Padding(0, 16, 0, 0);
+            pnlActions.TabIndex = 1;
             // 
-            // label1
+            // btnSave
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(397, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(93, 20);
-            label1.TabIndex = 0;
-            label1.Text = "اضافة مريض";
+            btnSave.BackColor = Color.FromArgb(22, 163, 74);
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(140, 16);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(180, 44);
+            btnSave.TabIndex = 0;
+            btnSave.Text = "💾 حفظ بيانات المريض";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.BackColor = Color.White;
+            btnCancel.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI", 10F);
+            btnCancel.ForeColor = Color.FromArgb(100, 116, 139);
+            btnCancel.Location = new Point(20, 16);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(105, 44);
+            btnCancel.TabIndex = 1;
+            btnCancel.Text = "إلغاء";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // FrmAddPatient
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1829, 778);
-            Controls.Add(pnlData);
-            Controls.Add(pnlTitle);
-            Controls.Add(label1);
+            BackColor = Color.FromArgb(244, 247, 251);
+            ClientSize = new Size(820, 440);
+            Controls.Add(pnlMainCard);
+            Controls.Add(pnlHeader);
+            Font = new Font("Segoe UI", 9.5F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FrmAddPatient";
+            Padding = new Padding(16);
             RightToLeft = RightToLeft.Yes;
             RightToLeftLayout = true;
-            Text = "FrmAddPatient";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "بيانات المريض";
             Load += FrmAddPatient_Load;
-            pnlTitle.ResumeLayout(false);
-            pnlTitle.PerformLayout();
-            pnlData.ResumeLayout(false);
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            pnlHeader.ResumeLayout(false);
+            pnlMainCard.ResumeLayout(false);
+            tblForm.ResumeLayout(false);
+            tblForm.PerformLayout();
+            pnlActions.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-        private Panel pnlTitle;
+
+        private Panel pnlHeader;
         private Label lblTitle;
-        private Panel pnlData;
-        private Label label9;
-        private TextBox txtPatientAgeOnRegister;
-        private Label label7;
-        private Label label6;
-        private Label label5;
-        private TextBox txtPatienPhone;
-        private Label label4;
-        private DateTimePicker DateOFRegister;
-        private DateTimePicker DOB;
-        private ComboBox cmboGender;
-        private Label label10;
-        private Label label11;
-        private TextBox address;
-        private Label label1;
-        private TextBox txtPatientName;
+        private Label lblSubtitle;
+        private Panel pnlMainCard;
+        private TableLayoutPanel tblForm;
+        private Label lblCode;
         private TextBox txtPatientCode;
-        private Label label3;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Button button1;
+        private Label lblName;
+        private TextBox txtPatientName;
+        private Label lblPhone;
+        private TextBox txtPatienPhone;
+        private Label lblGender;
+        private ComboBox cmboGender;
+        private Label lblAge;
+        private TextBox txtPatientAgeOnRegister;
+        private Label lblDob;
+        private DateTimePicker DOB;
+        private Label lblAddress;
+        private TextBox address;
+        private Label lblRegDate;
+        private DateTimePicker DateOFRegister;
+        private Panel pnlActions;
+        private Button btnSave;
+        private Button btnCancel;
     }
 }

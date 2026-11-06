@@ -1,16 +1,9 @@
-﻿namespace LabManagementSystem.Forms
+namespace LabManagementSystem.Forms
 {
     partial class FrmPayments
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,387 +15,553 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            textAfterDiscount = new TextBox();
-            txtPaid = new TextBox();
-            txtRemaining = new TextBox();
-            label7 = new Label();
-            label10 = new Label();
-            txtDiscount = new TextBox();
-            label5 = new Label();
-            txtTotal = new TextBox();
-            label9 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            txtLabsCount = new TextBox();
-            label8 = new Label();
-            label6 = new Label();
-            dtPaymentDate = new DateTimePicker();
+            pnlHeader = new Panel();
+            lblSubtitle = new Label();
+            lblTitle = new Label();
+            pnlSummaryCard = new Panel();
+            tblSummary = new TableLayoutPanel();
+            lblVisitNo = new Label();
             txtVisitCode = new TextBox();
+            lblName = new Label();
             txtPatientName = new TextBox();
-            label2 = new Label();
-            btnSave = new Button();
+            lblTests = new Label();
+            txtLabsCount = new TextBox();
+            lblGross = new Label();
+            txtTotal = new TextBox();
+            lblDisc = new Label();
+            txtDiscount = new TextBox();
+            lblNet = new Label();
+            textAfterDiscount = new TextBox();
+            lblPaid = new Label();
+            txtPaid = new TextBox();
+            lblRemaining = new Label();
+            txtRemaining = new TextBox();
+            pnlPayInputCard = new Panel();
+            lblNewPayPrompt = new Label();
+            txtNewPayment = new TextBox();
+            lblMethodPrompt = new Label();
+            cmbPaymentMethod = new ComboBox();
+            lblDatePrompt = new Label();
+            dtPaymentDate = new DateTimePicker();
+            btnAddPayment = new Button();
+            pnlGridCard = new Panel();
             dgvPayments = new DataGridView();
             colPaymentDate = new DataGridViewTextBoxColumn();
             colPaidAmount = new DataGridViewTextBoxColumn();
             colPaymentNotes = new DataGridViewTextBoxColumn();
-            btnAddLab = new Button();
-            label11 = new Label();
-            txtNewPayment = new TextBox();
-            tableLayoutPanel1.SuspendLayout();
+            pnlBottomBar = new Panel();
+            btnPrintReceipt = new Button();
+            btnPrintInvoice = new Button();
+            btnClose = new Button();
+            pnlHeader.SuspendLayout();
+            pnlSummaryCard.SuspendLayout();
+            tblSummary.SuspendLayout();
+            pnlPayInputCard.SuspendLayout();
+            pnlGridCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPayments).BeginInit();
+            pnlBottomBar.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // pnlHeader
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.RoyalBlue;
-            label1.Location = new Point(619, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(140, 38);
-            label1.TabIndex = 2;
-            label1.Text = "المدفوعات";
+            pnlHeader.BackColor = Color.FromArgb(23, 43, 77);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Height = 65;
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.TabIndex = 0;
             // 
-            // tableLayoutPanel1
+            // lblTitle
             // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            tableLayoutPanel1.ColumnCount = 6;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.4812832F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 69.5187149F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 163F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 258F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 98F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 266F));
-            tableLayoutPanel1.Controls.Add(textAfterDiscount, 1, 2);
-            tableLayoutPanel1.Controls.Add(txtRemaining, 5, 2);
-            tableLayoutPanel1.Controls.Add(label7, 4, 1);
-            tableLayoutPanel1.Controls.Add(label10, 4, 2);
-            tableLayoutPanel1.Controls.Add(txtDiscount, 5, 1);
-            tableLayoutPanel1.Controls.Add(label5, 0, 0);
-            tableLayoutPanel1.Controls.Add(txtTotal, 3, 1);
-            tableLayoutPanel1.Controls.Add(label9, 2, 2);
-            tableLayoutPanel1.Controls.Add(label3, 2, 0);
-            tableLayoutPanel1.Controls.Add(label4, 4, 0);
-            tableLayoutPanel1.Controls.Add(txtLabsCount, 1, 1);
-            tableLayoutPanel1.Controls.Add(label8, 0, 2);
-            tableLayoutPanel1.Controls.Add(label6, 2, 1);
-            tableLayoutPanel1.Controls.Add(dtPaymentDate, 5, 0);
-            tableLayoutPanel1.Controls.Add(txtVisitCode, 1, 0);
-            tableLayoutPanel1.Controls.Add(txtPatientName, 3, 0);
-            tableLayoutPanel1.Controls.Add(label2, 0, 1);
-            tableLayoutPanel1.Controls.Add(label11, 2, 3);
-            tableLayoutPanel1.Controls.Add(txtPaid, 3, 2);
-            tableLayoutPanel1.Controls.Add(txtNewPayment, 3, 3);
-            tableLayoutPanel1.Location = new Point(160, 106);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RightToLeft = RightToLeft.Yes;
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 74F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 43F));
-            tableLayoutPanel1.Size = new Size(1160, 244);
-            tableLayoutPanel1.TabIndex = 3;
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Height = 28;
+            lblTitle.Name = "lblTitle";
+            lblTitle.Text = "💳 الخزينة وسداد دفعات الزيارة";
+            lblTitle.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // textAfterDiscount
+            // lblSubtitle
             // 
-            textAfterDiscount.Location = new Point(789, 129);
-            textAfterDiscount.Name = "textAfterDiscount";
-            textAfterDiscount.Size = new Size(254, 27);
-            textAfterDiscount.TabIndex = 23;
+            lblSubtitle.Dock = DockStyle.Bottom;
+            lblSubtitle.Font = new Font("Segoe UI", 9F);
+            lblSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
+            lblSubtitle.Height = 18;
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Text = "تسجيل المقبوضات النقدية والإلكترونية، استعراض سجل المدفوعات، وطباعة الإيصالات والفواتير";
+            lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // txtPaid
+            // pnlSummaryCard
             // 
-            txtPaid.Location = new Point(368, 129);
-            txtPaid.Name = "txtPaid";
-            txtPaid.Size = new Size(252, 27);
-            txtPaid.TabIndex = 22;
+            pnlSummaryCard.BackColor = Color.White;
+            pnlSummaryCard.Controls.Add(tblSummary);
+            pnlSummaryCard.Dock = DockStyle.Top;
+            pnlSummaryCard.Height = 110;
+            pnlSummaryCard.Location = new Point(16, 81);
+            pnlSummaryCard.Name = "pnlSummaryCard";
+            pnlSummaryCard.Padding = new Padding(14, 10, 14, 10);
+            pnlSummaryCard.TabIndex = 1;
             // 
-            // txtRemaining
+            // tblSummary
             // 
-            txtRemaining.Location = new Point(3, 129);
-            txtRemaining.Name = "txtRemaining";
-            txtRemaining.Size = new Size(261, 27);
-            txtRemaining.TabIndex = 21;
+            tblSummary.ColumnCount = 8;
+            tblSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 90F));
+            tblSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16F));
+            tblSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 90F));
+            tblSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34F));
+            tblSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 85F));
+            tblSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16F));
+            tblSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 85F));
+            tblSummary.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34F));
+            tblSummary.Controls.Add(lblVisitNo, 0, 0);
+            tblSummary.Controls.Add(txtVisitCode, 1, 0);
+            tblSummary.Controls.Add(lblName, 2, 0);
+            tblSummary.Controls.Add(txtPatientName, 3, 0);
+            tblSummary.Controls.Add(lblGross, 4, 0);
+            tblSummary.Controls.Add(txtTotal, 5, 0);
+            tblSummary.Controls.Add(lblDisc, 6, 0);
+            tblSummary.Controls.Add(txtDiscount, 7, 0);
+            tblSummary.Controls.Add(lblTests, 0, 1);
+            tblSummary.Controls.Add(txtLabsCount, 1, 1);
+            tblSummary.Controls.Add(lblNet, 2, 1);
+            tblSummary.Controls.Add(textAfterDiscount, 3, 1);
+            tblSummary.Controls.Add(lblPaid, 4, 1);
+            tblSummary.Controls.Add(txtPaid, 5, 1);
+            tblSummary.Controls.Add(lblRemaining, 6, 1);
+            tblSummary.Controls.Add(txtRemaining, 7, 1);
+            tblSummary.Dock = DockStyle.Fill;
+            tblSummary.Name = "tblSummary";
+            tblSummary.RowCount = 2;
+            tblSummary.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tblSummary.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tblSummary.TabIndex = 0;
             // 
-            // label7
+            // lblVisitNo
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.ForeColor = Color.FromArgb(55, 71, 79);
-            label7.Location = new Point(294, 63);
-            label7.Name = "label7";
-            label7.Size = new Size(68, 28);
-            label7.TabIndex = 14;
-            label7.Text = "الخصم";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.ForeColor = Color.FromArgb(55, 71, 79);
-            label10.Location = new Point(285, 126);
-            label10.Name = "label10";
-            label10.Size = new Size(77, 28);
-            label10.TabIndex = 17;
-            label10.Text = "المتبقى";
-            // 
-            // txtDiscount
-            // 
-            txtDiscount.Location = new Point(3, 66);
-            txtDiscount.Name = "txtDiscount";
-            txtDiscount.Size = new Size(261, 27);
-            txtDiscount.TabIndex = 18;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.ForeColor = Color.FromArgb(55, 71, 79);
-            label5.Location = new Point(1059, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(98, 28);
-            label5.TabIndex = 12;
-            label5.Text = "كود الزيارة";
-            // 
-            // txtTotal
-            // 
-            txtTotal.Location = new Point(368, 66);
-            txtTotal.Name = "txtTotal";
-            txtTotal.Size = new Size(252, 27);
-            txtTotal.TabIndex = 19;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.ForeColor = Color.FromArgb(55, 71, 79);
-            label9.Location = new Point(655, 126);
-            label9.Name = "label9";
-            label9.Size = new Size(128, 28);
-            label9.TabIndex = 16;
-            label9.Text = "المدفوع سابقا";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.FromArgb(55, 71, 79);
-            label3.Location = new Point(663, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(120, 28);
-            label3.TabIndex = 9;
-            label3.Text = "اسم المريض";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.ForeColor = Color.FromArgb(55, 71, 79);
-            label4.Location = new Point(297, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(65, 28);
-            label4.TabIndex = 10;
-            label4.Text = "التاريخ";
-            // 
-            // txtLabsCount
-            // 
-            txtLabsCount.Location = new Point(789, 66);
-            txtLabsCount.Name = "txtLabsCount";
-            txtLabsCount.Size = new Size(254, 27);
-            txtLabsCount.TabIndex = 20;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.ForeColor = Color.FromArgb(55, 71, 79);
-            label8.Location = new Point(1054, 126);
-            label8.Name = "label8";
-            label8.Size = new Size(103, 56);
-            label8.TabIndex = 15;
-            label8.Text = "الاجمالى بعد الخصم";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.ForeColor = Color.FromArgb(55, 71, 79);
-            label6.Location = new Point(644, 63);
-            label6.Name = "label6";
-            label6.Size = new Size(139, 28);
-            label6.TabIndex = 13;
-            label6.Text = "اجمالى التحاليل";
-            // 
-            // dtPaymentDate
-            // 
-            dtPaymentDate.Location = new Point(3, 3);
-            dtPaymentDate.Name = "dtPaymentDate";
-            dtPaymentDate.Size = new Size(261, 27);
-            dtPaymentDate.TabIndex = 11;
+            lblVisitNo.Dock = DockStyle.Fill;
+            lblVisitNo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblVisitNo.ForeColor = Color.FromArgb(30, 41, 59);
+            lblVisitNo.Name = "lblVisitNo";
+            lblVisitNo.Text = "رقم الزيارة:";
+            lblVisitNo.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtVisitCode
             // 
-            txtVisitCode.Location = new Point(789, 3);
+            txtVisitCode.Dock = DockStyle.Fill;
+            txtVisitCode.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            txtVisitCode.Margin = new Padding(3, 6, 3, 6);
             txtVisitCode.Name = "txtVisitCode";
-            txtVisitCode.Size = new Size(254, 27);
-            txtVisitCode.TabIndex = 8;
-            txtVisitCode.TextChanged += textBox2_TextChanged;
+            txtVisitCode.ReadOnly = true;
+            // 
+            // lblName
+            // 
+            lblName.Dock = DockStyle.Fill;
+            lblName.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblName.ForeColor = Color.FromArgb(30, 41, 59);
+            lblName.Name = "lblName";
+            lblName.Text = "اسم المريض:";
+            lblName.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPatientName
             // 
-            txtPatientName.Location = new Point(368, 3);
+            txtPatientName.Dock = DockStyle.Fill;
+            txtPatientName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            txtPatientName.Margin = new Padding(3, 6, 3, 6);
             txtPatientName.Name = "txtPatientName";
-            txtPatientName.Size = new Size(252, 27);
-            txtPatientName.TabIndex = 6;
+            txtPatientName.ReadOnly = true;
             // 
-            // label2
+            // lblGross
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.FromArgb(55, 71, 79);
-            label2.Location = new Point(1082, 63);
-            label2.Name = "label2";
-            label2.Size = new Size(75, 56);
-            label2.TabIndex = 5;
-            label2.Text = "عدد التحاليل";
-            label2.Click += label2_Click;
+            lblGross.Dock = DockStyle.Fill;
+            lblGross.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblGross.ForeColor = Color.FromArgb(100, 116, 139);
+            lblGross.Name = "lblGross";
+            lblGross.Text = "الإجمالي:";
+            lblGross.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // btnSave
+            // txtTotal
             // 
-            btnSave.BackColor = Color.MediumSeaGreen;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(28, 521);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(160, 50);
-            btnSave.TabIndex = 18;
-            btnSave.Text = "حفظ";
-            btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += btnSave_Click;
+            txtTotal.Dock = DockStyle.Fill;
+            txtTotal.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            txtTotal.Margin = new Padding(3, 6, 3, 6);
+            txtTotal.Name = "txtTotal";
+            txtTotal.ReadOnly = true;
             // 
-            // dgvPayments
+            // lblDisc
             // 
-            dgvPayments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPayments.Columns.AddRange(new DataGridViewColumn[] { colPaymentDate, colPaidAmount, colPaymentNotes });
-            dgvPayments.Location = new Point(504, 411);
-            dgvPayments.Name = "dgvPayments";
-            dgvPayments.RightToLeft = RightToLeft.Yes;
-            dgvPayments.RowHeadersWidth = 51;
-            dgvPayments.Size = new Size(545, 188);
-            dgvPayments.TabIndex = 19;
+            lblDisc.Dock = DockStyle.Fill;
+            lblDisc.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblDisc.ForeColor = Color.FromArgb(100, 116, 139);
+            lblDisc.Name = "lblDisc";
+            lblDisc.Text = "الخصم:";
+            lblDisc.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // colPaymentDate
+            // txtDiscount
             // 
-            colPaymentDate.HeaderText = "التاريخ";
-            colPaymentDate.MinimumWidth = 6;
-            colPaymentDate.Name = "colPaymentDate";
-            colPaymentDate.Width = 125;
+            txtDiscount.Dock = DockStyle.Fill;
+            txtDiscount.Font = new Font("Segoe UI", 9.5F);
+            txtDiscount.Margin = new Padding(3, 6, 3, 6);
+            txtDiscount.Name = "txtDiscount";
+            txtDiscount.ReadOnly = true;
             // 
-            // colPaidAmount
+            // lblTests
             // 
-            colPaidAmount.HeaderText = "المبلغ المدفوع";
-            colPaidAmount.MinimumWidth = 6;
-            colPaidAmount.Name = "colPaidAmount";
-            colPaidAmount.Width = 125;
+            lblTests.Dock = DockStyle.Fill;
+            lblTests.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTests.ForeColor = Color.FromArgb(30, 41, 59);
+            lblTests.Name = "lblTests";
+            lblTests.Text = "الفحوصات:";
+            lblTests.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // colPaymentNotes
+            // txtLabsCount
             // 
-            colPaymentNotes.HeaderText = "ملاحظات";
-            colPaymentNotes.MinimumWidth = 6;
-            colPaymentNotes.Name = "colPaymentNotes";
-            colPaymentNotes.Width = 125;
+            txtLabsCount.Dock = DockStyle.Fill;
+            txtLabsCount.Font = new Font("Segoe UI", 9.5F);
+            txtLabsCount.Margin = new Padding(3, 6, 3, 6);
+            txtLabsCount.Name = "txtLabsCount";
+            txtLabsCount.ReadOnly = true;
             // 
-            // btnAddLab
+            // lblNet
             // 
-            btnAddLab.BackColor = Color.RoyalBlue;
-            btnAddLab.FlatAppearance.BorderSize = 0;
-            btnAddLab.FlatStyle = FlatStyle.Flat;
-            btnAddLab.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddLab.ForeColor = Color.White;
-            btnAddLab.Location = new Point(315, 388);
-            btnAddLab.Name = "btnAddLab";
-            btnAddLab.Size = new Size(109, 35);
-            btnAddLab.TabIndex = 24;
-            btnAddLab.Text = "إضافة ➕  ";
-            btnAddLab.UseVisualStyleBackColor = false;
-            btnAddLab.Click += btnAddLab_Click;
+            lblNet.Dock = DockStyle.Fill;
+            lblNet.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblNet.ForeColor = Color.FromArgb(37, 99, 235);
+            lblNet.Name = "lblNet";
+            lblNet.Text = "صافي المطلوب:";
+            lblNet.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label11
+            // textAfterDiscount
             // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.ForeColor = Color.FromArgb(55, 71, 79);
-            label11.Location = new Point(674, 200);
-            label11.Name = "label11";
-            label11.Size = new Size(109, 28);
-            label11.TabIndex = 24;
-            label11.Text = "دفعة جديدة";
+            textAfterDiscount.Dock = DockStyle.Fill;
+            textAfterDiscount.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            textAfterDiscount.ForeColor = Color.FromArgb(37, 99, 235);
+            textAfterDiscount.Margin = new Padding(3, 6, 3, 6);
+            textAfterDiscount.Name = "textAfterDiscount";
+            textAfterDiscount.ReadOnly = true;
+            // 
+            // lblPaid
+            // 
+            lblPaid.Dock = DockStyle.Fill;
+            lblPaid.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPaid.ForeColor = Color.FromArgb(22, 163, 74);
+            lblPaid.Name = "lblPaid";
+            lblPaid.Text = "المدفوع:";
+            lblPaid.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // txtPaid
+            // 
+            txtPaid.Dock = DockStyle.Fill;
+            txtPaid.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            txtPaid.ForeColor = Color.FromArgb(22, 163, 74);
+            txtPaid.Margin = new Padding(3, 6, 3, 6);
+            txtPaid.Name = "txtPaid";
+            txtPaid.ReadOnly = true;
+            // 
+            // lblRemaining
+            // 
+            lblRemaining.Dock = DockStyle.Fill;
+            lblRemaining.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblRemaining.ForeColor = Color.FromArgb(220, 38, 38);
+            lblRemaining.Name = "lblRemaining";
+            lblRemaining.Text = "المتبقي (دين):";
+            lblRemaining.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // txtRemaining
+            // 
+            txtRemaining.Dock = DockStyle.Fill;
+            txtRemaining.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            txtRemaining.ForeColor = Color.FromArgb(220, 38, 38);
+            txtRemaining.Margin = new Padding(3, 6, 3, 6);
+            txtRemaining.Name = "txtRemaining";
+            txtRemaining.ReadOnly = true;
+            // 
+            // pnlPayInputCard
+            // 
+            pnlPayInputCard.BackColor = Color.White;
+            pnlPayInputCard.Controls.Add(btnAddPayment);
+            pnlPayInputCard.Controls.Add(dtPaymentDate);
+            pnlPayInputCard.Controls.Add(lblDatePrompt);
+            pnlPayInputCard.Controls.Add(cmbPaymentMethod);
+            pnlPayInputCard.Controls.Add(lblMethodPrompt);
+            pnlPayInputCard.Controls.Add(txtNewPayment);
+            pnlPayInputCard.Controls.Add(lblNewPayPrompt);
+            pnlPayInputCard.Dock = DockStyle.Top;
+            pnlPayInputCard.Height = 64;
+            pnlPayInputCard.Location = new Point(16, 199);
+            pnlPayInputCard.Name = "pnlPayInputCard";
+            pnlPayInputCard.Padding = new Padding(12);
+            pnlPayInputCard.TabIndex = 2;
+            // 
+            // lblNewPayPrompt
+            // 
+            lblNewPayPrompt.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblNewPayPrompt.AutoSize = true;
+            lblNewPayPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblNewPayPrompt.ForeColor = Color.FromArgb(30, 41, 59);
+            lblNewPayPrompt.Location = new Point(830, 22);
+            lblNewPayPrompt.Name = "lblNewPayPrompt";
+            lblNewPayPrompt.Text = "قيمة الدفعة (ج.م):";
             // 
             // txtNewPayment
             // 
-            txtNewPayment.Location = new Point(368, 203);
+            txtNewPayment.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtNewPayment.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            txtNewPayment.ForeColor = Color.FromArgb(22, 163, 74);
+            txtNewPayment.Location = new Point(710, 18);
             txtNewPayment.Name = "txtNewPayment";
-            txtNewPayment.Size = new Size(252, 27);
-            txtNewPayment.TabIndex = 26;
+            txtNewPayment.Size = new Size(115, 26);
+            txtNewPayment.TabIndex = 0;
+            // 
+            // lblMethodPrompt
+            // 
+            lblMethodPrompt.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblMethodPrompt.AutoSize = true;
+            lblMethodPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblMethodPrompt.ForeColor = Color.FromArgb(30, 41, 59);
+            lblMethodPrompt.Location = new Point(625, 22);
+            lblMethodPrompt.Name = "lblMethodPrompt";
+            lblMethodPrompt.Text = "طريقة الدفع:";
+            // 
+            // cmbPaymentMethod
+            // 
+            cmbPaymentMethod.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cmbPaymentMethod.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbPaymentMethod.Font = new Font("Segoe UI", 10F);
+            cmbPaymentMethod.Location = new Point(460, 19);
+            cmbPaymentMethod.Name = "cmbPaymentMethod";
+            cmbPaymentMethod.Size = new Size(160, 25);
+            cmbPaymentMethod.TabIndex = 1;
+            // 
+            // lblDatePrompt
+            // 
+            lblDatePrompt.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblDatePrompt.AutoSize = true;
+            lblDatePrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblDatePrompt.ForeColor = Color.FromArgb(30, 41, 59);
+            lblDatePrompt.Location = new Point(375, 22);
+            lblDatePrompt.Name = "lblDatePrompt";
+            lblDatePrompt.Text = "تاريخ السداد:";
+            // 
+            // dtPaymentDate
+            // 
+            dtPaymentDate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            dtPaymentDate.Font = new Font("Segoe UI", 9.5F);
+            dtPaymentDate.Format = DateTimePickerFormat.Short;
+            dtPaymentDate.Location = new Point(255, 20);
+            dtPaymentDate.Name = "dtPaymentDate";
+            dtPaymentDate.Size = new Size(115, 24);
+            dtPaymentDate.TabIndex = 2;
+            // 
+            // btnAddPayment
+            // 
+            btnAddPayment.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAddPayment.BackColor = Color.FromArgb(37, 99, 235);
+            btnAddPayment.FlatAppearance.BorderSize = 0;
+            btnAddPayment.FlatStyle = FlatStyle.Flat;
+            btnAddPayment.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnAddPayment.ForeColor = Color.White;
+            btnAddPayment.Location = new Point(100, 15);
+            btnAddPayment.Name = "btnAddPayment";
+            btnAddPayment.Size = new Size(140, 34);
+            btnAddPayment.TabIndex = 3;
+            btnAddPayment.Text = "💵 تسجيل الدفعة";
+            btnAddPayment.UseVisualStyleBackColor = false;
+            btnAddPayment.Click += btnAddPayment_Click;
+            // 
+            // pnlGridCard
+            // 
+            pnlGridCard.BackColor = Color.White;
+            pnlGridCard.Controls.Add(dgvPayments);
+            pnlGridCard.Dock = DockStyle.Fill;
+            pnlGridCard.Location = new Point(16, 271);
+            pnlGridCard.Name = "pnlGridCard";
+            pnlGridCard.Padding = new Padding(12);
+            pnlGridCard.TabIndex = 3;
+            // 
+            // dgvPayments
+            // 
+            dgvPayments.AllowUserToAddRows = false;
+            dgvPayments.AllowUserToDeleteRows = false;
+            dgvPayments.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvPayments.BackgroundColor = Color.White;
+            dgvPayments.BorderStyle = BorderStyle.None;
+            dgvPayments.ColumnHeadersHeight = 38;
+            dgvPayments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvPayments.Columns.AddRange(new DataGridViewColumn[] {
+                colPaymentDate,
+                colPaidAmount,
+                colPaymentNotes
+            });
+            dgvPayments.Dock = DockStyle.Fill;
+            dgvPayments.Location = new Point(12, 12);
+            dgvPayments.MultiSelect = false;
+            dgvPayments.Name = "dgvPayments";
+            dgvPayments.ReadOnly = true;
+            dgvPayments.RowHeadersVisible = false;
+            dgvPayments.RowTemplate.Height = 36;
+            dgvPayments.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPayments.Size = new Size(916, 220);
+            dgvPayments.TabIndex = 0;
+            // 
+            // colPaymentDate
+            // 
+            colPaymentDate.FillWeight = 25F;
+            colPaymentDate.HeaderText = "تاريخ ووقت السداد";
+            colPaymentDate.Name = "colPaymentDate";
+            colPaymentDate.ReadOnly = true;
+            // 
+            // colPaidAmount
+            // 
+            colPaidAmount.FillWeight = 20F;
+            colPaidAmount.HeaderText = "المبلغ المسدد (ج.م)";
+            colPaidAmount.Name = "colPaidAmount";
+            colPaidAmount.ReadOnly = true;
+            // 
+            // colPaymentNotes
+            // 
+            colPaymentNotes.FillWeight = 55F;
+            colPaymentNotes.HeaderText = "طريقة الدفع والتفاصيل";
+            colPaymentNotes.Name = "colPaymentNotes";
+            colPaymentNotes.ReadOnly = true;
+            // 
+            // pnlBottomBar
+            // 
+            pnlBottomBar.BackColor = Color.White;
+            pnlBottomBar.Controls.Add(btnClose);
+            pnlBottomBar.Controls.Add(btnPrintInvoice);
+            pnlBottomBar.Controls.Add(btnPrintReceipt);
+            pnlBottomBar.Dock = DockStyle.Bottom;
+            pnlBottomBar.Height = 65;
+            pnlBottomBar.Location = new Point(16, 499);
+            pnlBottomBar.Name = "pnlBottomBar";
+            pnlBottomBar.Padding = new Padding(12);
+            pnlBottomBar.TabIndex = 4;
+            // 
+            // btnPrintReceipt
+            // 
+            btnPrintReceipt.Dock = DockStyle.Right;
+            btnPrintReceipt.BackColor = Color.FromArgb(37, 99, 235);
+            btnPrintReceipt.FlatAppearance.BorderSize = 0;
+            btnPrintReceipt.FlatStyle = FlatStyle.Flat;
+            btnPrintReceipt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnPrintReceipt.ForeColor = Color.White;
+            btnPrintReceipt.Location = new Point(740, 14);
+            btnPrintReceipt.Name = "btnPrintReceipt";
+            btnPrintReceipt.Size = new Size(195, 39);
+            btnPrintReceipt.TabIndex = 0;
+            btnPrintReceipt.Text = "🧾 طباعة إيصال حراري (80mm)";
+            btnPrintReceipt.UseVisualStyleBackColor = false;
+            btnPrintReceipt.Click += btnPrintReceipt_Click;
+            // 
+            // btnPrintInvoice
+            // 
+            btnPrintInvoice.Dock = DockStyle.Right;
+            btnPrintInvoice.BackColor = Color.FromArgb(23, 43, 77);
+            btnPrintInvoice.FlatAppearance.BorderSize = 0;
+            btnPrintInvoice.FlatStyle = FlatStyle.Flat;
+            btnPrintInvoice.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnPrintInvoice.ForeColor = Color.White;
+            btnPrintInvoice.Location = new Point(535, 14);
+            btnPrintInvoice.Name = "btnPrintInvoice";
+            btnPrintInvoice.Size = new Size(195, 39);
+            btnPrintInvoice.TabIndex = 1;
+            btnPrintInvoice.Text = "📄 طباعة فاتورة رسمية (A5)";
+            btnPrintInvoice.UseVisualStyleBackColor = false;
+            btnPrintInvoice.Click += btnPrintInvoice_Click;
+            // 
+            // btnClose
+            // 
+            btnClose.Dock = DockStyle.Left;
+            btnClose.BackColor = Color.White;
+            btnClose.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 9.5F);
+            btnClose.ForeColor = Color.FromArgb(100, 116, 139);
+            btnClose.Location = new Point(12, 14);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(100, 38);
+            btnClose.TabIndex = 2;
+            btnClose.Text = "إغلاق";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += (s, e) => Close();
             // 
             // FrmPayments
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1379, 620);
-            Controls.Add(btnAddLab);
-            Controls.Add(dgvPayments);
-            Controls.Add(btnSave);
-            Controls.Add(tableLayoutPanel1);
-            Controls.Add(label1);
+            BackColor = Color.FromArgb(244, 247, 251);
+            ClientSize = new Size(960, 580);
+            Controls.Add(pnlGridCard);
+            Controls.Add(pnlBottomBar);
+            Controls.Add(pnlPayInputCard);
+            Controls.Add(pnlSummaryCard);
+            Controls.Add(pnlHeader);
+            Font = new Font("Segoe UI", 9.5F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FrmPayments";
-            Text = "FrmPayments";
+            Padding = new Padding(16);
+            RightToLeft = RightToLeft.Yes;
+            RightToLeftLayout = true;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "خزينة وسداد دفعات الزيارة";
             Load += FrmPayments_Load;
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            pnlHeader.ResumeLayout(false);
+            pnlSummaryCard.ResumeLayout(false);
+            tblSummary.ResumeLayout(false);
+            tblSummary.PerformLayout();
+            pnlPayInputCard.ResumeLayout(false);
+            pnlPayInputCard.PerformLayout();
+            pnlGridCard.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvPayments).EndInit();
+            pnlBottomBar.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label label2;
+        private Panel pnlHeader;
+        private Label lblTitle;
+        private Label lblSubtitle;
+        private Panel pnlSummaryCard;
+        private TableLayoutPanel tblSummary;
+        private Label lblVisitNo;
         private TextBox txtVisitCode;
+        private Label lblName;
         private TextBox txtPatientName;
-        private Label label3;
-        private Label label4;
-        private DateTimePicker dtPaymentDate;
-        private Label label7;
-        private TextBox txtDiscount;
-        private Label label5;
-        private TextBox txtTotal;
+        private Label lblTests;
         private TextBox txtLabsCount;
-        private Label label6;
-        private Label label8;
-        private Label label9;
-        private Label label10;
-        private TextBox txtRemaining;
-        private TextBox txtPaid;
+        private Label lblGross;
+        private TextBox txtTotal;
+        private Label lblDisc;
+        private TextBox txtDiscount;
+        private Label lblNet;
         private TextBox textAfterDiscount;
-        private Button btnSave;
+        private Label lblPaid;
+        private TextBox txtPaid;
+        private Label lblRemaining;
+        private TextBox txtRemaining;
+        private Panel pnlPayInputCard;
+        private Label lblNewPayPrompt;
+        private TextBox txtNewPayment;
+        private Label lblMethodPrompt;
+        private ComboBox cmbPaymentMethod;
+        private Label lblDatePrompt;
+        private DateTimePicker dtPaymentDate;
+        private Button btnAddPayment;
+        private Panel pnlGridCard;
         private DataGridView dgvPayments;
         private DataGridViewTextBoxColumn colPaymentDate;
         private DataGridViewTextBoxColumn colPaidAmount;
         private DataGridViewTextBoxColumn colPaymentNotes;
-        private Button btnAddLab;
-        private Label label11;
-        private TextBox txtNewPayment;
+        private Panel pnlBottomBar;
+        private Button btnPrintReceipt;
+        private Button btnPrintInvoice;
+        private Button btnClose;
     }
 }

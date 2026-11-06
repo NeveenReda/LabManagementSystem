@@ -1,152 +1,135 @@
-﻿using LabManagementSystem.Models;
+using LabManagementSystem.Common;
+using LabManagementSystem.Models;
+using LabManagementSystem.Services;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace LabManagementSystem.Forms
 {
     public partial class FrmExternalLab : Form
     {
-        private int visitLabId;
-        private VisitLab? visitLab;
-        private LabContext db = new LabContext();
+        private readonly int _visitLabId;
+        private VisitLab? _visitLab;
+        private readonly LabContext _db = new();
 
         public FrmExternalLab()
         {
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;
+            FormStyler.ApplyFormTheme(this);
+            FormStyler.StyleButton(btnSave, ButtonStyle.Primary);
+            FormStyler.StyleButton(btnCancel, ButtonStyle.Secondary);
+            btnCancel.Click += (s, e) => { DialogResult = DialogResult.Cancel; Close(); };
         }
-        public FrmExternalLab(int visitLabId)
+
+        public FrmExternalLab(int visitLabId) : this()
         {
-            InitializeComponent();
-            //make text box starts from 
-            txtPatientInfo.RightToLeft = RightToLeft.Yes;
-            txtPatientInfo.TextAlign = HorizontalAlignment.Right;
+            _visitLabId = visitLabId;
 
-            this.visitLabId = visitLabId;
-
-            visitLab = db.VisitLabs
+            _visitLab = _db.VisitLabs
                 .Include(vl => vl.Visit)
                 .ThenInclude(v => v.Patient)
                 .Include(vl => vl.Lab)
-                .FirstOrDefault(vl => vl.Id == visitLabId);
+                .FirstOrDefault(vl => vl.Id == _visitLabId);
 
-            if (visitLab == null)
+            if (_visitLab == null)
             {
-                MessageBox.Show("التحليل غير موجود");
+                MessageBox.Show("التحليل غير موجود.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            txtPatientInfo.RightToLeft = RightToLeft.Yes;
-            txtPatientInfo.TextAlign = HorizontalAlignment.Right;
+            lblPatientInfo.Text =
+                $"المريض: {_visitLab.Visit.Patient.Name} (كود: {_visitLab.Visit.Patient.MedicalCode}) | الزيارة: {_visitLab.Visit.VisitDate:yyyy/MM/dd} | التحليل: {_visitLab.Lab.Name}";
 
-            txtPatientInfo.Text =
-                $"تفاصيل الزيارة " +
-                $"التاريخ: {visitLab.Visit.VisitDate:dd/MM/yyyy} | " +
-                $"الاسم: {visitLab.Visit.Patient.Name} | " +
-                $"الكود: {visitLab.Visit.Patient.MedicalCode}";
-             
-         
-
-            // Get ExpectedDays from Lab
-            txtExpextedDays.Text =
-                visitLab.Lab.Days.ToString();
-
-            //recieve ddate
-            dtpDateReceive.Value = dtpDateSend.Value.AddDays(visitLab.Lab.Days);
-          
+            txtExpextedDays.Text = _visitLab.Lab.Days.ToString();
+            dtpDateReceive.Value = dtpDateSend.Value.AddDays(_visitLab.Lab.Days);
         }
+
         private void FrmExternalLab_Load(object sender, EventArgs e)
         {
-            LoadExternalLab();
+            LoadExternalLabs();
             dtpDateReceive.Enabled = false;
-            // Make ExpectedDays read-only
             txtExpextedDays.ReadOnly = true;
 
-            
-
+            dtpDateSend.ValueChanged += (s, ev) =>
+            {
+                if (_visitLab != null)
+                {
+                    dtpDateReceive.Value = dtpDateSend.Value.AddDays(_visitLab.Lab.Days);
+                }
+            };
         }
 
-        private void label10_Click(object sender, EventArgs e)
+        private void LoadExternalLabs()
         {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LoadExternalLab()
-        {
-            cmbExternalLab.DataSource = db.BaseExternalLabs.ToList();
-            cmbExternalLab.DisplayMember = "Name";
-            cmbExternalLab.ValueMember = "Id";
+            try
+            {
+                var labs = ServiceLocator.LookupCacheService.GetExternalLabs();
+                cmbExternalLab.DataSource = labs;
+                cmbExternalLab.DisplayMember = "Name";
+                cmbExternalLab.ValueMember = "Id";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"خطأ في تحميل المعامل الخارجية: {ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (cmbExternalLab.SelectedValue == null)
             {
-                MessageBox.Show("من فضلك اختر المعمل الخارجي");
+                MessageBox.Show("من فضلك اختر المعمل الخارجي.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtContactPerson.Text))
             {
-                MessageBox.Show("من فضلك أدخل اسم المسؤول");
+                MessageBox.Show("من فضلك أدخل اسم المسؤول في المعمل الخارجي.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtContactPerson.Focus();
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtPhone.Text))
             {
-                MessageBox.Show("من فضلك أدخل رقم الهاتف");
+                MessageBox.Show("من فضلك أدخل رقم هاتف المعمل الخارجي.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPhone.Focus();
                 return;
             }
 
-            if (!int.TryParse(txtExpextedDays.Text, out int expectedDays))
+            try
             {
-                MessageBox.Show("من فضلك أدخل عدد الأيام المتوقعه بشكل صحيح");
-                return;
+                var externalLab = new ExternalLab
+                {
+                    VistLabId = _visitLabId,
+                    BaseExternalLabId = Convert.ToInt32(cmbExternalLab.SelectedValue),
+                    ContactPerson = txtContactPerson.Text.Trim(),
+                    Phone = txtPhone.Text.Trim(),
+                    DateTimeSend = dtpDateSend.Value,
+                    DateTimeReceive = dtpDateReceive.Value
+                };
+
+                _db.ExternalLabs.Add(externalLab);
+
+                if (_visitLab != null)
+                {
+                    _visitLab.IsExternal = true;
+                }
+
+                _db.SaveChanges();
+
+                MessageBox.Show("تم تحويل التحليل للمعمل الخارجي بنجاح.", "تم التحويل", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
             }
-
-            ExternalLab externalLab = new ExternalLab
+            catch (Exception ex)
             {
-                VistLabId = visitLabId,
+                MessageBox.Show($"حدث خطأ أثناء تحويل التحليل: {ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-                BaseExternalLabId =
-                    Convert.ToInt32(cmbExternalLab.SelectedValue),
-
-                ContactPerson = txtContactPerson.Text,
-
-                Phone = txtPhone.Text,
-
-                DateTimeSend = dtpDateSend.Value,
-
-                //ExpectedDays = expectedDays,
-                
-
-                DateTimeReceive = dtpDateReceive.Value
-            };
-
-            db.ExternalLabs.Add(externalLab);
-
-            // Mark this VisitLab as transferred to external lab
-            visitLab.IsExternal = true;
-
-            db.SaveChanges();
-
-            MessageBox.Show("تم تحويل التحليل للمعمل الخارجي بنجاح");
-
-            this.Close();
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            _db.Dispose();
         }
     }
 }

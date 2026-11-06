@@ -1,16 +1,9 @@
-﻿namespace LabManagementSystem.Forms
+namespace LabManagementSystem.Forms
 {
     partial class frmSettingsLab
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,315 +15,404 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            pnlTitle = new Panel();
+            pnlHeader = new Panel();
+            lblSubtitle = new Label();
             lblTitle = new Label();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            label5 = new Label();
-            label4 = new Label();
-            cmbLabCat = new ComboBox();
-            chkExternal = new CheckBox();
+            pnlInputsCard = new Panel();
+            tblInputs = new TableLayoutPanel();
+            lblLabName = new Label();
             txtName = new TextBox();
-            txtDays = new TextBox();
-            label3 = new Label();
-            button1 = new Button();
-            label1 = new Label();
-            label2 = new Label();
+            lblCategory = new Label();
+            cmbLabCat = new ComboBox();
+            lblPrice = new Label();
             txtPrice = new TextBox();
+            lblDays = new Label();
+            txtDays = new TextBox();
+            chkExternal = new CheckBox();
+            pnlActions = new Panel();
+            btnSave = new Button();
+            btnNew = new Button();
+            btnOpenParams = new Button();
+            pnlGridCard = new Panel();
             dgvLabs = new DataGridView();
-            Id = new DataGridViewTextBoxColumn();
-            LabCategoryId = new DataGridViewTextBoxColumn();
-            CategoryName = new DataGridViewTextBoxColumn();
-            LabName = new DataGridViewTextBoxColumn();
-            Price = new DataGridViewTextBoxColumn();
-            Days = new DataGridViewTextBoxColumn();
+            colId = new DataGridViewTextBoxColumn();
+            colName = new DataGridViewTextBoxColumn();
+            colCategory = new DataGridViewTextBoxColumn();
+            colPrice = new DataGridViewTextBoxColumn();
+            colDays = new DataGridViewTextBoxColumn();
+            colExternal = new DataGridViewTextBoxColumn();
             colEdit = new DataGridViewImageColumn();
-            pnlTitle.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            pnlHeader.SuspendLayout();
+            pnlInputsCard.SuspendLayout();
+            tblInputs.SuspendLayout();
+            pnlActions.SuspendLayout();
+            pnlGridCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLabs).BeginInit();
             SuspendLayout();
             // 
-            // pnlTitle
+            // pnlHeader
             // 
-            pnlTitle.BackColor = Color.Gainsboro;
-            pnlTitle.Controls.Add(lblTitle);
-            pnlTitle.Dock = DockStyle.Top;
-            pnlTitle.Location = new Point(0, 0);
-            pnlTitle.Margin = new Padding(3, 2, 3, 2);
-            pnlTitle.Name = "pnlTitle";
-            pnlTitle.Size = new Size(873, 52);
-            pnlTitle.TabIndex = 2;
+            pnlHeader.BackColor = Color.FromArgb(23, 43, 77);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Height = 65;
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.ForeColor = Color.RoyalBlue;
-            lblTitle.Location = new Point(333, 9);
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Height = 28;
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(225, 30);
-            lblTitle.TabIndex = 2;
-            lblTitle.Text = "شاشة اعدادات  التحاليل";
+            lblTitle.Text = "⚙️ إعدادات الفحوصات والتحاليل الطبية";
+            lblTitle.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // tableLayoutPanel1
+            // lblSubtitle
             // 
-            tableLayoutPanel1.Anchor = AnchorStyles.None;
-            tableLayoutPanel1.ColumnCount = 4;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 64.12698F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35.8730164F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 248F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 141F));
-            tableLayoutPanel1.Controls.Add(label5, 1, 1);
-            tableLayoutPanel1.Controls.Add(label4, 3, 2);
-            tableLayoutPanel1.Controls.Add(cmbLabCat, 2, 2);
-            tableLayoutPanel1.Controls.Add(chkExternal, 0, 1);
-            tableLayoutPanel1.Controls.Add(txtName, 2, 0);
-            tableLayoutPanel1.Controls.Add(txtDays, 2, 1);
-            tableLayoutPanel1.Controls.Add(label3, 3, 1);
-            tableLayoutPanel1.Controls.Add(button1, 0, 2);
-            tableLayoutPanel1.Controls.Add(label1, 3, 0);
-            tableLayoutPanel1.Controls.Add(label2, 1, 0);
-            tableLayoutPanel1.Controls.Add(txtPrice, 0, 0);
-            tableLayoutPanel1.Controls.Add(dgvLabs, 0, 3);
-            tableLayoutPanel1.Location = new Point(188, 63);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 52.33645F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 47.66355F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 252F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(660, 416);
-            tableLayoutPanel1.TabIndex = 4;
-            tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
+            lblSubtitle.Dock = DockStyle.Bottom;
+            lblSubtitle.Font = new Font("Segoe UI", 9F);
+            lblSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
+            lblSubtitle.Height = 18;
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Text = "تعريف التحاليل، تسعير الفحوصات، ربط الأقسام، وتحديد باراميترات ومعدلات النتائج الطبيعية";
+            lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label5
+            // pnlInputsCard
             // 
-            label5.Anchor = AnchorStyles.None;
-            label5.AutoSize = true;
-            label5.ForeColor = Color.Black;
-            label5.Location = new Point(186, 74);
-            label5.Name = "label5";
-            label5.Size = new Size(71, 15);
-            label5.TabIndex = 10;
-            label5.Text = "معمل خارجى";
+            pnlInputsCard.BackColor = Color.White;
+            pnlInputsCard.Controls.Add(pnlActions);
+            pnlInputsCard.Controls.Add(tblInputs);
+            pnlInputsCard.Dock = DockStyle.Top;
+            pnlInputsCard.Height = 165;
+            pnlInputsCard.Location = new Point(16, 81);
+            pnlInputsCard.Name = "pnlInputsCard";
+            pnlInputsCard.Padding = new Padding(14);
+            pnlInputsCard.TabIndex = 1;
             // 
-            // label4
+            // tblInputs
             // 
-            label4.Anchor = AnchorStyles.None;
-            label4.AutoSize = true;
-            label4.ForeColor = Color.Black;
-            label4.Location = new Point(559, 127);
-            label4.Name = "label4";
-            label4.Size = new Size(60, 15);
-            label4.TabIndex = 9;
-            label4.Text = "فئة التحليل";
+            tblInputs.ColumnCount = 5;
+            tblInputs.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95F));
+            tblInputs.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45F));
+            tblInputs.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95F));
+            tblInputs.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
+            tblInputs.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tblInputs.Controls.Add(lblLabName, 0, 0);
+            tblInputs.Controls.Add(txtName, 1, 0);
+            tblInputs.Controls.Add(lblCategory, 2, 0);
+            tblInputs.Controls.Add(cmbLabCat, 3, 0);
+            tblInputs.Controls.Add(lblPrice, 0, 1);
+            tblInputs.Controls.Add(txtPrice, 1, 1);
+            tblInputs.Controls.Add(lblDays, 2, 1);
+            tblInputs.Controls.Add(txtDays, 3, 1);
+            tblInputs.Controls.Add(chkExternal, 4, 0);
+            tblInputs.Dock = DockStyle.Top;
+            tblInputs.Height = 85;
+            tblInputs.Name = "tblInputs";
+            tblInputs.RowCount = 2;
+            tblInputs.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tblInputs.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tblInputs.TabIndex = 0;
             // 
-            // cmbLabCat
+            // lblLabName
             // 
-            cmbLabCat.Anchor = AnchorStyles.None;
-            cmbLabCat.ForeColor = Color.Black;
-            cmbLabCat.FormattingEnabled = true;
-            cmbLabCat.Location = new Point(301, 123);
-            cmbLabCat.Name = "cmbLabCat";
-            cmbLabCat.Size = new Size(185, 23);
-            cmbLabCat.TabIndex = 11;
-            // 
-            // chkExternal
-            // 
-            chkExternal.Anchor = AnchorStyles.None;
-            chkExternal.AutoSize = true;
-            chkExternal.ForeColor = Color.Black;
-            chkExternal.Location = new Point(79, 74);
-            chkExternal.Name = "chkExternal";
-            chkExternal.Size = new Size(15, 14);
-            chkExternal.TabIndex = 12;
-            chkExternal.UseVisualStyleBackColor = true;
+            lblLabName.Dock = DockStyle.Fill;
+            lblLabName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblLabName.ForeColor = Color.FromArgb(30, 41, 59);
+            lblLabName.Name = "lblLabName";
+            lblLabName.Text = "اسم التحليل:";
+            lblLabName.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtName
             // 
-            txtName.Anchor = AnchorStyles.None;
-            txtName.ForeColor = Color.Black;
-            txtName.Location = new Point(301, 16);
+            txtName.Dock = DockStyle.Fill;
+            txtName.Font = new Font("Segoe UI", 10F);
+            txtName.Margin = new Padding(4, 6, 4, 6);
             txtName.Name = "txtName";
-            txtName.Size = new Size(185, 23);
-            txtName.TabIndex = 7;
+            txtName.PlaceholderText = "مثال: Complete Blood Picture (CBC)...";
+            txtName.TabIndex = 0;
             // 
-            // txtDays
+            // lblCategory
             // 
-            txtDays.Anchor = AnchorStyles.None;
-            txtDays.ForeColor = Color.Black;
-            txtDays.Location = new Point(301, 70);
-            txtDays.Name = "txtDays";
-            txtDays.Size = new Size(185, 23);
-            txtDays.TabIndex = 6;
+            lblCategory.Dock = DockStyle.Fill;
+            lblCategory.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblCategory.ForeColor = Color.FromArgb(30, 41, 59);
+            lblCategory.Name = "lblCategory";
+            lblCategory.Text = "قسم التحليل:";
+            lblCategory.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label3
+            // cmbLabCat
             // 
-            label3.Anchor = AnchorStyles.None;
-            label3.AutoSize = true;
-            label3.ForeColor = Color.Black;
-            label3.Location = new Point(561, 74);
-            label3.Name = "label3";
-            label3.Size = new Size(56, 15);
-            label3.TabIndex = 4;
-            label3.Text = "عدد الأيام ";
+            cmbLabCat.Dock = DockStyle.Fill;
+            cmbLabCat.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbLabCat.Font = new Font("Segoe UI", 10F);
+            cmbLabCat.Margin = new Padding(4, 6, 4, 6);
+            cmbLabCat.Name = "cmbLabCat";
+            cmbLabCat.TabIndex = 1;
             // 
-            // button1
+            // lblPrice
             // 
-            button1.Anchor = AnchorStyles.None;
-            button1.ForeColor = SystemColors.ActiveCaptionText;
-            button1.Location = new Point(19, 114);
-            button1.Name = "button1";
-            button1.Size = new Size(135, 42);
-            button1.TabIndex = 1;
-            button1.Text = "اضافة";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
-            // label1
-            // 
-            label1.Anchor = AnchorStyles.None;
-            label1.AutoSize = true;
-            label1.ForeColor = Color.Black;
-            label1.Location = new Point(572, 20);
-            label1.Name = "label1";
-            label1.Size = new Size(34, 15);
-            label1.TabIndex = 2;
-            label1.Text = "الاسم";
-            // 
-            // label2
-            // 
-            label2.Anchor = AnchorStyles.None;
-            label2.AutoSize = true;
-            label2.ForeColor = Color.Black;
-            label2.Location = new Point(203, 20);
-            label2.Name = "label2";
-            label2.Size = new Size(36, 15);
-            label2.TabIndex = 3;
-            label2.Text = "السعر";
+            lblPrice.Dock = DockStyle.Fill;
+            lblPrice.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblPrice.ForeColor = Color.FromArgb(30, 41, 59);
+            lblPrice.Name = "lblPrice";
+            lblPrice.Text = "السعر (ج.م):";
+            lblPrice.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPrice
             // 
-            txtPrice.Anchor = AnchorStyles.None;
-            txtPrice.ForeColor = Color.Black;
-            txtPrice.Location = new Point(25, 16);
+            txtPrice.Dock = DockStyle.Fill;
+            txtPrice.Font = new Font("Segoe UI", 10F);
+            txtPrice.Margin = new Padding(4, 6, 4, 6);
             txtPrice.Name = "txtPrice";
-            txtPrice.Size = new Size(122, 23);
-            txtPrice.TabIndex = 5;
+            txtPrice.PlaceholderText = "0.00";
+            txtPrice.TabIndex = 2;
+            // 
+            // lblDays
+            // 
+            lblDays.Dock = DockStyle.Fill;
+            lblDays.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblDays.ForeColor = Color.FromArgb(30, 41, 59);
+            lblDays.Name = "lblDays";
+            lblDays.Text = "أيام الاستلام:";
+            lblDays.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // txtDays
+            // 
+            txtDays.Dock = DockStyle.Fill;
+            txtDays.Font = new Font("Segoe UI", 10F);
+            txtDays.Margin = new Padding(4, 6, 4, 6);
+            txtDays.Name = "txtDays";
+            txtDays.Text = "1";
+            txtDays.TabIndex = 3;
+            // 
+            // chkExternal
+            // 
+            chkExternal.Dock = DockStyle.Fill;
+            chkExternal.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            chkExternal.ForeColor = Color.FromArgb(30, 41, 59);
+            chkExternal.Location = new Point(4, 6);
+            chkExternal.Name = "chkExternal";
+            chkExternal.Size = new Size(180, 30);
+            chkExternal.TabIndex = 4;
+            chkExternal.Text = "تحليل خارجي (External)";
+            chkExternal.UseVisualStyleBackColor = true;
+            // 
+            // pnlActions
+            // 
+            pnlActions.Controls.Add(btnOpenParams);
+            pnlActions.Controls.Add(btnNew);
+            pnlActions.Controls.Add(btnSave);
+            pnlActions.Dock = DockStyle.Bottom;
+            pnlActions.Height = 50;
+            pnlActions.Name = "pnlActions";
+            pnlActions.Padding = new Padding(0, 8, 0, 0);
+            pnlActions.TabIndex = 1;
+            // 
+            // btnSave
+            // 
+            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSave.BackColor = Color.FromArgb(22, 163, 74);
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(940, 8);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(140, 36);
+            btnSave.TabIndex = 0;
+            btnSave.Text = "💾 حفظ التحليل";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnNew
+            // 
+            btnNew.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnNew.BackColor = Color.White;
+            btnNew.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
+            btnNew.FlatStyle = FlatStyle.Flat;
+            btnNew.Font = new Font("Segoe UI", 9.5F);
+            btnNew.ForeColor = Color.FromArgb(30, 41, 59);
+            btnNew.Location = new Point(830, 8);
+            btnNew.Name = "btnNew";
+            btnNew.Size = new Size(100, 36);
+            btnNew.TabIndex = 1;
+            btnNew.Text = "➕ جديد";
+            btnNew.UseVisualStyleBackColor = false;
+            btnNew.Click += btnNew_Click;
+            // 
+            // btnOpenParams
+            // 
+            btnOpenParams.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnOpenParams.BackColor = Color.FromArgb(37, 99, 235);
+            btnOpenParams.FlatAppearance.BorderSize = 0;
+            btnOpenParams.FlatStyle = FlatStyle.Flat;
+            btnOpenParams.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnOpenParams.ForeColor = Color.White;
+            btnOpenParams.Location = new Point(570, 8);
+            btnOpenParams.Name = "btnOpenParams";
+            btnOpenParams.Size = new Size(250, 36);
+            btnOpenParams.TabIndex = 2;
+            btnOpenParams.Text = "⚙️ إعداد باراميترات ومعدلات التحليل";
+            btnOpenParams.UseVisualStyleBackColor = false;
+            btnOpenParams.Click += btnOpenParams_Click;
+            // 
+            // pnlGridCard
+            // 
+            pnlGridCard.BackColor = Color.White;
+            pnlGridCard.Controls.Add(dgvLabs);
+            pnlGridCard.Dock = DockStyle.Fill;
+            pnlGridCard.Location = new Point(16, 246);
+            pnlGridCard.Name = "pnlGridCard";
+            pnlGridCard.Padding = new Padding(12);
+            pnlGridCard.TabIndex = 2;
             // 
             // dgvLabs
             // 
-            dgvLabs.Anchor = AnchorStyles.None;
-            dgvLabs.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            dgvLabs.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLabs.Columns.AddRange(new DataGridViewColumn[] { Id, LabCategoryId, CategoryName, LabName, Price, Days, colEdit });
-            tableLayoutPanel1.SetColumnSpan(dgvLabs, 4);
-            dgvLabs.Location = new Point(7, 191);
+            dgvLabs.AllowUserToAddRows = false;
+            dgvLabs.AllowUserToDeleteRows = false;
+            dgvLabs.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvLabs.BackgroundColor = Color.White;
+            dgvLabs.BorderStyle = BorderStyle.None;
+            dgvLabs.ColumnHeadersHeight = 38;
+            dgvLabs.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvLabs.Columns.AddRange(new DataGridViewColumn[] {
+                colId,
+                colName,
+                colCategory,
+                colPrice,
+                colDays,
+                colExternal,
+                colEdit
+            });
+            dgvLabs.Dock = DockStyle.Fill;
+            dgvLabs.Location = new Point(12, 12);
+            dgvLabs.MultiSelect = false;
             dgvLabs.Name = "dgvLabs";
-            dgvLabs.RightToLeft = RightToLeft.Yes;
-            dgvLabs.Size = new Size(645, 197);
-            dgvLabs.TabIndex = 8;
-            dgvLabs.CellContentClick += dgvLabs_CellContentClick_1;
+            dgvLabs.ReadOnly = true;
+            dgvLabs.RowHeadersVisible = false;
+            dgvLabs.RowTemplate.Height = 36;
+            dgvLabs.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvLabs.Size = new Size(1056, 380);
+            dgvLabs.TabIndex = 0;
+            dgvLabs.CellContentClick += dgvLabs_CellContentClick;
             // 
-            // Id
+            // colId
             // 
-            Id.DataPropertyName = "Id";
-            Id.HeaderText = "Id";
-            Id.Name = "Id";
-            Id.Visible = false;
+            colId.DataPropertyName = "Id";
+            colId.FillWeight = 10F;
+            colId.HeaderText = "#";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
             // 
-            // LabCategoryId
+            // colName
             // 
-            LabCategoryId.DataPropertyName = "LabCategoryId";
-            LabCategoryId.HeaderText = "LabCategoryId";
-            LabCategoryId.Name = "LabCategoryId";
-            LabCategoryId.ReadOnly = true;
-            LabCategoryId.Visible = false;
+            colName.DataPropertyName = "Name";
+            colName.FillWeight = 38F;
+            colName.HeaderText = "اسم التحليل الطبي";
+            colName.Name = "colName";
+            colName.ReadOnly = true;
             // 
-            // CategoryName
+            // colCategory
             // 
-            CategoryName.DataPropertyName = "CategoryName";
-            CategoryName.HeaderText = "فئة التحليل";
-            CategoryName.MinimumWidth = 100;
-            CategoryName.Name = "CategoryName";
-            CategoryName.ReadOnly = true;
-            CategoryName.Width = 150;
+            colCategory.DataPropertyName = "CategoryName";
+            colCategory.FillWeight = 22F;
+            colCategory.HeaderText = "القسم / التصنيف";
+            colCategory.Name = "colCategory";
+            colCategory.ReadOnly = true;
             // 
-            // LabName
+            // colPrice
             // 
-            LabName.DataPropertyName = "Name";
-            LabName.HeaderText = "التحليل";
-            LabName.MinimumWidth = 150;
-            LabName.Name = "LabName";
-            LabName.ReadOnly = true;
-            LabName.Width = 150;
+            colPrice.DataPropertyName = "Price";
+            colPrice.FillWeight = 14F;
+            colPrice.HeaderText = "السعر (ج.م)";
+            colPrice.Name = "colPrice";
+            colPrice.ReadOnly = true;
             // 
-            // Price
+            // colDays
             // 
-            Price.DataPropertyName = "Price";
-            Price.HeaderText = "السعر";
-            Price.Name = "Price";
-            Price.ReadOnly = true;
+            colDays.DataPropertyName = "Days";
+            colDays.FillWeight = 12F;
+            colDays.HeaderText = "أيام الاستلام";
+            colDays.Name = "colDays";
+            colDays.ReadOnly = true;
             // 
-            // Days
+            // colExternal
             // 
-            Days.DataPropertyName = "Days";
-            Days.HeaderText = "عدد الايام";
-            Days.Name = "Days";
-            Days.ReadOnly = true;
+            colExternal.DataPropertyName = "IsExternalText";
+            colExternal.FillWeight = 12F;
+            colExternal.HeaderText = "طبيعة الفحص";
+            colExternal.Name = "colExternal";
+            colExternal.ReadOnly = true;
             // 
             // colEdit
             // 
+            colEdit.FillWeight = 8F;
             colEdit.HeaderText = "تعديل";
             colEdit.Name = "colEdit";
+            colEdit.ReadOnly = true;
             // 
             // frmSettingsLab
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(873, 534);
-            Controls.Add(tableLayoutPanel1);
-            Controls.Add(pnlTitle);
+            BackColor = Color.FromArgb(244, 247, 251);
+            ClientSize = new Size(1110, 650);
+            Controls.Add(pnlGridCard);
+            Controls.Add(pnlInputsCard);
+            Controls.Add(pnlHeader);
+            Font = new Font("Segoe UI", 9.5F);
             Name = "frmSettingsLab";
-            Text = "frmSettingsLab";
+            Padding = new Padding(16);
+            RightToLeft = RightToLeft.Yes;
+            RightToLeftLayout = true;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "إعدادات الفحوصات والتحاليل";
             Load += frmSettingsLab_Load;
-            pnlTitle.ResumeLayout(false);
-            pnlTitle.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            pnlHeader.ResumeLayout(false);
+            pnlInputsCard.ResumeLayout(false);
+            tblInputs.ResumeLayout(false);
+            tblInputs.PerformLayout();
+            pnlActions.ResumeLayout(false);
+            pnlGridCard.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvLabs).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel pnlTitle;
+        private Panel pnlHeader;
         private Label lblTitle;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Button button1;
-        private Label label1;
-        private Label label3;
-        private Label label2;
+        private Label lblSubtitle;
+        private Panel pnlInputsCard;
+        private TableLayoutPanel tblInputs;
+        private Label lblLabName;
         private TextBox txtName;
-        private TextBox txtDays;
-        private TextBox txtPrice;
-        private Label label5;
-        private Label label4;
-        private DataGridView dgvLabs;
+        private Label lblCategory;
         private ComboBox cmbLabCat;
+        private Label lblPrice;
+        private TextBox txtPrice;
+        private Label lblDays;
+        private TextBox txtDays;
         private CheckBox chkExternal;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewTextBoxColumn LabCategoryId;
-        private DataGridViewTextBoxColumn CategoryName;
-        private DataGridViewTextBoxColumn LabName;
-        private DataGridViewTextBoxColumn Price;
-        private DataGridViewTextBoxColumn Days;
+        private Panel pnlActions;
+        private Button btnSave;
+        private Button btnNew;
+        private Button btnOpenParams;
+        private Panel pnlGridCard;
+        private DataGridView dgvLabs;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colCategory;
+        private DataGridViewTextBoxColumn colPrice;
+        private DataGridViewTextBoxColumn colDays;
+        private DataGridViewTextBoxColumn colExternal;
         private DataGridViewImageColumn colEdit;
     }
 }

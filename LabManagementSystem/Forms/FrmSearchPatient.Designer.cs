@@ -1,16 +1,9 @@
-﻿namespace LabManagementSystem.Forms
+namespace LabManagementSystem.Forms
 {
     partial class FrmSearchPatient
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,320 +15,285 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            pnlTitle = new Panel();
-            label1 = new Label();
-            btnSearch = new Button();
+            pnlHeader = new Panel();
+            lblHeader = new Label();
+            lblSubtitle = new Label();
+            btnAddPatient = new Button();
+            pnlSearchCard = new Panel();
+            lblSearchPrompt = new Label();
             txtSearch = new TextBox();
-            pnlSearch = new Panel();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            lblSearch = new Label();
-            button1 = new Button();
-            pnlBottom = new Panel();
-            label3 = new Label();
-            colDelete = new DataGridViewImageColumn();
-            colEdit = new DataGridViewImageColumn();
-            colAge = new DataGridViewTextBoxColumn();
-            colGender = new DataGridViewTextBoxColumn();
-            colPhone = new DataGridViewTextBoxColumn();
-            colName = new DataGridViewTextBoxColumn();
-            colMedicalCode = new DataGridViewTextBoxColumn();
-            colId = new DataGridViewTextBoxColumn();
+            btnRefresh = new Button();
+            lblResultsCount = new Label();
+            pnlGridCard = new Panel();
             dgvPatients = new DataGridView();
-            pnlTitle.SuspendLayout();
-            pnlSearch.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
-            pnlBottom.SuspendLayout();
+            colId = new DataGridViewTextBoxColumn();
+            colMedicalCode = new DataGridViewTextBoxColumn();
+            colName = new DataGridViewTextBoxColumn();
+            colPhone = new DataGridViewTextBoxColumn();
+            colGender = new DataGridViewTextBoxColumn();
+            colAge = new DataGridViewTextBoxColumn();
+            colEdit = new DataGridViewImageColumn();
+            colDelete = new DataGridViewImageColumn();
+            pnlHeader.SuspendLayout();
+            pnlSearchCard.SuspendLayout();
+            pnlGridCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPatients).BeginInit();
             SuspendLayout();
             // 
-            // pnlTitle
+            // pnlHeader
             // 
-            pnlTitle.BackColor = Color.Gainsboro;
-            pnlTitle.Controls.Add(label1);
-            pnlTitle.Controls.Add(btnSearch);
-            pnlTitle.Dock = DockStyle.Top;
-            pnlTitle.Location = new Point(0, 0);
-            pnlTitle.Margin = new Padding(3, 2, 3, 2);
-            pnlTitle.Name = "pnlTitle";
-            pnlTitle.Size = new Size(1199, 45);
-            pnlTitle.TabIndex = 0;
-            pnlTitle.Paint += pnlTitle_Paint;
+            pnlHeader.BackColor = Color.FromArgb(23, 43, 77);
+            pnlHeader.Controls.Add(btnAddPatient);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(lblHeader);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Height = 68;
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.TabIndex = 0;
             // 
-            // label1
+            // lblHeader
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.RoyalBlue;
-            label1.Location = new Point(710, 8);
-            label1.Name = "label1";
-            label1.Size = new Size(225, 30);
-            label1.TabIndex = 1;
-            label1.Text = "شاشة البحث عن مريض";
-            label1.Click += label1_Click;
+            lblHeader.Dock = DockStyle.Top;
+            lblHeader.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
+            lblHeader.ForeColor = Color.White;
+            lblHeader.Height = 28;
+            lblHeader.Name = "lblHeader";
+            lblHeader.Text = "👥 سجل وبحث بيانات المرضى";
+            lblHeader.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // btnSearch
+            // lblSubtitle
             // 
-            btnSearch.BackColor = Color.RoyalBlue;
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(494, 9);
-            btnSearch.Margin = new Padding(3, 2, 3, 2);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(160, 32);
-            btnSearch.TabIndex = 4;
-            btnSearch.Text = "إضافة مريض ➕  ";
-            btnSearch.UseVisualStyleBackColor = false;
-            btnSearch.Click += button1_Click;
+            lblSubtitle.Dock = DockStyle.Bottom;
+            lblSubtitle.Font = new Font("Segoe UI", 9F);
+            lblSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
+            lblSubtitle.Height = 18;
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Text = "البحث الفوري بالكود الطبي، الاسم، أو رقم الهاتف وتعديل أو حذف السجلات";
+            lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // btnAddPatient
+            // 
+            btnAddPatient.Dock = DockStyle.Left;
+            btnAddPatient.BackColor = Color.FromArgb(37, 99, 235);
+            btnAddPatient.FlatAppearance.BorderSize = 0;
+            btnAddPatient.FlatStyle = FlatStyle.Flat;
+            btnAddPatient.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnAddPatient.ForeColor = Color.White;
+            btnAddPatient.Name = "btnAddPatient";
+            btnAddPatient.Size = new Size(160, 40);
+            btnAddPatient.TabIndex = 2;
+            btnAddPatient.Text = "➕ مريض جديد";
+            btnAddPatient.UseVisualStyleBackColor = false;
+            btnAddPatient.Click += btnAddPatient_Click;
+            // 
+            // pnlSearchCard
+            // 
+            pnlSearchCard.BackColor = Color.White;
+            pnlSearchCard.Controls.Add(lblResultsCount);
+            pnlSearchCard.Controls.Add(btnRefresh);
+            pnlSearchCard.Controls.Add(txtSearch);
+            pnlSearchCard.Controls.Add(lblSearchPrompt);
+            pnlSearchCard.Dock = DockStyle.Top;
+            pnlSearchCard.Height = 62;
+            pnlSearchCard.Name = "pnlSearchCard";
+            pnlSearchCard.Padding = new Padding(16, 12, 16, 12);
+            pnlSearchCard.TabIndex = 1;
+            // 
+            // lblSearchPrompt
+            // 
+            lblSearchPrompt.Dock = DockStyle.Right;
+            lblSearchPrompt.AutoSize = false;
+            lblSearchPrompt.Width = 85;
+            lblSearchPrompt.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblSearchPrompt.ForeColor = Color.FromArgb(30, 41, 59);
+            lblSearchPrompt.Name = "lblSearchPrompt";
+            lblSearchPrompt.Text = "بحث سريع:";
+            lblSearchPrompt.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtSearch
             // 
-            txtSearch.Anchor = AnchorStyles.None;
-            txtSearch.Location = new Point(657, 14);
-            txtSearch.Margin = new Padding(3, 2, 3, 2);
+            txtSearch.Dock = DockStyle.Right;
+            txtSearch.Font = new Font("Segoe UI", 10.5F);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(159, 23);
-            txtSearch.TabIndex = 3;
+            txtSearch.PlaceholderText = "اكتب اسم المريض، الكود الطبي، أو الهاتف...";
+            txtSearch.Size = new Size(380, 26);
+            txtSearch.TabIndex = 0;
             txtSearch.TextChanged += txtSearch_TextChanged;
             // 
-            // pnlSearch
+            // btnRefresh
             // 
-            pnlSearch.BackColor = Color.White;
-            pnlSearch.Controls.Add(tableLayoutPanel1);
-            pnlSearch.Dock = DockStyle.Top;
-            pnlSearch.Location = new Point(0, 45);
-            pnlSearch.Margin = new Padding(3, 2, 3, 2);
-            pnlSearch.Name = "pnlSearch";
-            pnlSearch.Size = new Size(1199, 52);
-            pnlSearch.TabIndex = 1;
+            btnRefresh.Dock = DockStyle.Right;
+            btnRefresh.BackColor = Color.White;
+            btnRefresh.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.Font = new Font("Segoe UI", 9.5F);
+            btnRefresh.ForeColor = Color.FromArgb(30, 41, 59);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(110, 38);
+            btnRefresh.TabIndex = 1;
+            btnRefresh.Text = "🔄 تحديث";
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
-            // tableLayoutPanel1
+            // lblResultsCount
             // 
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 262F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 535F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 789F));
-            tableLayoutPanel1.Controls.Add(button1, 2, 0);
-            tableLayoutPanel1.Controls.Add(lblSearch, 0, 0);
-            tableLayoutPanel1.Controls.Add(txtSearch, 1, 0);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 52F));
-            tableLayoutPanel1.Size = new Size(1199, 52);
-            tableLayoutPanel1.TabIndex = 2;
+            lblResultsCount.Dock = DockStyle.Left;
+            lblResultsCount.AutoSize = true;
+            lblResultsCount.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblResultsCount.ForeColor = Color.FromArgb(100, 116, 139);
+            lblResultsCount.Name = "lblResultsCount";
+            lblResultsCount.Text = "المرضى المعروضين: 0";
+            lblResultsCount.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // lblSearch
+            // pnlGridCard
             // 
-            lblSearch.Anchor = AnchorStyles.None;
-            lblSearch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSearch.ForeColor = Color.FromArgb(55, 71, 79);
-            lblSearch.Location = new Point(1001, 1);
-            lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(134, 50);
-            lblSearch.TabIndex = 2;
-            lblSearch.Text = "بحث بالاسم او كود المريض";
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.None;
-            button1.BackColor = Color.RoyalBlue;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(209, 13);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(118, 26);
-            button1.TabIndex = 6;
-            button1.Text = "بحث";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click_1;
-            // 
-            // pnlBottom
-            // 
-            pnlBottom.Controls.Add(label3);
-            pnlBottom.Dock = DockStyle.Bottom;
-            pnlBottom.Location = new Point(0, 490);
-            pnlBottom.Margin = new Padding(3, 2, 3, 2);
-            pnlBottom.Name = "pnlBottom";
-            pnlBottom.Size = new Size(1199, 30);
-            pnlBottom.TabIndex = 4;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(828, 8);
-            label3.Name = "label3";
-            label3.Size = new Size(96, 15);
-            label3.TabIndex = 0;
-            label3.Text = "إجمالي المرضى : 0";
-            // 
-            // colDelete
-            // 
-            colDelete.HeaderText = "حذف";
-            colDelete.MinimumWidth = 6;
-            colDelete.Name = "colDelete";
-            colDelete.ReadOnly = true;
-            colDelete.Resizable = DataGridViewTriState.True;
-            // 
-            // colEdit
-            // 
-            colEdit.HeaderText = "تعديل";
-            colEdit.MinimumWidth = 6;
-            colEdit.Name = "colEdit";
-            colEdit.ReadOnly = true;
-            colEdit.Resizable = DataGridViewTriState.True;
-            // 
-            // colAge
-            // 
-            colAge.DataPropertyName = "AgeAtRecord";
-            colAge.HeaderText = "السن";
-            colAge.MinimumWidth = 6;
-            colAge.Name = "colAge";
-            colAge.ReadOnly = true;
-            // 
-            // colGender
-            // 
-            colGender.DataPropertyName = "Gender";
-            colGender.HeaderText = "النوع";
-            colGender.MinimumWidth = 6;
-            colGender.Name = "colGender";
-            colGender.ReadOnly = true;
-            // 
-            // colPhone
-            // 
-            colPhone.DataPropertyName = "Phone";
-            colPhone.HeaderText = "رقم الموبايل";
-            colPhone.MinimumWidth = 6;
-            colPhone.Name = "colPhone";
-            colPhone.ReadOnly = true;
-            // 
-            // colName
-            // 
-            colName.DataPropertyName = "Name";
-            colName.HeaderText = "اسم المريض";
-            colName.MinimumWidth = 6;
-            colName.Name = "colName";
-            colName.ReadOnly = true;
-            // 
-            // colMedicalCode
-            // 
-            colMedicalCode.DataPropertyName = "MedicalCode";
-            colMedicalCode.HeaderText = "كود المريض";
-            colMedicalCode.MinimumWidth = 6;
-            colMedicalCode.Name = "colMedicalCode";
-            colMedicalCode.ReadOnly = true;
-            // 
-            // colId
-            // 
-            colId.DataPropertyName = "Id";
-            colId.HeaderText = "م";
-            colId.MinimumWidth = 6;
-            colId.Name = "colId";
-            colId.ReadOnly = true;
+            pnlGridCard.BackColor = Color.White;
+            pnlGridCard.Controls.Add(dgvPatients);
+            pnlGridCard.Dock = DockStyle.Fill;
+            pnlGridCard.Padding = new Padding(12);
+            pnlGridCard.Name = "pnlGridCard";
+            pnlGridCard.TabIndex = 2;
             // 
             // dgvPatients
             // 
             dgvPatients.AllowUserToAddRows = false;
             dgvPatients.AllowUserToDeleteRows = false;
-            dgvPatients.AllowUserToResizeRows = false;
             dgvPatients.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvPatients.BackgroundColor = SystemColors.Control;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvPatients.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvPatients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPatients.Columns.AddRange(new DataGridViewColumn[] { colId, colMedicalCode, colName, colPhone, colGender, colAge, colEdit, colDelete });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvPatients.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvPatients.BackgroundColor = Color.White;
+            dgvPatients.BorderStyle = BorderStyle.None;
+            dgvPatients.ColumnHeadersHeight = 40;
+            dgvPatients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvPatients.Columns.AddRange(new DataGridViewColumn[] {
+                colId,
+                colMedicalCode,
+                colName,
+                colPhone,
+                colGender,
+                colAge,
+                colEdit,
+                colDelete
+            });
             dgvPatients.Dock = DockStyle.Fill;
-            dgvPatients.EnableHeadersVisualStyles = false;
-            dgvPatients.Location = new Point(0, 97);
-            dgvPatients.Margin = new Padding(3, 2, 3, 2);
+            dgvPatients.Location = new Point(12, 12);
             dgvPatients.MultiSelect = false;
             dgvPatients.Name = "dgvPatients";
             dgvPatients.ReadOnly = true;
             dgvPatients.RowHeadersVisible = false;
-            dgvPatients.RowHeadersWidth = 51;
-            dgvPatients.RowTemplate.Height = 45;
+            dgvPatients.RowTemplate.Height = 38;
             dgvPatients.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPatients.Size = new Size(1199, 393);
-            dgvPatients.TabIndex = 5;
-            dgvPatients.CellContentClick += dgvPatients_CellContentClick_1;
+            dgvPatients.Size = new Size(1176, 510);
+            dgvPatients.TabIndex = 0;
+            dgvPatients.CellContentClick += dgvPatients_CellContentClick;
+            // 
+            // colId
+            // 
+            colId.DataPropertyName = "Id";
+            colId.FillWeight = 10F;
+            colId.HeaderText = "#";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            // 
+            // colMedicalCode
+            // 
+            colMedicalCode.DataPropertyName = "MedicalCode";
+            colMedicalCode.FillWeight = 20F;
+            colMedicalCode.HeaderText = "الكود الطبي";
+            colMedicalCode.Name = "colMedicalCode";
+            colMedicalCode.ReadOnly = true;
+            // 
+            // colName
+            // 
+            colName.DataPropertyName = "Name";
+            colName.FillWeight = 32F;
+            colName.HeaderText = "اسم المريض";
+            colName.Name = "colName";
+            colName.ReadOnly = true;
+            // 
+            // colPhone
+            // 
+            colPhone.DataPropertyName = "Phone";
+            colPhone.FillWeight = 18F;
+            colPhone.HeaderText = "رقم الهاتف";
+            colPhone.Name = "colPhone";
+            colPhone.ReadOnly = true;
+            // 
+            // colGender
+            // 
+            colGender.DataPropertyName = "Gender";
+            colGender.FillWeight = 12F;
+            colGender.HeaderText = "النوع";
+            colGender.Name = "colGender";
+            colGender.ReadOnly = true;
+            // 
+            // colAge
+            // 
+            colAge.DataPropertyName = "AgeAtRecord";
+            colAge.FillWeight = 12F;
+            colAge.HeaderText = "السن";
+            colAge.Name = "colAge";
+            colAge.ReadOnly = true;
+            // 
+            // colEdit
+            // 
+            colEdit.FillWeight = 10F;
+            colEdit.HeaderText = "تعديل";
+            colEdit.Name = "colEdit";
+            colEdit.ReadOnly = true;
+            // 
+            // colDelete
+            // 
+            colDelete.FillWeight = 10F;
+            colDelete.HeaderText = "حذف";
+            colDelete.Name = "colDelete";
+            colDelete.ReadOnly = true;
             // 
             // FrmSearchPatient
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(1199, 520);
-            Controls.Add(dgvPatients);
-            Controls.Add(pnlSearch);
-            Controls.Add(pnlTitle);
-            Controls.Add(pnlBottom);
-            Margin = new Padding(3, 2, 3, 2);
+            BackColor = Color.FromArgb(244, 247, 251);
+            ClientSize = new Size(1200, 680);
+            Controls.Add(pnlGridCard);
+            Controls.Add(pnlSearchCard);
+            Controls.Add(pnlHeader);
+            Font = new Font("Segoe UI", 9.5F);
             Name = "FrmSearchPatient";
+            Padding = new Padding(16);
             RightToLeft = RightToLeft.Yes;
             RightToLeftLayout = true;
-            Text = "FrmSearchPatient";
+            Text = "سجل وبيانات المرضى";
             Load += FrmSearchPatient_Load;
-            pnlTitle.ResumeLayout(false);
-            pnlTitle.PerformLayout();
-            pnlSearch.ResumeLayout(false);
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
-            pnlBottom.ResumeLayout(false);
-            pnlBottom.PerformLayout();
+            pnlHeader.ResumeLayout(false);
+            pnlSearchCard.ResumeLayout(false);
+            pnlSearchCard.PerformLayout();
+            pnlGridCard.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvPatients).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel pnlTitle;
-        private Label label1;
-        private Panel pnlSearch;
+        private Panel pnlHeader;
+        private Label lblHeader;
+        private Label lblSubtitle;
+        private Button btnAddPatient;
+        private Panel pnlSearchCard;
+        private Label lblSearchPrompt;
         private TextBox txtSearch;
-        private Button btnSearch;
-        private Label lblSearch;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Panel pnlBottom;
-        private Label label3;
-        private DataGridViewImageColumn colDelete;
-        private DataGridViewImageColumn colEdit;
-        private DataGridViewTextBoxColumn colAge;
-        private DataGridViewTextBoxColumn colGender;
-        private DataGridViewTextBoxColumn colPhone;
-        private DataGridViewTextBoxColumn colName;
-        private DataGridViewTextBoxColumn colMedicalCode;
-        private DataGridViewTextBoxColumn colId;
+        private Button btnRefresh;
+        private Label lblResultsCount;
+        private Panel pnlGridCard;
         private DataGridView dgvPatients;
-        private Button button1;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn colMedicalCode;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colPhone;
+        private DataGridViewTextBoxColumn colGender;
+        private DataGridViewTextBoxColumn colAge;
+        private DataGridViewImageColumn colEdit;
+        private DataGridViewImageColumn colDelete;
     }
 }

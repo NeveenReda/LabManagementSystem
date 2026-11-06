@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace LabManagementSystem.Models;
@@ -12,6 +12,8 @@ public partial class Payment
     public decimal Amount { get; set; }
 
     public string? Notes { get; set; }
+
+    public int PaymentMethod { get; set; } = 1; // 1=Cash, 2=Visa, 3=Transfer, 4=Insurance
 
     public int VisitId { get; set; }
 

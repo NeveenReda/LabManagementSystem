@@ -1,16 +1,9 @@
-﻿namespace LabManagementSystem.Forms
+namespace LabManagementSystem.Forms
 {
     partial class FrmAddVisit
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,639 +15,642 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            label3 = new Label();
+            pnlHeader = new Panel();
+            lblSubtitle = new Label();
+            lblTitle = new Label();
+            pnlPatientCard = new Panel();
+            tblPatient = new TableLayoutPanel();
+            lblCode = new Label();
             txtPatientCode = new TextBox();
-            label4 = new Label();
-            txtTotal = new TextBox();
-            lblDoctorNAme = new Label();
+            btnPickPatient = new Button();
+            btnAddPatient = new Button();
+            lblName = new Label();
+            txtPatientName = new TextBox();
+            lblDoctor = new Label();
             txtDoctorName = new TextBox();
-            label6 = new Label();
-            pnlData = new Panel();
-            tblAnalysis = new TableLayoutPanel();
+            lblDate = new Label();
+            DateOfVisit = new DateTimePicker();
+            lblNotes = new Label();
+            txtNotes = new TextBox();
+            pnlLabsCard = new Panel();
+            pnlAddLabBar = new Panel();
+            lblSelectLab = new Label();
+            cmbolabs = new ComboBox();
+            btnAddLab = new Button();
             dgvVisitDetails = new DataGridView();
             colId = new DataGridViewTextBoxColumn();
-            colLabName = new DataGridViewTextBoxColumn();
+            colName = new DataGridViewTextBoxColumn();
             colPrice = new DataGridViewTextBoxColumn();
             colExternal = new DataGridViewButtonColumn();
             colResult = new DataGridViewButtonColumn();
             colDelete = new DataGridViewImageColumn();
             colVisitLabId = new DataGridViewTextBoxColumn();
-            button3 = new Button();
-            cmbolabs = new ComboBox();
-            tableLayoutPanel3 = new TableLayoutPanel();
-            btnSave = new Button();
-            btnAddLab = new Button();
-            label10 = new Label();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            label9 = new Label();
-            label8 = new Label();
-            DateOfVisit = new DateTimePicker();
-            txtRemaining = new TextBox();
-            txtAfterDiscount = new TextBox();
-            textDiscountValue = new TextBox();
-            label11 = new Label();
+            pnlFinancialCard = new Panel();
+            tblFinancial = new TableLayoutPanel();
+            lblGross = new Label();
+            txtTotal = new TextBox();
+            lblDiscPct = new Label();
             textDiscountPercentage = new TextBox();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            btnAddPatient = new Button();
-            txtPatientName = new TextBox();
-            label12 = new Label();
-            txtNotes = new TextBox();
-            label1 = new Label();
-            label7 = new Label();
-            label5 = new Label();
+            lblDiscVal = new Label();
+            textDiscountValue = new TextBox();
+            lblNet = new Label();
+            txtAfterDiscount = new TextBox();
+            lblPaid = new Label();
             txtPayment = new TextBox();
-            lbltxt = new Label();
-            pnlTitle = new Panel();
-            pnlData.SuspendLayout();
-            tblAnalysis.SuspendLayout();
+            lblRemaining = new Label();
+            txtRemaining = new TextBox();
+            btnSave = new Button();
+            pnlHeader.SuspendLayout();
+            pnlPatientCard.SuspendLayout();
+            tblPatient.SuspendLayout();
+            pnlLabsCard.SuspendLayout();
+            pnlAddLabBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvVisitDetails).BeginInit();
-            tableLayoutPanel3.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
-            pnlTitle.SuspendLayout();
+            pnlFinancialCard.SuspendLayout();
+            tblFinancial.SuspendLayout();
             SuspendLayout();
             // 
-            // button1
+            // pnlHeader
             // 
-            button1.BackColor = Color.MediumSeaGreen;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(11, 359);
-            button1.Name = "button1";
-            button1.Size = new Size(160, 50);
-            button1.TabIndex = 17;
-            button1.Text = "حفظ";
-            button1.UseVisualStyleBackColor = false;
+            pnlHeader.BackColor = Color.FromArgb(23, 43, 77);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Height = 65;
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.TabIndex = 0;
             // 
-            // label3
+            // lblTitle
             // 
-            label3.AutoSize = true;
-            label3.ForeColor = Color.FromArgb(55, 71, 79);
-            label3.Location = new Point(1690, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(134, 31);
-            label3.TabIndex = 1;
-            label3.Text = "كود المريض";
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Height = 28;
+            lblTitle.Name = "lblTitle";
+            lblTitle.Text = "🧪 تسجيل زيارة وفحوصات طبية";
+            lblTitle.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblSubtitle
+            // 
+            lblSubtitle.Dock = DockStyle.Bottom;
+            lblSubtitle.Font = new Font("Segoe UI", 9F);
+            lblSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
+            lblSubtitle.Height = 18;
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Text = "تحديد المريض، إضافة التحاليل المطلوبة، احتساب الخصومات، والتحصيل المالي";
+            lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // pnlPatientCard
+            // 
+            pnlPatientCard.BackColor = Color.White;
+            pnlPatientCard.Controls.Add(tblPatient);
+            pnlPatientCard.Dock = DockStyle.Top;
+            pnlPatientCard.Height = 115;
+            pnlPatientCard.Location = new Point(16, 81);
+            pnlPatientCard.Name = "pnlPatientCard";
+            pnlPatientCard.Padding = new Padding(14, 10, 14, 10);
+            pnlPatientCard.TabIndex = 1;
+            // 
+            // tblPatient
+            // 
+            tblPatient.ColumnCount = 7;
+            tblPatient.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 90F));
+            tblPatient.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150F));
+            tblPatient.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95F));
+            tblPatient.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 110F));
+            tblPatient.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95F));
+            tblPatient.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tblPatient.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tblPatient.Controls.Add(lblCode, 0, 0);
+            tblPatient.Controls.Add(txtPatientCode, 1, 0);
+            tblPatient.Controls.Add(btnPickPatient, 2, 0);
+            tblPatient.Controls.Add(btnAddPatient, 3, 0);
+            tblPatient.Controls.Add(lblName, 4, 0);
+            tblPatient.Controls.Add(txtPatientName, 5, 0);
+            tblPatient.Controls.Add(lblDoctor, 0, 1);
+            tblPatient.Controls.Add(txtDoctorName, 1, 1);
+            tblPatient.Controls.Add(lblDate, 2, 1);
+            tblPatient.Controls.Add(DateOfVisit, 3, 1);
+            tblPatient.Controls.Add(lblNotes, 4, 1);
+            tblPatient.Controls.Add(txtNotes, 5, 1);
+            tblPatient.Dock = DockStyle.Fill;
+            tblPatient.Name = "tblPatient";
+            tblPatient.RowCount = 2;
+            tblPatient.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tblPatient.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tblPatient.TabIndex = 0;
+            // 
+            // lblCode
+            // 
+            lblCode.Dock = DockStyle.Fill;
+            lblCode.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblCode.ForeColor = Color.FromArgb(30, 41, 59);
+            lblCode.Name = "lblCode";
+            lblCode.Text = "الكود الطبي:";
+            lblCode.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPatientCode
             // 
-            txtPatientCode.Location = new Point(724, 3);
+            txtPatientCode.Dock = DockStyle.Fill;
+            txtPatientCode.Font = new Font("Segoe UI", 10F);
+            txtPatientCode.Margin = new Padding(4, 8, 4, 8);
             txtPatientCode.Name = "txtPatientCode";
-            txtPatientCode.Size = new Size(213, 38);
+            txtPatientCode.PlaceholderText = "الكود الطبي...";
             txtPatientCode.TabIndex = 0;
-            txtPatientCode.TextChanged += txtPatientCode_TextChanged;
             txtPatientCode.Leave += txtPatientCode_Leave;
             // 
-            // label4
+            // btnPickPatient
             // 
-            label4.AutoSize = true;
-            label4.ForeColor = Color.FromArgb(55, 71, 79);
-            label4.Location = new Point(490, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(93, 31);
-            label4.TabIndex = 3;
-            label4.Text = "الاجمالى";
+            btnPickPatient.BackColor = Color.FromArgb(37, 99, 235);
+            btnPickPatient.Dock = DockStyle.Fill;
+            btnPickPatient.FlatAppearance.BorderSize = 0;
+            btnPickPatient.FlatStyle = FlatStyle.Flat;
+            btnPickPatient.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnPickPatient.ForeColor = Color.White;
+            btnPickPatient.Margin = new Padding(3, 6, 3, 6);
+            btnPickPatient.Name = "btnPickPatient";
+            btnPickPatient.Text = "🔍 اختيار";
+            btnPickPatient.UseVisualStyleBackColor = false;
+            btnPickPatient.Click += btnPickPatient_Click;
             // 
-            // txtTotal
+            // btnAddPatient
             // 
-            txtTotal.Location = new Point(179, 3);
-            txtTotal.Name = "txtTotal";
-            txtTotal.Size = new Size(240, 38);
-            txtTotal.TabIndex = 2;
+            btnAddPatient.BackColor = Color.FromArgb(22, 163, 74);
+            btnAddPatient.Dock = DockStyle.Fill;
+            btnAddPatient.FlatAppearance.BorderSize = 0;
+            btnAddPatient.FlatStyle = FlatStyle.Flat;
+            btnAddPatient.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnAddPatient.ForeColor = Color.White;
+            btnAddPatient.Margin = new Padding(3, 6, 3, 6);
+            btnAddPatient.Name = "btnAddPatient";
+            btnAddPatient.Text = "➕ مريض جديد";
+            btnAddPatient.UseVisualStyleBackColor = false;
+            btnAddPatient.Click += btnAddPatient_Click;
             // 
-            // lblDoctorNAme
+            // lblName
             // 
-            lblDoctorNAme.AutoSize = true;
-            lblDoctorNAme.ForeColor = Color.FromArgb(55, 71, 79);
-            lblDoctorNAme.Location = new Point(1698, 56);
-            lblDoctorNAme.Name = "lblDoctorNAme";
-            lblDoctorNAme.Size = new Size(126, 31);
-            lblDoctorNAme.TabIndex = 5;
-            lblDoctorNAme.Text = "اسم الدكتور";
+            lblName.Dock = DockStyle.Fill;
+            lblName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblName.ForeColor = Color.FromArgb(30, 41, 59);
+            lblName.Name = "lblName";
+            lblName.Text = "اسم المريض:";
+            lblName.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // txtPatientName
+            // 
+            tblPatient.SetColumnSpan(txtPatientName, 2);
+            txtPatientName.Dock = DockStyle.Fill;
+            txtPatientName.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            txtPatientName.Margin = new Padding(4, 8, 4, 8);
+            txtPatientName.Name = "txtPatientName";
+            txtPatientName.ReadOnly = true;
+            txtPatientName.TabIndex = 1;
+            // 
+            // lblDoctor
+            // 
+            lblDoctor.Dock = DockStyle.Fill;
+            lblDoctor.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblDoctor.ForeColor = Color.FromArgb(30, 41, 59);
+            lblDoctor.Name = "lblDoctor";
+            lblDoctor.Text = "الطبيب المعالج:";
+            lblDoctor.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtDoctorName
             // 
-            txtDoctorName.Location = new Point(1289, 59);
+            txtDoctorName.Dock = DockStyle.Fill;
+            txtDoctorName.Font = new Font("Segoe UI", 10F);
+            txtDoctorName.Margin = new Padding(4, 8, 4, 8);
             txtDoctorName.Name = "txtDoctorName";
-            txtDoctorName.Size = new Size(240, 38);
-            txtDoctorName.TabIndex = 4;
+            txtDoctorName.PlaceholderText = "اسم الطبيب المحول...";
+            txtDoctorName.TabIndex = 2;
             // 
-            // label6
+            // lblDate
             // 
-            label6.AutoSize = true;
-            label6.ForeColor = Color.FromArgb(55, 71, 79);
-            label6.Location = new Point(455, 56);
-            label6.Name = "label6";
-            label6.Size = new Size(128, 31);
-            label6.TabIndex = 7;
-            label6.Text = "قيمة الخصم";
+            lblDate.Dock = DockStyle.Fill;
+            lblDate.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblDate.ForeColor = Color.FromArgb(30, 41, 59);
+            lblDate.Name = "lblDate";
+            lblDate.Text = "تاريخ الزيارة:";
+            lblDate.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // pnlData
+            // DateOfVisit
             // 
-            pnlData.BackColor = SystemColors.Window;
-            pnlData.BorderStyle = BorderStyle.FixedSingle;
-            pnlData.Controls.Add(tblAnalysis);
-            pnlData.Controls.Add(tableLayoutPanel1);
-            pnlData.Controls.Add(button1);
-            pnlData.Dock = DockStyle.Top;
-            pnlData.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            pnlData.Location = new Point(0, 70);
-            pnlData.Name = "pnlData";
-            pnlData.Size = new Size(1829, 714);
-            pnlData.TabIndex = 5;
-            pnlData.Paint += pnlData_Paint;
+            DateOfVisit.Dock = DockStyle.Fill;
+            DateOfVisit.Font = new Font("Segoe UI", 9.5F);
+            DateOfVisit.Format = DateTimePickerFormat.Short;
+            DateOfVisit.Margin = new Padding(4, 8, 4, 8);
+            DateOfVisit.Name = "DateOfVisit";
+            DateOfVisit.TabIndex = 3;
             // 
-            // tblAnalysis
+            // lblNotes
             // 
-            tblAnalysis.AutoSize = true;
-            tblAnalysis.ColumnCount = 3;
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 41.26984F));
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.3152714F));
-            tblAnalysis.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 46.4148865F));
-            tblAnalysis.Controls.Add(dgvVisitDetails, 0, 1);
-            tblAnalysis.Controls.Add(button3, 2, 2);
-            tblAnalysis.Controls.Add(cmbolabs, 1, 0);
-            tblAnalysis.Controls.Add(tableLayoutPanel3, 2, 0);
-            tblAnalysis.Controls.Add(label10, 0, 0);
-            tblAnalysis.Dock = DockStyle.Top;
-            tblAnalysis.Location = new Point(0, 268);
-            tblAnalysis.Name = "tblAnalysis";
-            tblAnalysis.RowCount = 3;
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 1.39720559F));
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Percent, 98.60279F));
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 13F));
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tblAnalysis.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tblAnalysis.Size = new Size(1827, 4093);
-            tblAnalysis.TabIndex = 22;
-            tblAnalysis.Paint += tblAnalysis_Paint;
+            lblNotes.Dock = DockStyle.Fill;
+            lblNotes.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblNotes.ForeColor = Color.FromArgb(30, 41, 59);
+            lblNotes.Name = "lblNotes";
+            lblNotes.Text = "ملاحظات الزيارة:";
+            lblNotes.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // txtNotes
+            // 
+            tblPatient.SetColumnSpan(txtNotes, 2);
+            txtNotes.Dock = DockStyle.Fill;
+            txtNotes.Font = new Font("Segoe UI", 10F);
+            txtNotes.Margin = new Padding(4, 8, 4, 8);
+            txtNotes.Name = "txtNotes";
+            txtNotes.PlaceholderText = "أي ملاحظات سريرية أو تشخيصية...";
+            txtNotes.TabIndex = 4;
+            // 
+            // pnlLabsCard
+            // 
+            pnlLabsCard.BackColor = Color.White;
+            pnlLabsCard.Controls.Add(dgvVisitDetails);
+            pnlLabsCard.Controls.Add(pnlAddLabBar);
+            pnlLabsCard.Dock = DockStyle.Fill;
+            pnlLabsCard.Location = new Point(16, 204);
+            pnlLabsCard.Name = "pnlLabsCard";
+            pnlLabsCard.Padding = new Padding(12);
+            pnlLabsCard.TabIndex = 2;
+            // 
+            // pnlAddLabBar
+            // 
+            pnlAddLabBar.Controls.Add(lblSelectLab);
+            pnlAddLabBar.Controls.Add(cmbolabs);
+            pnlAddLabBar.Controls.Add(btnAddLab);
+            pnlAddLabBar.Dock = DockStyle.Top;
+            pnlAddLabBar.Height = 48;
+            pnlAddLabBar.Name = "pnlAddLabBar";
+            pnlAddLabBar.Padding = new Padding(6);
+            pnlAddLabBar.TabIndex = 0;
+            // 
+            // lblSelectLab
+            // 
+            lblSelectLab.Dock = DockStyle.Right;
+            lblSelectLab.AutoSize = false;
+            lblSelectLab.Width = 95;
+            lblSelectLab.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblSelectLab.ForeColor = Color.FromArgb(30, 41, 59);
+            lblSelectLab.Name = "lblSelectLab";
+            lblSelectLab.Text = "اختر التحليل:";
+            lblSelectLab.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // cmbolabs
+            // 
+            cmbolabs.Dock = DockStyle.Right;
+            cmbolabs.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbolabs.Font = new Font("Segoe UI", 10F);
+            cmbolabs.Name = "cmbolabs";
+            cmbolabs.Size = new Size(340, 25);
+            cmbolabs.TabIndex = 0;
+            cmbolabs.SelectedIndexChanged += cmbolabs_SelectedIndexChanged;
+            // 
+            // btnAddLab
+            // 
+            btnAddLab.Dock = DockStyle.Right;
+            btnAddLab.BackColor = Color.FromArgb(37, 99, 235);
+            btnAddLab.FlatAppearance.BorderSize = 0;
+            btnAddLab.FlatStyle = FlatStyle.Flat;
+            btnAddLab.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnAddLab.ForeColor = Color.White;
+            btnAddLab.Name = "btnAddLab";
+            btnAddLab.Size = new Size(140, 36);
+            btnAddLab.TabIndex = 1;
+            btnAddLab.Text = "➕ إضافة للزيارة";
+            btnAddLab.UseVisualStyleBackColor = false;
+            btnAddLab.Click += btnAddLab_Click;
             // 
             // dgvVisitDetails
             // 
             dgvVisitDetails.AllowUserToAddRows = false;
-            dgvVisitDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvVisitDetails.Columns.AddRange(new DataGridViewColumn[] { colId, colLabName, colPrice, colExternal, colResult, colDelete, colVisitLabId });
+            dgvVisitDetails.AllowUserToDeleteRows = false;
+            dgvVisitDetails.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvVisitDetails.BackgroundColor = Color.White;
+            dgvVisitDetails.BorderStyle = BorderStyle.None;
+            dgvVisitDetails.ColumnHeadersHeight = 38;
+            dgvVisitDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvVisitDetails.Columns.AddRange(new DataGridViewColumn[] {
+                colId,
+                colName,
+                colPrice,
+                colExternal,
+                colResult,
+                colDelete,
+                colVisitLabId
+            });
             dgvVisitDetails.Dock = DockStyle.Fill;
-            dgvVisitDetails.Location = new Point(1076, 60);
+            dgvVisitDetails.Location = new Point(12, 60);
+            dgvVisitDetails.MultiSelect = false;
             dgvVisitDetails.Name = "dgvVisitDetails";
             dgvVisitDetails.ReadOnly = true;
             dgvVisitDetails.RowHeadersVisible = false;
-            dgvVisitDetails.RowHeadersWidth = 51;
+            dgvVisitDetails.RowTemplate.Height = 36;
             dgvVisitDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvVisitDetails.Size = new Size(748, 4016);
-            dgvVisitDetails.TabIndex = 24;
+            dgvVisitDetails.Size = new Size(1144, 250);
+            dgvVisitDetails.TabIndex = 1;
             dgvVisitDetails.CellContentClick += dgvVisitDetails_CellContentClick;
             // 
             // colId
             // 
-            colId.DataPropertyName = "Id";
-            colId.HeaderText = "م";
-            colId.MinimumWidth = 6;
+            colId.FillWeight = 10F;
+            colId.HeaderText = "#";
             colId.Name = "colId";
             colId.ReadOnly = true;
-            colId.Width = 125;
             // 
-            // colLabName
+            // colName
             // 
-            colLabName.DataPropertyName = "Name";
-            colLabName.HeaderText = "اسم التحليل";
-            colLabName.MinimumWidth = 6;
-            colLabName.Name = "colLabName";
-            colLabName.ReadOnly = true;
-            colLabName.Width = 125;
+            colName.FillWeight = 45F;
+            colName.HeaderText = "اسم التحليل الطبي";
+            colName.Name = "colName";
+            colName.ReadOnly = true;
             // 
             // colPrice
             // 
-            colPrice.DataPropertyName = "Price";
-            colPrice.HeaderText = "السعر";
-            colPrice.MinimumWidth = 6;
+            colPrice.FillWeight = 15F;
+            colPrice.HeaderText = "السعر (ج.م)";
             colPrice.Name = "colPrice";
             colPrice.ReadOnly = true;
-            colPrice.Width = 125;
             // 
             // colExternal
             // 
-            colExternal.DataPropertyName = "ExternalType";
-            colExternal.HeaderText = "";
-            colExternal.MinimumWidth = 6;
+            colExternal.FillWeight = 12F;
+            colExternal.HeaderText = "إحالة خارجي";
             colExternal.Name = "colExternal";
             colExternal.ReadOnly = true;
-            colExternal.Resizable = DataGridViewTriState.True;
-            colExternal.SortMode = DataGridViewColumnSortMode.Automatic;
-            colExternal.Text = "تحويل لمعمل خارجي";
+            colExternal.Text = "معمل خارجي";
             colExternal.UseColumnTextForButtonValue = true;
-            colExternal.Width = 125;
             // 
             // colResult
             // 
-            colResult.HeaderText = "";
-            colResult.MinimumWidth = 6;
+            colResult.FillWeight = 12F;
+            colResult.HeaderText = "النتائج";
             colResult.Name = "colResult";
             colResult.ReadOnly = true;
-            colResult.Text = "نتيجة التحليل";
+            colResult.Text = "إدخال النتائج";
             colResult.UseColumnTextForButtonValue = true;
-            colResult.Width = 125;
             // 
             // colDelete
             // 
+            colDelete.FillWeight = 8F;
             colDelete.HeaderText = "حذف";
-            colDelete.MinimumWidth = 6;
             colDelete.Name = "colDelete";
             colDelete.ReadOnly = true;
-            colDelete.Resizable = DataGridViewTriState.True;
-            colDelete.SortMode = DataGridViewColumnSortMode.Automatic;
-            colDelete.Width = 125;
             // 
             // colVisitLabId
             // 
             colVisitLabId.HeaderText = "VisitLabId";
-            colVisitLabId.MinimumWidth = 6;
             colVisitLabId.Name = "colVisitLabId";
             colVisitLabId.ReadOnly = true;
             colVisitLabId.Visible = false;
-            colVisitLabId.Width = 125;
             // 
-            // button3
+            // pnlFinancialCard
             // 
-            button3.BackColor = Color.MediumSeaGreen;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.ForeColor = Color.White;
-            button3.Location = new Point(711, 4082);
-            button3.Name = "button3";
-            button3.Size = new Size(134, 7);
-            button3.TabIndex = 25;
-            button3.Text = "حفظ";
-            button3.UseVisualStyleBackColor = false;
+            pnlFinancialCard.BackColor = Color.White;
+            pnlFinancialCard.Controls.Add(btnSave);
+            pnlFinancialCard.Controls.Add(tblFinancial);
+            pnlFinancialCard.Dock = DockStyle.Bottom;
+            pnlFinancialCard.Height = 110;
+            pnlFinancialCard.Location = new Point(16, 554);
+            pnlFinancialCard.Name = "pnlFinancialCard";
+            pnlFinancialCard.Padding = new Padding(14, 10, 14, 10);
+            pnlFinancialCard.TabIndex = 3;
             // 
-            // cmbolabs
+            // tblFinancial
             // 
-            cmbolabs.Font = new Font("Tahoma", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmbolabs.FormattingEnabled = true;
-            cmbolabs.Location = new Point(857, 3);
-            cmbolabs.Name = "cmbolabs";
-            cmbolabs.Size = new Size(213, 30);
-            cmbolabs.TabIndex = 15;
-            cmbolabs.SelectedIndexChanged += cmbolabs_SelectedIndexChanged;
+            tblFinancial.ColumnCount = 6;
+            tblFinancial.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66F));
+            tblFinancial.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66F));
+            tblFinancial.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66F));
+            tblFinancial.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66F));
+            tblFinancial.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66F));
+            tblFinancial.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66F));
+            tblFinancial.Controls.Add(lblGross, 0, 0);
+            tblFinancial.Controls.Add(txtTotal, 0, 1);
+            tblFinancial.Controls.Add(lblDiscPct, 1, 0);
+            tblFinancial.Controls.Add(textDiscountPercentage, 1, 1);
+            tblFinancial.Controls.Add(lblDiscVal, 2, 0);
+            tblFinancial.Controls.Add(textDiscountValue, 2, 1);
+            tblFinancial.Controls.Add(lblNet, 3, 0);
+            tblFinancial.Controls.Add(txtAfterDiscount, 3, 1);
+            tblFinancial.Controls.Add(lblPaid, 4, 0);
+            tblFinancial.Controls.Add(txtPayment, 4, 1);
+            tblFinancial.Controls.Add(lblRemaining, 5, 0);
+            tblFinancial.Controls.Add(txtRemaining, 5, 1);
+            tblFinancial.Dock = DockStyle.Top;
+            tblFinancial.Height = 58;
+            tblFinancial.Name = "tblFinancial";
+            tblFinancial.RowCount = 2;
+            tblFinancial.RowStyles.Add(new RowStyle(SizeType.Absolute, 24F));
+            tblFinancial.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
+            tblFinancial.TabIndex = 0;
             // 
-            // tableLayoutPanel3
+            // lblGross
             // 
-            tableLayoutPanel3.ColumnCount = 4;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 34F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 122F));
-            tableLayoutPanel3.Controls.Add(btnSave, 3, 0);
-            tableLayoutPanel3.Controls.Add(btnAddLab, 0, 0);
-            tableLayoutPanel3.Location = new Point(420, 3);
-            tableLayoutPanel3.Name = "tableLayoutPanel3";
-            tableLayoutPanel3.RowCount = 1;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.Size = new Size(425, 51);
-            tableLayoutPanel3.TabIndex = 27;
+            lblGross.Dock = DockStyle.Fill;
+            lblGross.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblGross.ForeColor = Color.FromArgb(100, 116, 139);
+            lblGross.Name = "lblGross";
+            lblGross.Text = "إجمالي الفحوصات";
+            lblGross.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // btnSave
+            // txtTotal
             // 
-            btnSave.BackColor = Color.MediumSeaGreen;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(3, 3);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(117, 40);
-            btnSave.TabIndex = 26;
-            btnSave.Text = "حفظ";
-            btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += btnSave_Click;
+            txtTotal.Dock = DockStyle.Fill;
+            txtTotal.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            txtTotal.Name = "txtTotal";
+            txtTotal.ReadOnly = true;
+            txtTotal.Text = "0.00";
+            txtTotal.TextAlign = HorizontalAlignment.Center;
             // 
-            // btnAddLab
+            // lblDiscPct
             // 
-            btnAddLab.BackColor = Color.RoyalBlue;
-            btnAddLab.FlatAppearance.BorderSize = 0;
-            btnAddLab.FlatStyle = FlatStyle.Flat;
-            btnAddLab.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddLab.ForeColor = Color.White;
-            btnAddLab.Location = new Point(304, 3);
-            btnAddLab.Name = "btnAddLab";
-            btnAddLab.Size = new Size(118, 35);
-            btnAddLab.TabIndex = 23;
-            btnAddLab.Text = "إضافة ➕  ";
-            btnAddLab.UseVisualStyleBackColor = false;
-            btnAddLab.Click += btnAddLab_Click;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Dock = DockStyle.Right;
-            label10.ForeColor = Color.FromArgb(55, 71, 79);
-            label10.Location = new Point(1076, 0);
-            label10.Name = "label10";
-            label10.Size = new Size(92, 57);
-            label10.TabIndex = 2;
-            label10.Text = "التحليل :";
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 4;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.81818F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 76.1818161F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 164F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 421F));
-            tableLayoutPanel1.Controls.Add(label9, 2, 4);
-            tableLayoutPanel1.Controls.Add(label8, 2, 3);
-            tableLayoutPanel1.Controls.Add(DateOfVisit, 1, 3);
-            tableLayoutPanel1.Controls.Add(txtRemaining, 3, 4);
-            tableLayoutPanel1.Controls.Add(txtAfterDiscount, 3, 3);
-            tableLayoutPanel1.Controls.Add(textDiscountValue, 3, 1);
-            tableLayoutPanel1.Controls.Add(label3, 0, 0);
-            tableLayoutPanel1.Controls.Add(label4, 2, 0);
-            tableLayoutPanel1.Controls.Add(txtTotal, 3, 0);
-            tableLayoutPanel1.Controls.Add(lblDoctorNAme, 0, 1);
-            tableLayoutPanel1.Controls.Add(txtDoctorName, 1, 1);
-            tableLayoutPanel1.Controls.Add(label6, 2, 1);
-            tableLayoutPanel1.Controls.Add(label11, 2, 2);
-            tableLayoutPanel1.Controls.Add(textDiscountPercentage, 3, 2);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 0);
-            tableLayoutPanel1.Controls.Add(txtNotes, 1, 2);
-            tableLayoutPanel1.Controls.Add(label1, 0, 2);
-            tableLayoutPanel1.Controls.Add(label7, 0, 3);
-            tableLayoutPanel1.Controls.Add(label5, 0, 4);
-            tableLayoutPanel1.Controls.Add(txtPayment, 1, 4);
-            tableLayoutPanel1.Dock = DockStyle.Top;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 5;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50.7042236F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 49.2957764F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 48F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 69F));
-            tableLayoutPanel1.Size = new Size(1827, 268);
-            tableLayoutPanel1.TabIndex = 20;
-            tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.ForeColor = Color.FromArgb(55, 71, 79);
-            label9.Location = new Point(510, 198);
-            label9.Name = "label9";
-            label9.Size = new Size(73, 31);
-            label9.TabIndex = 7;
-            label9.Text = "الباقى";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.ForeColor = Color.FromArgb(55, 71, 79);
-            label8.Location = new Point(451, 150);
-            label8.Name = "label8";
-            label8.Size = new Size(132, 48);
-            label8.TabIndex = 25;
-            label8.Text = "الاجمالى بعد الخصم";
-            // 
-            // DateOfVisit
-            // 
-            DateOfVisit.Location = new Point(1112, 153);
-            DateOfVisit.Name = "DateOfVisit";
-            DateOfVisit.Size = new Size(417, 38);
-            DateOfVisit.TabIndex = 27;
-            // 
-            // txtRemaining
-            // 
-            txtRemaining.Location = new Point(179, 201);
-            txtRemaining.Name = "txtRemaining";
-            txtRemaining.Size = new Size(240, 38);
-            txtRemaining.TabIndex = 6;
-            // 
-            // txtAfterDiscount
-            // 
-            txtAfterDiscount.Location = new Point(179, 153);
-            txtAfterDiscount.Name = "txtAfterDiscount";
-            txtAfterDiscount.Size = new Size(240, 38);
-            txtAfterDiscount.TabIndex = 24;
-            txtAfterDiscount.TextChanged += txtAfterDiscount_TextChanged;
-            // 
-            // textDiscountValue
-            // 
-            textDiscountValue.Location = new Point(179, 59);
-            textDiscountValue.Name = "textDiscountValue";
-            textDiscountValue.Size = new Size(240, 38);
-            textDiscountValue.TabIndex = 23;
-            textDiscountValue.TextChanged += textDiscountValue_TextChanged;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.ForeColor = Color.FromArgb(55, 71, 79);
-            label11.Location = new Point(427, 111);
-            label11.Name = "label11";
-            label11.Size = new Size(156, 31);
-            label11.TabIndex = 19;
-            label11.Text = "نسبة الخصم %";
+            lblDiscPct.Dock = DockStyle.Fill;
+            lblDiscPct.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblDiscPct.ForeColor = Color.FromArgb(100, 116, 139);
+            lblDiscPct.Name = "lblDiscPct";
+            lblDiscPct.Text = "خصم %";
+            lblDiscPct.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // textDiscountPercentage
             // 
-            textDiscountPercentage.Location = new Point(179, 114);
+            textDiscountPercentage.Dock = DockStyle.Fill;
+            textDiscountPercentage.Font = new Font("Segoe UI", 10.5F);
             textDiscountPercentage.Name = "textDiscountPercentage";
-            textDiscountPercentage.Size = new Size(240, 38);
-            textDiscountPercentage.TabIndex = 18;
+            textDiscountPercentage.Text = "0";
+            textDiscountPercentage.TextAlign = HorizontalAlignment.Center;
             textDiscountPercentage.TextChanged += textDiscountPercentage_TextChanged;
             // 
-            // tableLayoutPanel2
+            // lblDiscVal
             // 
-            tableLayoutPanel2.ColumnCount = 4;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 48.3394852F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 51.6605148F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 291F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 194F));
-            tableLayoutPanel2.Controls.Add(btnAddPatient, 3, 0);
-            tableLayoutPanel2.Controls.Add(txtPatientName, 2, 0);
-            tableLayoutPanel2.Controls.Add(txtPatientCode, 0, 0);
-            tableLayoutPanel2.Controls.Add(label12, 1, 0);
-            tableLayoutPanel2.Location = new Point(589, 3);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 1;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(940, 50);
-            tableLayoutPanel2.TabIndex = 6;
+            lblDiscVal.Dock = DockStyle.Fill;
+            lblDiscVal.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblDiscVal.ForeColor = Color.FromArgb(100, 116, 139);
+            lblDiscVal.Name = "lblDiscVal";
+            lblDiscVal.Text = "قيمة الخصم (ج.م)";
+            lblDiscVal.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // btnAddPatient
+            // textDiscountValue
             // 
-            btnAddPatient.BackColor = Color.RoyalBlue;
-            btnAddPatient.FlatAppearance.BorderSize = 0;
-            btnAddPatient.FlatStyle = FlatStyle.Flat;
-            btnAddPatient.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddPatient.ForeColor = Color.White;
-            btnAddPatient.Location = new Point(38, 3);
-            btnAddPatient.Name = "btnAddPatient";
-            btnAddPatient.Size = new Size(154, 42);
-            btnAddPatient.TabIndex = 21;
-            btnAddPatient.Text = "إضافة مريض ➕  ";
-            btnAddPatient.UseVisualStyleBackColor = false;
-            btnAddPatient.Click += btnAddPatient_Click;
+            textDiscountValue.Dock = DockStyle.Fill;
+            textDiscountValue.Font = new Font("Segoe UI", 10.5F);
+            textDiscountValue.Name = "textDiscountValue";
+            textDiscountValue.Text = "0.00";
+            textDiscountValue.TextAlign = HorizontalAlignment.Center;
+            textDiscountValue.TextChanged += textDiscountValue_TextChanged;
             // 
-            // txtPatientName
+            // lblNet
             // 
-            txtPatientName.Location = new Point(242, 3);
-            txtPatientName.Name = "txtPatientName";
-            txtPatientName.Size = new Size(241, 38);
-            txtPatientName.TabIndex = 3;
+            lblNet.Dock = DockStyle.Fill;
+            lblNet.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblNet.ForeColor = Color.FromArgb(37, 99, 235);
+            lblNet.Name = "lblNet";
+            lblNet.Text = "صافي المطلوب";
+            lblNet.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label12
+            // txtAfterDiscount
             // 
-            label12.AutoSize = true;
-            label12.ForeColor = Color.FromArgb(55, 71, 79);
-            label12.Location = new Point(582, 0);
-            label12.Name = "label12";
-            label12.Size = new Size(136, 31);
-            label12.TabIndex = 2;
-            label12.Text = "اسم المريض";
+            txtAfterDiscount.Dock = DockStyle.Fill;
+            txtAfterDiscount.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            txtAfterDiscount.ForeColor = Color.FromArgb(37, 99, 235);
+            txtAfterDiscount.Name = "txtAfterDiscount";
+            txtAfterDiscount.ReadOnly = true;
+            txtAfterDiscount.Text = "0.00";
+            txtAfterDiscount.TextAlign = HorizontalAlignment.Center;
             // 
-            // txtNotes
+            // lblPaid
             // 
-            txtNotes.Location = new Point(1289, 114);
-            txtNotes.Name = "txtNotes";
-            txtNotes.Size = new Size(240, 38);
-            txtNotes.TabIndex = 20;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.ForeColor = Color.FromArgb(55, 71, 79);
-            label1.Location = new Point(1724, 111);
-            label1.Name = "label1";
-            label1.Size = new Size(100, 31);
-            label1.TabIndex = 21;
-            label1.Text = "ملاحظات";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.ForeColor = Color.FromArgb(55, 71, 79);
-            label7.Location = new Point(1697, 150);
-            label7.Name = "label7";
-            label7.RightToLeft = RightToLeft.Yes;
-            label7.Size = new Size(127, 31);
-            label7.TabIndex = 26;
-            label7.Text = "تاريخ الزيارة";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.ForeColor = Color.FromArgb(55, 71, 79);
-            label5.Location = new Point(1733, 198);
-            label5.Name = "label5";
-            label5.Size = new Size(91, 31);
-            label5.TabIndex = 22;
-            label5.Text = "المدفوع";
+            lblPaid.Dock = DockStyle.Fill;
+            lblPaid.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPaid.ForeColor = Color.FromArgb(22, 163, 74);
+            lblPaid.Name = "lblPaid";
+            lblPaid.Text = "المدفوع حالياً (ج.م)";
+            lblPaid.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // txtPayment
             // 
-            txtPayment.Location = new Point(1289, 201);
+            txtPayment.Dock = DockStyle.Fill;
+            txtPayment.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            txtPayment.ForeColor = Color.FromArgb(22, 163, 74);
             txtPayment.Name = "txtPayment";
-            txtPayment.Size = new Size(240, 38);
-            txtPayment.TabIndex = 21;
+            txtPayment.Text = "0.00";
+            txtPayment.TextAlign = HorizontalAlignment.Center;
             txtPayment.TextChanged += txtPayment_TextChanged;
             // 
-            // lbltxt
+            // lblRemaining
             // 
-            lbltxt.AutoSize = true;
-            lbltxt.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbltxt.ForeColor = Color.RoyalBlue;
-            lbltxt.Location = new Point(843, 19);
-            lbltxt.Name = "lbltxt";
-            lbltxt.Size = new Size(224, 38);
-            lbltxt.TabIndex = 2;
-            lbltxt.Text = "شاشة إضافة زيارة";
-            lbltxt.Click += lbltxt_Click;
+            lblRemaining.Dock = DockStyle.Fill;
+            lblRemaining.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblRemaining.ForeColor = Color.FromArgb(220, 38, 38);
+            lblRemaining.Name = "lblRemaining";
+            lblRemaining.Text = "المتبقي (دين)";
+            lblRemaining.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // pnlTitle
+            // txtRemaining
             // 
-            pnlTitle.BackColor = Color.Gainsboro;
-            pnlTitle.Controls.Add(lbltxt);
-            pnlTitle.Dock = DockStyle.Top;
-            pnlTitle.Location = new Point(0, 0);
-            pnlTitle.Name = "pnlTitle";
-            pnlTitle.Size = new Size(1829, 70);
-            pnlTitle.TabIndex = 4;
+            txtRemaining.Dock = DockStyle.Fill;
+            txtRemaining.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            txtRemaining.ForeColor = Color.FromArgb(220, 38, 38);
+            txtRemaining.Name = "txtRemaining";
+            txtRemaining.ReadOnly = true;
+            txtRemaining.Text = "0.00";
+            txtRemaining.TextAlign = HorizontalAlignment.Center;
+            // 
+            // btnSave
+            // 
+            btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSave.BackColor = Color.FromArgb(22, 163, 74);
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(14, 68);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(220, 36);
+            btnSave.TabIndex = 1;
+            btnSave.Text = "💾 حفظ الزيارة والطباعة";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // FrmAddVisit
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1829, 778);
-            Controls.Add(pnlData);
-            Controls.Add(pnlTitle);
+            BackColor = Color.FromArgb(244, 247, 251);
+            ClientSize = new Size(1200, 680);
+            Controls.Add(pnlLabsCard);
+            Controls.Add(pnlFinancialCard);
+            Controls.Add(pnlPatientCard);
+            Controls.Add(pnlHeader);
+            Font = new Font("Segoe UI", 9.5F);
             Name = "FrmAddVisit";
+            Padding = new Padding(16);
             RightToLeft = RightToLeft.Yes;
-            Text = "FrmAddVisit";
+            RightToLeftLayout = true;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "تسجيل زيارة جديدة";
             Load += FrmAddVisit_Load;
-            pnlData.ResumeLayout(false);
-            pnlData.PerformLayout();
-            tblAnalysis.ResumeLayout(false);
-            tblAnalysis.PerformLayout();
+            pnlHeader.ResumeLayout(false);
+            pnlPatientCard.ResumeLayout(false);
+            tblPatient.ResumeLayout(false);
+            tblPatient.PerformLayout();
+            pnlLabsCard.ResumeLayout(false);
+            pnlAddLabBar.ResumeLayout(false);
+            pnlAddLabBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvVisitDetails).EndInit();
-            tableLayoutPanel3.ResumeLayout(false);
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
-            tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel2.PerformLayout();
-            pnlTitle.ResumeLayout(false);
-            pnlTitle.PerformLayout();
+            pnlFinancialCard.ResumeLayout(false);
+            tblFinancial.ResumeLayout(false);
+            tblFinancial.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-        private Button button1;
-        private Label label3;
+
+        private Panel pnlHeader;
+        private Label lblTitle;
+        private Label lblSubtitle;
+        private Panel pnlPatientCard;
+        private TableLayoutPanel tblPatient;
+        private Label lblCode;
         private TextBox txtPatientCode;
-        private Label label4;
-        private TextBox txtTotal;
-        private Label lblDoctorNAme;
-        private TextBox txtDoctorName;
-        private Label label6;
-        private Panel pnlData;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label label11;
-        private TextBox textDiscountPercentage;
-        private Label lbltxt;
-        private Panel pnlTitle;
-        private Label label1;
-        private TextBox txtNotes;
-        private TextBox txtPayment;
-        private Label label5;
-        private Label label9;
-        private Label label8;
-        private TextBox txtRemaining;
-        private TextBox txtAfterDiscount;
-        private TextBox textDiscountValue;
-        private TableLayoutPanel tblAnalysis;
-        private Button btnAddLab;
-        private ComboBox cmbolabs;
-        private Label label10;
-        private DataGridView dgvVisitDetails;
-        private Button button3;
-        private Label label7;
-        private DateTimePicker DateOfVisit;
+        private Button btnPickPatient;
         private Button btnAddPatient;
-        private TableLayoutPanel tableLayoutPanel2;
+        private Label lblName;
         private TextBox txtPatientName;
-        private Label label12;
-        private Button btnSave;
-        private TableLayoutPanel tableLayoutPanel3;
+        private Label lblDoctor;
+        private TextBox txtDoctorName;
+        private Label lblDate;
+        private DateTimePicker DateOfVisit;
+        private Label lblNotes;
+        private TextBox txtNotes;
+        private Panel pnlLabsCard;
+        private Panel pnlAddLabBar;
+        private Label lblSelectLab;
+        private ComboBox cmbolabs;
+        private Button btnAddLab;
+        private DataGridView dgvVisitDetails;
         private DataGridViewTextBoxColumn colId;
-        private DataGridViewTextBoxColumn colLabName;
+        private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colPrice;
-        private DataGridViewButtonColumn colExternalLab;
+        private DataGridViewButtonColumn colExternal;
         private DataGridViewButtonColumn colResult;
         private DataGridViewImageColumn colDelete;
         private DataGridViewTextBoxColumn colVisitLabId;
-        private DataGridViewButtonColumn colExternal;
+        private Panel pnlFinancialCard;
+        private TableLayoutPanel tblFinancial;
+        private Label lblGross;
+        private TextBox txtTotal;
+        private Label lblDiscPct;
+        private TextBox textDiscountPercentage;
+        private Label lblDiscVal;
+        private TextBox textDiscountValue;
+        private Label lblNet;
+        private TextBox txtAfterDiscount;
+        private Label lblPaid;
+        private TextBox txtPayment;
+        private Label lblRemaining;
+        private TextBox txtRemaining;
+        private Button btnSave;
     }
 }

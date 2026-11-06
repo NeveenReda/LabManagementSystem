@@ -1,16 +1,9 @@
-﻿namespace LabManagementSystem.Forms
+namespace LabManagementSystem.Forms
 {
     partial class FrmExternalLab
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,247 +15,350 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            txtPatientInfo = new TextBox();
-            lbltxt = new Label();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            dtpDateReceive = new DateTimePicker();
-            dtpDateSend = new DateTimePicker();
-            txtExpextedDays = new TextBox();
-            txtPhone = new TextBox();
-            txtContactPerson = new TextBox();
+            pnlHeader = new Panel();
+            lblTitle = new Label();
+            lblSubtitle = new Label();
+            pnlInfoCard = new Panel();
+            lblPatientInfo = new Label();
+            pnlFormCard = new Panel();
+            tlpInputs = new TableLayoutPanel();
+            lblExternalLab = new Label();
             cmbExternalLab = new ComboBox();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            lblDoctorNAme = new Label();
+            lblContactPerson = new Label();
+            txtContactPerson = new TextBox();
+            lblPhone = new Label();
+            txtPhone = new TextBox();
+            lblDateSend = new Label();
+            dtpDateSend = new DateTimePicker();
+            lblDays = new Label();
+            txtExpextedDays = new TextBox();
+            lblDateReceive = new Label();
+            dtpDateReceive = new DateTimePicker();
+            pnlBottom = new Panel();
             btnSave = new Button();
-            tableLayoutPanel1.SuspendLayout();
+            btnCancel = new Button();
+            pnlHeader.SuspendLayout();
+            pnlInfoCard.SuspendLayout();
+            pnlFormCard.SuspendLayout();
+            tlpInputs.SuspendLayout();
+            pnlBottom.SuspendLayout();
             SuspendLayout();
             // 
-            // txtPatientInfo
+            // pnlHeader
             // 
-            txtPatientInfo.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtPatientInfo.Location = new Point(737, 64);
-            txtPatientInfo.Name = "txtPatientInfo";
-            txtPatientInfo.RightToLeft = RightToLeft.Yes;
-            txtPatientInfo.Size = new Size(701, 31);
-            txtPatientInfo.TabIndex = 0;
-            txtPatientInfo.TextAlign = HorizontalAlignment.Right;
+            pnlHeader.BackColor = Color.FromArgb(23, 43, 77);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(16, 10, 16, 10);
+            pnlHeader.Size = new Size(680, 60);
+            pnlHeader.TabIndex = 0;
             // 
-            // lbltxt
+            // lblTitle
             // 
-            lbltxt.AutoSize = true;
-            lbltxt.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lbltxt.ForeColor = Color.RoyalBlue;
-            lbltxt.Location = new Point(686, -7);
-            lbltxt.Name = "lbltxt";
-            lbltxt.Size = new Size(343, 38);
-            lbltxt.TabIndex = 3;
-            lbltxt.Text = "شاشة التحويل لمعمل خارجى";
+            lblTitle.AutoSize = true;
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Font = new Font("Segoe UI", 11.5F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(16, 10);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(185, 21);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "تحويل تحليل لمعمل خارجي";
             // 
-            // tableLayoutPanel1
+            // lblSubtitle
             // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel1.AutoScroll = true;
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(dtpDateReceive, 0, 5);
-            tableLayoutPanel1.Controls.Add(dtpDateSend, 0, 3);
-            tableLayoutPanel1.Controls.Add(txtExpextedDays, 0, 4);
-            tableLayoutPanel1.Controls.Add(txtPhone, 0, 2);
-            tableLayoutPanel1.Controls.Add(txtContactPerson, 0, 1);
-            tableLayoutPanel1.Controls.Add(cmbExternalLab, 0, 0);
-            tableLayoutPanel1.Controls.Add(label1, 1, 0);
-            tableLayoutPanel1.Controls.Add(label2, 1, 2);
-            tableLayoutPanel1.Controls.Add(label3, 1, 3);
-            tableLayoutPanel1.Controls.Add(label4, 1, 4);
-            tableLayoutPanel1.Controls.Add(label5, 1, 5);
-            tableLayoutPanel1.Controls.Add(lblDoctorNAme, 1, 1);
-            tableLayoutPanel1.Location = new Point(835, 151);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 6;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 54.4642868F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 45.5357132F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 71F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
-            tableLayoutPanel1.Size = new Size(537, 313);
-            tableLayoutPanel1.TabIndex = 4;
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.Dock = DockStyle.Bottom;
+            lblSubtitle.Font = new Font("Segoe UI", 8.5F);
+            lblSubtitle.ForeColor = Color.FromArgb(203, 213, 225);
+            lblSubtitle.Location = new Point(16, 35);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(244, 15);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "تحديد المعمل المرجعي وتواريخ الإرسال والاستلام";
             // 
-            // dtpDateReceive
+            // pnlInfoCard
             // 
-            dtpDateReceive.Location = new Point(3, 260);
-            dtpDateReceive.Name = "dtpDateReceive";
-            dtpDateReceive.Size = new Size(262, 27);
-            dtpDateReceive.TabIndex = 29;
+            pnlInfoCard.BackColor = Color.FromArgb(239, 246, 255);
+            pnlInfoCard.BorderStyle = BorderStyle.FixedSingle;
+            pnlInfoCard.Controls.Add(lblPatientInfo);
+            pnlInfoCard.Dock = DockStyle.Top;
+            pnlInfoCard.Location = new Point(0, 60);
+            pnlInfoCard.Name = "pnlInfoCard";
+            pnlInfoCard.Padding = new Padding(14, 10, 14, 10);
+            pnlInfoCard.Size = new Size(680, 52);
+            pnlInfoCard.TabIndex = 1;
             // 
-            // dtpDateSend
+            // lblPatientInfo
             // 
-            dtpDateSend.Location = new Point(3, 186);
-            dtpDateSend.Name = "dtpDateSend";
-            dtpDateSend.Size = new Size(262, 27);
-            dtpDateSend.TabIndex = 28;
+            lblPatientInfo.Dock = DockStyle.Fill;
+            lblPatientInfo.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblPatientInfo.ForeColor = Color.FromArgb(30, 64, 175);
+            lblPatientInfo.Location = new Point(14, 10);
+            lblPatientInfo.Name = "lblPatientInfo";
+            lblPatientInfo.Size = new Size(650, 30);
+            lblPatientInfo.TabIndex = 0;
+            lblPatientInfo.Text = "بيانات الزيارة والتحليل...";
+            lblPatientInfo.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // txtExpextedDays
+            // pnlFormCard
             // 
-            txtExpextedDays.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtExpextedDays.Location = new Point(25, 221);
-            txtExpextedDays.Name = "txtExpextedDays";
-            txtExpextedDays.Size = new Size(240, 27);
-            txtExpextedDays.TabIndex = 25;
+            pnlFormCard.BackColor = Color.White;
+            pnlFormCard.Controls.Add(tlpInputs);
+            pnlFormCard.Dock = DockStyle.Fill;
+            pnlFormCard.Location = new Point(0, 112);
+            pnlFormCard.Name = "pnlFormCard";
+            pnlFormCard.Padding = new Padding(24, 16, 24, 16);
+            pnlFormCard.Size = new Size(680, 278);
+            pnlFormCard.TabIndex = 2;
             // 
-            // txtPhone
+            // tlpInputs
             // 
-            txtPhone.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtPhone.Location = new Point(25, 115);
-            txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(240, 27);
-            txtPhone.TabIndex = 23;
+            tlpInputs.ColumnCount = 2;
+            tlpInputs.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32F));
+            tlpInputs.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 68F));
+            tlpInputs.Controls.Add(lblExternalLab, 0, 0);
+            tlpInputs.Controls.Add(cmbExternalLab, 1, 0);
+            tlpInputs.Controls.Add(lblContactPerson, 0, 1);
+            tlpInputs.Controls.Add(txtContactPerson, 1, 1);
+            tlpInputs.Controls.Add(lblPhone, 0, 2);
+            tlpInputs.Controls.Add(txtPhone, 1, 2);
+            tlpInputs.Controls.Add(lblDateSend, 0, 3);
+            tlpInputs.Controls.Add(dtpDateSend, 1, 3);
+            tlpInputs.Controls.Add(lblDays, 0, 4);
+            tlpInputs.Controls.Add(txtExpextedDays, 1, 4);
+            tlpInputs.Controls.Add(lblDateReceive, 0, 5);
+            tlpInputs.Controls.Add(dtpDateReceive, 1, 5);
+            tlpInputs.Dock = DockStyle.Fill;
+            tlpInputs.Location = new Point(24, 16);
+            tlpInputs.Name = "tlpInputs";
+            tlpInputs.RowCount = 6;
+            tlpInputs.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
+            tlpInputs.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
+            tlpInputs.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
+            tlpInputs.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
+            tlpInputs.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
+            tlpInputs.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
+            tlpInputs.Size = new Size(632, 246);
+            tlpInputs.TabIndex = 0;
             // 
-            // txtContactPerson
+            // lblExternalLab
             // 
-            txtContactPerson.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtContactPerson.Location = new Point(25, 64);
-            txtContactPerson.Name = "txtContactPerson";
-            txtContactPerson.Size = new Size(240, 27);
-            txtContactPerson.TabIndex = 22;
+            lblExternalLab.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblExternalLab.AutoSize = true;
+            lblExternalLab.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblExternalLab.Location = new Point(433, 10);
+            lblExternalLab.Name = "lblExternalLab";
+            lblExternalLab.Size = new Size(196, 17);
+            lblExternalLab.TabIndex = 0;
+            lblExternalLab.Text = "المعمل الخارجي المرجعي:";
             // 
             // cmbExternalLab
             // 
-            cmbExternalLab.Font = new Font("Tahoma", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmbExternalLab.FormattingEnabled = true;
+            cmbExternalLab.Dock = DockStyle.Fill;
+            cmbExternalLab.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbExternalLab.Font = new Font("Segoe UI", 10F);
             cmbExternalLab.Location = new Point(3, 3);
             cmbExternalLab.Name = "cmbExternalLab";
-            cmbExternalLab.Size = new Size(251, 30);
-            cmbExternalLab.TabIndex = 16;
+            cmbExternalLab.Size = new Size(424, 25);
+            cmbExternalLab.TabIndex = 1;
             // 
-            // label1
+            // lblContactPerson
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label1.AutoSize = true;
-            label1.ForeColor = Color.FromArgb(55, 71, 79);
-            label1.Location = new Point(425, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(109, 20);
-            label1.TabIndex = 3;
-            label1.Text = "المعمل الخارجى";
-            label1.TextAlign = ContentAlignment.TopRight;
-            label1.Click += label10_Click;
+            lblContactPerson.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblContactPerson.AutoSize = true;
+            lblContactPerson.Font = new Font("Segoe UI", 9.5F);
+            lblContactPerson.Location = new Point(433, 48);
+            lblContactPerson.Name = "lblContactPerson";
+            lblContactPerson.Size = new Size(196, 17);
+            lblContactPerson.TabIndex = 2;
+            lblContactPerson.Text = "اسم الشخص المسؤول:";
             // 
-            // label2
+            // txtContactPerson
             // 
-            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label2.AutoSize = true;
-            label2.ForeColor = Color.FromArgb(55, 71, 79);
-            label2.Location = new Point(458, 112);
-            label2.Name = "label2";
-            label2.Size = new Size(76, 20);
-            label2.TabIndex = 18;
-            label2.Text = "رقم الهاتف";
+            txtContactPerson.Dock = DockStyle.Fill;
+            txtContactPerson.Font = new Font("Segoe UI", 10F);
+            txtContactPerson.Location = new Point(3, 41);
+            txtContactPerson.Name = "txtContactPerson";
+            txtContactPerson.Size = new Size(424, 25);
+            txtContactPerson.TabIndex = 3;
             // 
-            // label3
+            // lblPhone
             // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.ForeColor = Color.FromArgb(55, 71, 79);
-            label3.Location = new Point(445, 183);
-            label3.Name = "label3";
-            label3.Size = new Size(89, 20);
-            label3.TabIndex = 19;
-            label3.Text = "تاريخ التسليم";
+            lblPhone.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblPhone.AutoSize = true;
+            lblPhone.Font = new Font("Segoe UI", 9.5F);
+            lblPhone.Location = new Point(433, 86);
+            lblPhone.Name = "lblPhone";
+            lblPhone.Size = new Size(196, 17);
+            lblPhone.TabIndex = 4;
+            lblPhone.Text = "رقم هاتف المعمل:";
             // 
-            // label4
+            // txtPhone
             // 
-            label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label4.AutoSize = true;
-            label4.ForeColor = Color.FromArgb(55, 71, 79);
-            label4.Location = new Point(405, 218);
-            label4.Name = "label4";
-            label4.Size = new Size(129, 20);
-            label4.TabIndex = 20;
-            label4.Text = "عدد الايام المتوقعه";
+            txtPhone.Dock = DockStyle.Fill;
+            txtPhone.Font = new Font("Segoe UI", 10F);
+            txtPhone.Location = new Point(3, 79);
+            txtPhone.Name = "txtPhone";
+            txtPhone.Size = new Size(424, 25);
+            txtPhone.TabIndex = 5;
             // 
-            // label5
+            // lblDateSend
             // 
-            label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label5.AutoSize = true;
-            label5.ForeColor = Color.FromArgb(55, 71, 79);
-            label5.Location = new Point(442, 257);
-            label5.Name = "label5";
-            label5.Size = new Size(92, 20);
-            label5.TabIndex = 21;
-            label5.Text = "تاريخ الاستلام";
-            label5.Click += label5_Click;
+            lblDateSend.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblDateSend.AutoSize = true;
+            lblDateSend.Font = new Font("Segoe UI", 9.5F);
+            lblDateSend.Location = new Point(433, 124);
+            lblDateSend.Name = "lblDateSend";
+            lblDateSend.Size = new Size(196, 17);
+            lblDateSend.TabIndex = 6;
+            lblDateSend.Text = "تاريخ ووقت الإرسال:";
             // 
-            // lblDoctorNAme
+            // dtpDateSend
             // 
-            lblDoctorNAme.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblDoctorNAme.AutoSize = true;
-            lblDoctorNAme.ForeColor = Color.FromArgb(55, 71, 79);
-            lblDoctorNAme.Location = new Point(446, 61);
-            lblDoctorNAme.Name = "lblDoctorNAme";
-            lblDoctorNAme.Size = new Size(88, 20);
-            lblDoctorNAme.TabIndex = 17;
-            lblDoctorNAme.Text = "اسم المسؤل";
+            dtpDateSend.CustomFormat = "yyyy/MM/dd  hh:mm tt";
+            dtpDateSend.Dock = DockStyle.Fill;
+            dtpDateSend.Font = new Font("Segoe UI", 10F);
+            dtpDateSend.Format = DateTimePickerFormat.Custom;
+            dtpDateSend.Location = new Point(3, 117);
+            dtpDateSend.Name = "dtpDateSend";
+            dtpDateSend.Size = new Size(424, 25);
+            dtpDateSend.TabIndex = 7;
+            // 
+            // lblDays
+            // 
+            lblDays.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblDays.AutoSize = true;
+            lblDays.Font = new Font("Segoe UI", 9.5F);
+            lblDays.Location = new Point(433, 162);
+            lblDays.Name = "lblDays";
+            lblDays.Size = new Size(196, 17);
+            lblDays.TabIndex = 8;
+            lblDays.Text = "أيام التنفيذ المتوقعة:";
+            // 
+            // txtExpextedDays
+            // 
+            txtExpextedDays.Dock = DockStyle.Fill;
+            txtExpextedDays.Font = new Font("Segoe UI", 10F);
+            txtExpextedDays.Location = new Point(3, 155);
+            txtExpextedDays.Name = "txtExpextedDays";
+            txtExpextedDays.ReadOnly = true;
+            txtExpextedDays.Size = new Size(424, 25);
+            txtExpextedDays.TabIndex = 9;
+            // 
+            // lblDateReceive
+            // 
+            lblDateReceive.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            lblDateReceive.AutoSize = true;
+            lblDateReceive.Font = new Font("Segoe UI", 9.5F);
+            lblDateReceive.Location = new Point(433, 201);
+            lblDateReceive.Name = "lblDateReceive";
+            lblDateReceive.Size = new Size(196, 17);
+            lblDateReceive.TabIndex = 10;
+            lblDateReceive.Text = "التاريخ المتوقع للاستلام:";
+            // 
+            // dtpDateReceive
+            // 
+            dtpDateReceive.CustomFormat = "yyyy/MM/dd  hh:mm tt";
+            dtpDateReceive.Dock = DockStyle.Fill;
+            dtpDateReceive.Enabled = false;
+            dtpDateReceive.Font = new Font("Segoe UI", 10F);
+            dtpDateReceive.Format = DateTimePickerFormat.Custom;
+            dtpDateReceive.Location = new Point(3, 193);
+            dtpDateReceive.Name = "dtpDateReceive";
+            dtpDateReceive.Size = new Size(424, 25);
+            dtpDateReceive.TabIndex = 11;
+            // 
+            // pnlBottom
+            // 
+            pnlBottom.BackColor = Color.FromArgb(244, 247, 251);
+            pnlBottom.Controls.Add(btnSave);
+            pnlBottom.Controls.Add(btnCancel);
+            pnlBottom.Dock = DockStyle.Bottom;
+            pnlBottom.Location = new Point(0, 390);
+            pnlBottom.Name = "pnlBottom";
+            pnlBottom.Padding = new Padding(16, 10, 16, 10);
+            pnlBottom.Size = new Size(680, 56);
+            pnlBottom.TabIndex = 3;
             // 
             // btnSave
             // 
-            btnSave.BackColor = Color.MediumSeaGreen;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(656, 429);
+            btnSave.Dock = DockStyle.Right;
+            btnSave.Location = new Point(504, 10);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(119, 35);
-            btnSave.TabIndex = 27;
-            btnSave.Text = "حفظ";
-            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Size = new Size(160, 36);
+            btnSave.TabIndex = 0;
+            btnSave.Text = "💾 تأكيد التحويل";
+            btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Dock = DockStyle.Left;
+            btnCancel.Location = new Point(16, 10);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(90, 36);
+            btnCancel.TabIndex = 1;
+            btnCancel.Text = "إلغاء";
+            btnCancel.UseVisualStyleBackColor = true;
             // 
             // FrmExternalLab
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1476, 520);
-            Controls.Add(btnSave);
-            Controls.Add(tableLayoutPanel1);
-            Controls.Add(lbltxt);
-            Controls.Add(txtPatientInfo);
+            ClientSize = new Size(680, 446);
+            Controls.Add(pnlFormCard);
+            Controls.Add(pnlBottom);
+            Controls.Add(pnlInfoCard);
+            Controls.Add(pnlHeader);
+            Font = new Font("Segoe UI", 9.5F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FrmExternalLab";
-            Text = "FrmExternalLab";
+            RightToLeft = RightToLeft.Yes;
+            RightToLeftLayout = true;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "تحويل تحليل لمعمل خارجي";
             Load += FrmExternalLab_Load;
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            pnlHeader.ResumeLayout(false);
+            pnlHeader.PerformLayout();
+            pnlInfoCard.ResumeLayout(false);
+            pnlFormCard.ResumeLayout(false);
+            tlpInputs.ResumeLayout(false);
+            tlpInputs.PerformLayout();
+            pnlBottom.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private TextBox txtPatientInfo;
-        private Label lbltxt;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label label1;
+        private Panel pnlHeader;
+        private Label lblTitle;
+        private Label lblSubtitle;
+        private Panel pnlInfoCard;
+        private Label lblPatientInfo;
+        private Panel pnlFormCard;
+        private TableLayoutPanel tlpInputs;
+        private Label lblExternalLab;
         private ComboBox cmbExternalLab;
-        private Label lblDoctorNAme;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private TextBox txtExpextedDays;
-        private TextBox txtPhone;
+        private Label lblContactPerson;
         private TextBox txtContactPerson;
-        private Button btnSave;
+        private Label lblPhone;
+        private TextBox txtPhone;
+        private Label lblDateSend;
         private DateTimePicker dtpDateSend;
-        protected DateTimePicker dtpDateReceive;
+        private Label lblDays;
+        private TextBox txtExpextedDays;
+        private Label lblDateReceive;
+        private DateTimePicker dtpDateReceive;
+        private Panel pnlBottom;
+        private Button btnSave;
+        private Button btnCancel;
     }
 }

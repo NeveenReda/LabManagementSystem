@@ -1,718 +1,468 @@
-﻿using LabManagementSystem.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using LabManagementSystem.Common;
+using LabManagementSystem.Enums;
+using LabManagementSystem.Models;
+using LabManagementSystem.Printing;
+using LabManagementSystem.Services;
 
 namespace LabManagementSystem.Forms
 {
     public partial class FrmAddVisit : Form
     {
-        public event Action? AddPatientClicked;//declare an action
-        LabContext db = new LabContext();
-        Visit? visit;
-        Patient? selectedPatient;
-        Lab? selectedLab;
+        private readonly IVisitService _visitService;
+        private readonly IPatientService _patientService;
+        private readonly ILookupCacheService _lookupCache;
+
+        private Visit? _visit;
+        private Patient? _selectedPatient;
+        private Lab? _selectedLab;
+        private bool _isUpdatingDiscount = false;
+
+        public event Action? Saved;
+        public event Action? Cancelled;
+
         public FrmAddVisit()
         {
             InitializeComponent();
-            lbltxt.Text = "شاشة اضافة زيارة";
-
-            //dgvVisitDetails.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            //dgvVisitDetails.MultiSelect = true;
-            //dgvVisitDetails.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithAutoHeaderText;
+            _visitService = ServiceLocator.VisitService;
+            _patientService = ServiceLocator.PatientService;
+            _lookupCache = ServiceLocator.LookupCacheService;
+            lblTitle.Text = "🧪 تسجيل زيارة جديدة";
         }
+
         public FrmAddVisit(Visit visit)
         {
             InitializeComponent();
+            _visitService = ServiceLocator.VisitService;
+            _patientService = ServiceLocator.PatientService;
+            _lookupCache = ServiceLocator.LookupCacheService;
+            lblTitle.Text = "✏️ تعديل بيانات الزيارة";
 
-            lbltxt.Text = "تعديل زيارة";
-
-            int visitId = visit.Id;
-            //get this.visit from db
-            this.visit = db.Visits
-                .Include(v => v.Patient)
-                .Include(v => v.Payments)
-                .Include(v => v.VisitLabs)
-                    .ThenInclude(vl => vl.Lab)
-                .Include(v => v.VisitLabs)
-                    .ThenInclude(vl => vl.VisitLabResults)
-                .Include(v => v.VisitLabs)
-                    .ThenInclude(vl => vl.ExternalLabs)
-                .FirstOrDefault(v => v.Id == visitId);
-            if (this.visit == null)
+            _visit = _visitService.GetVisitById(visit.Id);
+            if (_visit == null)
             {
-                MessageBox.Show("الزيارة غير موجودة");
+                MessageBox.Show("الزيارة غير موجودة في قاعدة البيانات.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Close();
                 return;
             }
-            //fill controls with data from db
-            selectedPatient =this. visit.Patient;
-            DateOfVisit.Value = this.visit.VisitDate;
 
-            txtNotes.Text = this.visit.Notes;
-            txtDoctorName.Text = this.visit.DrName;
+            _selectedPatient = _visit.Patient;
+            DateOfVisit.Value = _visit.VisitDate;
+            txtNotes.Text = _visit.Notes ?? "";
+            txtDoctorName.Text = _visit.DrName ?? "";
 
-            txtPatientCode.Text = this.visit.Patient.MedicalCode;
-            txtPatientName.Text = this.visit.Patient.Name;
+            txtPatientCode.Text = _visit.Patient.MedicalCode;
+            txtPatientName.Text = _visit.Patient.Name;
 
-            txtPayment.Text = this.visit.Payments
-                .Sum(p => p.Amount)
-                .ToString("0.00");
-            textDiscountValue.Text = this.visit.DiscountValue.ToString();
-            textDiscountPercentage.Text=this.visit.DiscountPercent.ToString();  
+            txtPayment.Text = _visit.Payments.Sum(p => p.Amount).ToString("0.00");
+            txtPayment.ReadOnly = true;
 
-
-            LoadVisitLabs();
-        }
-        private void pnlData_Paint(object sender, PaintEventArgs e)
-        {
-
+            textDiscountValue.Text = _visit.DiscountValue?.ToString("0.00") ?? "0.00";
+            textDiscountPercentage.Text = _visit.DiscountPercent?.ToString("0.00") ?? "0.00";
         }
 
         private void FrmAddVisit_Load(object sender, EventArgs e)
         {
-            //tableLayoutPanel1.SetColumn(txtPatientCode, 1);
-            //tableLayoutPanel1.SetColumn(btnAddPatient, 2);
-            //tableLayoutPanel1.SetColumn(label3, 0);
-            tblAnalysis.SetColumnSpan(dgvVisitDetails, 3);
-            txtPatientName.ReadOnly = true;
-            txtTotal.ReadOnly = true;
-            txtAfterDiscount.ReadOnly = true;
-            txtRemaining.ReadOnly = true;
+            FormStyler.ApplyFormTheme(this, lblTitle.Text);
+            FormStyler.StyleButton(btnPickPatient, ButtonStyle.Primary);
+            FormStyler.StyleButton(btnAddPatient, ButtonStyle.Success);
+            FormStyler.StyleButton(btnAddLab, ButtonStyle.Primary);
+            FormStyler.StyleButton(btnSave, ButtonStyle.Success);
 
-            cmbolabs.DataSource = db.Labs.ToList();
-            cmbolabs.DisplayMember = "Name";
-            cmbolabs.ValueMember = "Id";
+            FormStyler.StyleInput(txtPatientCode);
+            FormStyler.StyleInput(txtPatientName);
+            FormStyler.StyleInput(txtDoctorName);
+            FormStyler.StyleInput(txtNotes);
+            FormStyler.StyleInput(cmbolabs);
 
+            DataGridViewStyler.Apply(dgvVisitDetails);
+            colDelete.Image = ImageHelper.LoadSafeImage("imgs/delete.png", 16, 16, Color.Crimson);
 
-            dgvVisitDetails.AutoGenerateColumns = false;
+            LoadLabsCombo();
 
-            colDelete.Image = Image.FromFile("imgs/delete.png");
-
-            //////////////////
-            ////////////grid font size
-            dgvVisitDetails.DefaultCellStyle.Font = new Font("Arial", 9);
-
-            dgvVisitDetails.ColumnHeadersDefaultCellStyle.Font =
-                new Font("Arial", 12, FontStyle.Bold);
-       }
-
-        private void btnAddPatient_Click(object sender, EventArgs e)
-        {
-            AddPatientClicked?.Invoke();
+            if (_visit != null)
+            {
+                LoadExistingVisitLabs();
+            }
         }
 
-        private void tblAnalysis_Paint(object sender, PaintEventArgs e)
+        private void LoadLabsCombo()
         {
-
+            try
+            {
+                var labs = _lookupCache.GetLabs();
+                cmbolabs.DataSource = labs;
+                cmbolabs.DisplayMember = "Name";
+                cmbolabs.ValueMember = "Id";
+                if (labs.Count > 0)
+                {
+                    cmbolabs.SelectedIndex = 0;
+                    _selectedLab = labs[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"خطأ في تحميل قائمة التحاليل:\n{ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void txtPatientCode_TextChanged(object sender, EventArgs e)
+        private void LoadExistingVisitLabs()
         {
+            dgvVisitDetails.Rows.Clear();
 
-        }
-
-        private void txtAfterDiscount_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lbltxt_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            // =====================================================
-            // 1. التأكد من وجود المريض
-            // =====================================================
-
-            if (selectedPatient == null)
+            foreach (var vl in _visit!.VisitLabs)
             {
-                MessageBox.Show("من فضلك اختار المريض أولا");
-                return;
+                int rowIndex = dgvVisitDetails.Rows.Add(
+                    vl.LabId,
+                    vl.Lab?.Name ?? "تحليل",
+                    vl.LabPrice,
+                    "معمل خارجي",
+                    "إدخال النتائج",
+                    null,
+                    vl.Id
+                );
             }
 
-            // =====================================================
-            // 2. التأكد من وجود تحليل واحد على الأقل
-            // =====================================================
-
-            if (dgvVisitDetails.Rows.Count == 0)
-            {
-                MessageBox.Show("من فضلك ادخل تحليل واحد على الاقل");
-                return;
-            }
-
-
-            // =====================================================
-            // =====================================================
-            //              ADD NEW VISIT
-            // =====================================================
-            // =====================================================
-
-            if (visit == null)
-            {
-                // =========================
-                // Create Visit
-                // =========================
-
-                Visit vis = new Visit();
-
-                vis.PatientId = selectedPatient.Id;
-                vis.VisitDate = DateTime.Now;
-                vis.CreateDate = DateTime.Now;
-
-                vis.DrName = txtDoctorName.Text;
-                vis.Notes = txtNotes.Text;
-
-                vis.TotalPrice = Convert.ToDecimal(txtTotal.Text);
-
-                if (decimal.TryParse(
-                    textDiscountPercentage.Text,
-                    out decimal discountPercentage))
-                {
-                    vis.DiscountPercent = discountPercentage;
-                }
-
-                if (decimal.TryParse(
-                    textDiscountValue.Text,
-                    out decimal discountValue))
-                {
-                    vis.DiscountValue = discountValue;
-                }
-
-                vis.NetPrice = decimal.Parse(txtAfterDiscount.Text);
-
-                db.Visits.Add(vis);
-
-                // Save Visit first to get Visit.Id
-                db.SaveChanges();
-
-
-                // =========================
-                // Create VisitLabs
-                // =========================
-
-                foreach (DataGridViewRow row in dgvVisitDetails.Rows)
-                {
-                    if (row.IsNewRow)
-                        continue;
-
-                    VisitLab visitLab = new VisitLab();
-
-                    visitLab.VisitId = vis.Id;
-
-                    visitLab.LabId =
-                        Convert.ToInt32(row.Cells["colId"].Value);
-
-                    visitLab.LabPrice =
-                        Convert.ToDecimal(row.Cells["colPrice"].Value);
-
-                    visitLab.IsExternal =false;
-                       // Convert.ToBoolean(row.Cells["colExternal"].Value);
-
-                    // استخدمي هنا ID صحيح من VisitLabStatus
-                    visitLab.VisitLabStatusId = 1;
-
-                    db.VisitLabs.Add(visitLab);
-
-                    row.Tag = visitLab;
-                }
-
-
-                // Save VisitLabs
-                db.SaveChanges();
-
-
-                // =========================
-                // Put VisitLabId in Grid
-                // =========================
-
-                foreach (DataGridViewRow row in dgvVisitDetails.Rows)
-                {
-                    if (row.IsNewRow)
-                        continue;
-
-                    VisitLab visitLab = row.Tag as VisitLab;
-
-                    if (visitLab != null)
-                    {
-                        row.Cells["colVisitLabId"].Value =
-                            visitLab.Id;
-                    }
-                }
-
-
-                // =========================
-                // Add Payment ONCE
-                // =========================
-
-                if (decimal.TryParse(
-                    txtPayment.Text,
-                    out decimal paymentAmount)
-                    && paymentAmount > 0)
-                {
-                    Payment payment = new Payment
-                    {
-                        PaymentDate = DateTime.Now,
-                        Amount = paymentAmount,
-                        VisitId = vis.Id
-                    };
-
-                    db.Payments.Add(payment);
-                }
-
-
-                db.SaveChanges();
-
-                MessageBox.Show("تم حفظ الزيارة بنجاح");
-
-                return;
-            }
-
-
-            // =====================================================
-            // =====================================================
-            //              UPDATE EXISTING VISIT
-            // =====================================================
-            // =====================================================
-
-
-            // =========================
-            // 3. Update Visit information
-            // =========================
-
-            visit.DrName = txtDoctorName.Text;
-            visit.Notes = txtNotes.Text;
-           // visit.VisitDate = DateOfVisit.Value;
-
-            visit.TotalPrice =
-                Convert.ToDecimal(txtTotal.Text);
-
-            if (decimal.TryParse(
-                textDiscountPercentage.Text,
-                out decimal discountPercentageUpdate))
-            {
-                visit.DiscountPercent =
-                    discountPercentageUpdate;
-            }
-            else
-            {
-                visit.DiscountPercent = null;
-            }
-
-            if (decimal.TryParse(
-                textDiscountValue.Text,
-                out decimal discountValueUpdate))
-            {
-                visit.DiscountValue =
-                    discountValueUpdate;
-            }
-            else
-            {
-                visit.DiscountValue = null;
-            }
-
-            visit.NetPrice =
-                decimal.Parse(txtAfterDiscount.Text);
-
-
-            // =====================================================
-            // 4. Get Lab IDs currently موجودة في Grid
-            // =====================================================
-
-            HashSet<int> currentLabIds = new HashSet<int>();
-
-            foreach (DataGridViewRow row in dgvVisitDetails.Rows)
-            {
-                if (row.IsNewRow)
-                    continue;
-
-                int labId =
-                    Convert.ToInt32(row.Cells["colId"].Value);
-
-                currentLabIds.Add(labId);
-            }
-
-
-            // =====================================================
-            // 5. Add NEW VisitLabs
-            // =====================================================
-
-            foreach (DataGridViewRow row in dgvVisitDetails.Rows)
-            {
-                if (row.IsNewRow)
-                    continue;
-
-                int labId =
-                    Convert.ToInt32(row.Cells["colId"].Value);
-
-
-                // هل التحليل موجود بالفعل في الزيارة؟
-                VisitLab? existingVisitLab =
-                    visit.VisitLabs
-                        .FirstOrDefault(vl => vl.LabId == labId);
-
-
-                if (existingVisitLab != null)
-                {
-                    // التحليل موجود بالفعل
-                    // لا ننشئ VisitLab جديد
-                    row.Cells["colVisitLabId"].Value =
-                        existingVisitLab.Id;
-
-                    continue;
-                }
-
-
-                // =========================
-                // التحليل جديد
-                // =========================
-
-                VisitLab newVisitLab = new VisitLab();
-
-                newVisitLab.VisitId = visit.Id;
-
-                newVisitLab.LabId = labId;
-
-                newVisitLab.LabPrice =
-                    Convert.ToDecimal(
-                        row.Cells["colPrice"].Value);
-
-                newVisitLab.IsExternal = false;
-                   
-
-                // استخدمي ID صحيح من VisitLabStatus
-                newVisitLab.VisitLabStatusId = 1;
-
-                db.VisitLabs.Add(newVisitLab);
-
-                // بعد SaveChanges سيأخذ Id
-                row.Tag = newVisitLab;
-            }
-
-
-            // نحفظ VisitLabs الجديدة
-            db.SaveChanges();
-
-
-            // =====================================================
-            // 6. Put VisitLabId for NEW VisitLabs
-            // =====================================================
-
-            foreach (DataGridViewRow row in dgvVisitDetails.Rows)
-            {
-                if (row.IsNewRow)
-                    continue;
-
-                VisitLab? visitLab =
-                    row.Tag as VisitLab;
-
-                if (visitLab != null)
-                {
-                    row.Cells["colVisitLabId"].Value =
-                        visitLab.Id;
-                }
-            }
-
-
-            // =====================================================
-            // 7. Delete VisitLabs التي تم حذفها من Grid
-            // =====================================================
-
-            var oldVisitLabs =
-                visit.VisitLabs.ToList();
-
-            foreach (VisitLab oldVisitLab in oldVisitLabs)
-            {
-                // ما زال موجودًا في Grid
-                if (currentLabIds.Contains(oldVisitLab.LabId))
-                    continue;
-
-
-                // ==============================================
-                // التحليل تم حذفه من Grid
-                // ==============================================
-
-                bool hasResults =
-                    oldVisitLab.VisitLabResults.Any();
-
-                bool hasExternalLab =
-                    oldVisitLab.ExternalLabs.Any();
-
-
-                // لا نحذف VisitLab إذا كان له Results
-                // أو بيانات معمل خارجي
-                if (hasResults || hasExternalLab)
-                {
-                    MessageBox.Show(
-                        "لا يمكن حذف أحد التحاليل لأنه يحتوي على نتائج " +
-                        "أو بيانات معمل خارجي.\n\n" +
-                        "إذا أردت حذفه يجب التعامل مع هذه البيانات أولا.",
-                        "تنبيه",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-
-                    return;
-                }
-
-
-                db.VisitLabs.Remove(oldVisitLab);
-            }
-
-
-            // =====================================================
-            // 8. لا نعدل Payments القديمة
-            // =====================================================
-            //
-            // Payments يتم التعامل معها من FrmPayment
-            //
-            // لذلك لا يوجد هنا:
-            //
-            // db.Payments.Remove(...)
-            //
-            // ولا ننشئ Payment جديدة عند تعديل الزيارة.
-            // =====================================================
-
-
-            // =====================================================
-            // 9. Save everything
-            // =====================================================
-
-            db.SaveChanges();
-
-
-            MessageBox.Show("تم تعديل الزيارة بنجاح");
-
-            this.Close();
-        }
-
-        private void txtPatientCode_Leave(object sender, EventArgs e)
-        {
-            string code = txtPatientCode.Text.Trim();
-            if (string.IsNullOrEmpty(code))
-            {
-                selectedPatient = null;
-                txtPatientName.Clear();
-                return;
-            }
-            selectedPatient = db.Patients.FirstOrDefault(x => x.MedicalCode == code);
-            if (selectedPatient == null)
-            {
-                MessageBox.Show("المريض غير موجود");
-                txtPatientName.Clear();
-                return;
-            }
-            txtPatientName.Text = selectedPatient.Name;
+            RecalculateTotals();
         }
 
         private void cmbolabs_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cmbolabs.SelectedItem is Lab lab)
+            {
+                _selectedLab = lab;
+            }
+        }
 
-            if (cmbolabs.SelectedItem is not Lab lab)
+        private void btnAddLab_Click(object sender, EventArgs e)
+        {
+            if (_selectedLab == null)
+            {
+                MessageBox.Show("يرجى اختيار تحليل من القائمة أولاً.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
-            selectedLab = lab;
+            }
 
+            foreach (DataGridViewRow row in dgvVisitDetails.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (Convert.ToInt32(row.Cells["colId"].Value) == _selectedLab.Id)
+                {
+                    MessageBox.Show("هذا التحليل تمت إضافته بالفعل إلى الزيارة.", "تحليل مكرر", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            dgvVisitDetails.Rows.Add(
+                _selectedLab.Id,
+                _selectedLab.Name,
+                _selectedLab.Price,
+                "معمل خارجي",
+                "إدخال النتائج",
+                null,
+                null
+            );
+
+            RecalculateTotals();
         }
 
         private void dgvVisitDetails_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //int labId = Convert.ToInt32(dgvVisitDetails.Rows[e.RowIndex].Cells["colId"].Value);
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-            //Lab lab = db.Labs.Find(labId);
-            //if (dgvVisitDetails.Columns[e.ColumnIndex].Name == "colDelete")
-            //{
-            //    db.Labs.Remove(lab);
-            //    db.SaveChanges();
-            //    MessageBox.Show("تم حذف التحليل بنجاح");
-            //}
-            if (e.RowIndex < 0)
-                return;
+            string colName = dgvVisitDetails.Columns[e.ColumnIndex].Name;
 
-            if (dgvVisitDetails.Columns[e.ColumnIndex].Name == "colDelete")
+            if (colName == "colDelete")
             {
                 dgvVisitDetails.Rows.RemoveAt(e.RowIndex);
-
-                CalculateTotal();
-                CalculateAfterDiscount();
+                RecalculateTotals();
             }
-            // Check if clicked column is the external lab button
-            if (e.ColumnIndex == dgvVisitDetails.Columns["colExternal"].Index)
+            else if (colName == "colExternal")
             {
-                // Get VisitLabId from hidden column
-                if (dgvVisitDetails.Rows[e.RowIndex].Cells["colVisitLabId"].Value == null)
+                object? val = dgvVisitDetails.Rows[e.RowIndex].Cells["colVisitLabId"].Value;
+                if (val == null || val == DBNull.Value)
                 {
-                    MessageBox.Show("من فضلك احفظ الزيارة أولاً");
+                    MessageBox.Show("يرجى حفظ الزيارة أولاً لتتمكن من إحالة التحليل لمعمل خارجي.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                int visitLabId = Convert.ToInt32(
-                    dgvVisitDetails.Rows[e.RowIndex].Cells["colVisitLabId"].Value
-                );
-
-                // Open External Lab form
-                FrmExternalLab frm = new FrmExternalLab(visitLabId);
-
+                int visitLabId = Convert.ToInt32(val);
+                using var frm = new FrmExternalLab(visitLabId);
                 frm.ShowDialog();
             }
-
-            ///for lab result
-            //if (dgvVisitDetails.Columns[e.ColumnIndex].Name == "colResult")
-            //{
-            //    int visitLabId = Convert.ToInt32(
-            //        dgvVisitDetails.Rows[e.RowIndex]
-            //            .Cells["colVisitLabId"].Value
-            //    );
-
-            //    FrmLabResult frm = new FrmLabResult(visitLabId);
-            //    frm.ShowDialog();
-            //}
-            if (dgvVisitDetails.Columns[e.ColumnIndex].Name == "colResult")
+            else if (colName == "colResult")
             {
-                object value = dgvVisitDetails.Rows[e.RowIndex]
-                    .Cells["colVisitLabId"].Value;
-
-                if (value == null || value == DBNull.Value)
+                object? val = dgvVisitDetails.Rows[e.RowIndex].Cells["colVisitLabId"].Value;
+                if (val == null || val == DBNull.Value)
                 {
-                    MessageBox.Show("احفظ الزيارة أولاً");
+                    MessageBox.Show("يرجى حفظ الزيارة أولاً لإدخال النتائج.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                int visitLabId = Convert.ToInt32(value);
-
-                FrmLabResult frm = new FrmLabResult(visitLabId);
+                int visitLabId = Convert.ToInt32(val);
+                using var frm = new FrmLabResult(visitLabId);
                 frm.ShowDialog();
             }
-
-        }
-        
-
-        private void btnAddLab_Click(object sender, EventArgs e)
-        {
-            if (selectedLab == null)
-            {
-                MessageBox.Show("  من فضلك اختار التحليل اولا");
-                return;
-            }
-            foreach (DataGridViewRow row in dgvVisitDetails.Rows)
-            {
-                if (row.IsNewRow) continue;
-                if (Convert.ToInt32(row.Cells["colId"].Value) == selectedLab.Id)
-                {
-                    MessageBox.Show("هذا التحليل تمت اضافته بالفعل ");
-                    return;
-                }
-            }
-            dgvVisitDetails.Rows.Add(selectedLab.Id, selectedLab.Name, selectedLab.Price, selectedLab.IsExternal,null,null,null,null);
-            CalculateTotal();
-            CalculateAfterDiscount();
-
         }
 
-        private void CalculateTotal()
+        private void RecalculateTotals()
         {
             decimal total = 0;
             foreach (DataGridViewRow row in dgvVisitDetails.Rows)
             {
                 if (row.IsNewRow) continue;
-                total += Convert.ToDecimal(row.Cells["colPrice"].Value);
-
+                if (decimal.TryParse(row.Cells["colPrice"].Value?.ToString(), out decimal price))
+                {
+                    total += price;
+                }
             }
-            txtTotal.Text = total.ToString();
+
+            txtTotal.Text = total.ToString("0.00");
+            ApplyDiscountCalculations();
         }
 
-        private void CalculateAfterDiscount()
+        private void ApplyDiscountCalculations()
         {
-            decimal total = 0;
-            decimal discountValue = 0;
-            decimal discountPercentage = 0;
-            decimal paid = 0;
-
-            decimal.TryParse(txtTotal.Text, out total);
-            decimal.TryParse(textDiscountPercentage.Text, out discountPercentage);
-            decimal.TryParse(textDiscountValue.Text, out discountValue);
-            decimal.TryParse(txtPayment.Text, out paid);
-
-            if (discountPercentage > 0)
+            if (_isUpdatingDiscount) return;
+            _isUpdatingDiscount = true;
+            try
             {
-                discountValue = total * discountPercentage / 100;
-                textDiscountValue.Text = discountValue.ToString("0.00");
+                decimal.TryParse(txtTotal.Text, out decimal total);
+                decimal.TryParse(textDiscountPercentage.Text, out decimal percent);
+                decimal.TryParse(textDiscountValue.Text, out decimal discountVal);
+                decimal.TryParse(txtPayment.Text, out decimal paid);
+
+                if (percent > 0)
+                {
+                    discountVal = Math.Round(total * (percent / 100m), 2);
+                    textDiscountValue.Text = discountVal.ToString("0.00");
+                }
+                else if (discountVal > 0 && total > 0)
+                {
+                    percent = Math.Round((discountVal / total) * 100m, 2);
+                    textDiscountPercentage.Text = percent.ToString("0.00");
+                }
+
+                decimal net = Math.Max(0, total - discountVal);
+                txtAfterDiscount.Text = net.ToString("0.00");
+
+                decimal remain = Math.Max(0, net - paid);
+                txtRemaining.Text = remain.ToString("0.00");
             }
-            decimal afetrDiscount = total - discountValue;
-            txtAfterDiscount.Text = afetrDiscount.ToString("0.00");
-            decimal remain = afetrDiscount - paid;
-            txtRemaining.Text = remain.ToString("0.00");
-
-        }
-
-        private void textDiscountValue_TextChanged(object sender, EventArgs e)
-        {
-            CalculateAfterDiscount();
+            finally
+            {
+                _isUpdatingDiscount = false;
+            }
         }
 
         private void textDiscountPercentage_TextChanged(object sender, EventArgs e)
         {
-            CalculateAfterDiscount();
+            if (_isUpdatingDiscount) return;
+            if (decimal.TryParse(textDiscountPercentage.Text, out decimal p) && p >= 0)
+            {
+                decimal.TryParse(txtTotal.Text, out decimal total);
+                decimal discountVal = Math.Round(total * (p / 100m), 2);
+                _isUpdatingDiscount = true;
+                textDiscountValue.Text = discountVal.ToString("0.00");
+                _isUpdatingDiscount = false;
+            }
+            ApplyDiscountCalculations();
+        }
+
+        private void textDiscountValue_TextChanged(object sender, EventArgs e)
+        {
+            if (_isUpdatingDiscount) return;
+            if (decimal.TryParse(textDiscountValue.Text, out decimal d) && d >= 0)
+            {
+                decimal.TryParse(txtTotal.Text, out decimal total);
+                if (total > 0)
+                {
+                    decimal percent = Math.Round((d / total) * 100m, 2);
+                    _isUpdatingDiscount = true;
+                    textDiscountPercentage.Text = percent.ToString("0.00");
+                    _isUpdatingDiscount = false;
+                }
+            }
+            ApplyDiscountCalculations();
         }
 
         private void txtPayment_TextChanged(object sender, EventArgs e)
         {
-            CalculateAfterDiscount();
+            ApplyDiscountCalculations();
         }
 
-        //private void LoadVisitLabs()
-        //{
-        //    dgvVisitDetails.Rows.Clear();
-
-        //    foreach (var visitLab in visit!.VisitLabs)
-        //    {
-        //        dgvVisitDetails.Rows.Add(
-        //            visitLab.LabId,
-        //            visitLab.Lab.Name,
-        //            visitLab.LabPrice,
-        //            visitLab.IsExternal
-        //        );
-        //    }
-
-        //    CalculateTotal();
-        //    CalculateAfterDiscount();
-        //}
-
-        private void LoadVisitLabs()
+        private async void txtPatientCode_Leave(object sender, EventArgs e)
         {
-            dgvVisitDetails.Rows.Clear();
-
-            foreach (var visitLab in visit!.VisitLabs)
+            string code = txtPatientCode.Text.Trim();
+            if (string.IsNullOrEmpty(code))
             {
-                int rowIndex = dgvVisitDetails.Rows.Add(
-                    visitLab.LabId,
-                    visitLab.Lab.Name,
-                    visitLab.LabPrice,
-                    visitLab.IsExternal
-                );
-
-                dgvVisitDetails.Rows[rowIndex]
-                    .Cells["colVisitLabId"]
-                    .Value = visitLab.Id;
+                _selectedPatient = null;
+                txtPatientName.Clear();
+                return;
             }
 
-            CalculateTotal();
-            CalculateAfterDiscount();
+            var patient = await _patientService.GetPatientByCodeAsync(code);
+            if (patient == null)
+            {
+                MessageBox.Show("لم يتم العثور على مريض بهذا الكود الطبي.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtPatientName.Clear();
+                _selectedPatient = null;
+                return;
+            }
+
+            SetPatient(patient);
         }
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+
+        private void SetPatient(Patient patient)
         {
-
+            _selectedPatient = patient;
+            txtPatientCode.Text = patient.MedicalCode;
+            txtPatientName.Text = patient.Name;
         }
 
+        private void btnPickPatient_Click(object sender, EventArgs e)
+        {
+            using var frm = new FrmSelectPatient();
+            if (frm.ShowDialog() == DialogResult.OK && frm.SelectedPatient != null)
+            {
+                SetPatient(frm.SelectedPatient);
+            }
+        }
+
+        private void btnAddPatient_Click(object sender, EventArgs e)
+        {
+            using var frm = new FrmAddPatient();
+            if (frm.ShowDialog() == DialogResult.OK && frm.CreatedPatient != null)
+            {
+                SetPatient(frm.CreatedPatient);
+            }
+        }
+
+        private async void btnSave_Click(object sender, EventArgs e)
+        {
+            if (_selectedPatient == null)
+            {
+                MessageBox.Show("يرجى اختيار مريض أولاً.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPatientCode.Focus();
+                return;
+            }
+
+            var labIds = new List<int>();
+            var labItemsForReceipt = new List<Tuple<string, decimal>>();
+            foreach (DataGridViewRow row in dgvVisitDetails.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Cells["colId"].Value != null)
+                {
+                    int id = Convert.ToInt32(row.Cells["colId"].Value);
+                    labIds.Add(id);
+                    string name = row.Cells["colName"].Value?.ToString() ?? "تحليل";
+                    decimal price = Convert.ToDecimal(row.Cells["colPrice"].Value ?? 0);
+                    labItemsForReceipt.Add(Tuple.Create(name, price));
+                }
+            }
+
+            if (labIds.Count == 0)
+            {
+                MessageBox.Show("يرجى إضافة تحليل واحد على الأقل للزيارة.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            decimal.TryParse(textDiscountValue.Text, out decimal discountVal);
+            decimal.TryParse(textDiscountPercentage.Text, out decimal discountPercent);
+            decimal.TryParse(txtPayment.Text, out decimal initialPaid);
+
+            try
+            {
+                btnSave.Enabled = false;
+                int savedVisitId;
+
+                if (_visit == null)
+                {
+                    var newVisit = new Visit
+                    {
+                        PatientId = _selectedPatient.Id,
+                        VisitDate = DateOfVisit.Value,
+                        DrName = txtDoctorName.Text.Trim(),
+                        Notes = txtNotes.Text.Trim(),
+                        DiscountValue = discountVal > 0 ? discountVal : null,
+                        DiscountPercent = discountPercent > 0 ? discountPercent : null
+                    };
+
+                    savedVisitId = await _visitService.CreateVisitAsync(newVisit, labIds, initialPaid, (int)PaymentMethodEnum.Cash, "دفعة أولى عند التسجيل");
+                    MessageBox.Show("تم حفظ الزيارة بنجاح.", "تم الحفظ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    _visit.DrName = txtDoctorName.Text.Trim();
+                    _visit.Notes = txtNotes.Text.Trim();
+                    _visit.VisitDate = DateOfVisit.Value;
+                    _visit.DiscountValue = discountVal > 0 ? discountVal : null;
+                    _visit.DiscountPercent = discountPercent > 0 ? discountPercent : null;
+
+                    await _visitService.UpdateVisitAsync(_visit, labIds);
+                    savedVisitId = _visit.Id;
+                    MessageBox.Show("تم تعديل الزيارة بنجاح.", "تم التعديل", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                // Ask to print payment receipt
+                var printPrompt = MessageBox.Show(
+                    "هل ترغب في طباعة إيصال السداد (فاتورة الاستقبال) الآن؟",
+                    "طباعة إيصال الزيارة",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (printPrompt == DialogResult.Yes)
+                {
+                    decimal total = labItemsForReceipt.Sum(x => x.Item2);
+                    decimal net = Math.Max(0, total - discountVal);
+                    decimal remaining = Math.Max(0, net - initialPaid);
+
+                    var receiptModel = new ThermalReceiptModel
+                    {
+                        VisitId = savedVisitId,
+                        VisitDate = DateOfVisit.Value,
+                        PatientName = _selectedPatient.Name,
+                        MedicalCode = _selectedPatient.MedicalCode,
+                        DoctorName = txtDoctorName.Text.Trim(),
+                        Items = labItemsForReceipt,
+                        TotalAmount = total,
+                        DiscountAmount = discountVal,
+                        NetAmount = net,
+                        PaidAmount = initialPaid,
+                        RemainingBalance = remaining,
+                        PaymentMethodName = "نقدي",
+                        ReceiptDate = DateTime.Now
+                    };
+
+                    using var viewer = new DocumentViewerForm(new ThermalReceiptDocument(receiptModel), $"إيصال زيارة #{savedVisitId}");
+                    viewer.ShowDialog();
+                }
+
+                Saved?.Invoke();
+
+                if (Modal)
+                {
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"حدث خطأ أثناء حفظ الزيارة:\n{ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (!IsDisposed && btnSave != null && !btnSave.IsDisposed)
+                {
+                    btnSave.Enabled = true;
+                }
+            }
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            if (DialogResult != DialogResult.OK)
+                Cancelled?.Invoke();
+        }
     }
 }
-
-

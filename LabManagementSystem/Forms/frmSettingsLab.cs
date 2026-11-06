@@ -1,163 +1,218 @@
-﻿using LabManagementSystem.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using LabManagementSystem.Common;
+using LabManagementSystem.Models;
+using LabManagementSystem.Services;
 
 namespace LabManagementSystem.Forms
 {
     public partial class frmSettingsLab : Form
     {
-
-        LabContext db = new LabContext();
-        bool editingMode = false;
-        private Lab? thelab;
+        private readonly ILabSettingsService _settingsService;
+        private readonly ILookupCacheService _lookupCache;
+        private bool _editingMode = false;
+        private Lab? _selectedLab;
 
         public frmSettingsLab()
         {
             InitializeComponent();
-
-            dgvLabs.DefaultCellStyle.ForeColor = Color.Black;
-            dgvLabs.DefaultCellStyle.BackColor = Color.White;
-
-            dgvLabs.RowsDefaultCellStyle.ForeColor = Color.Black;
-            dgvLabs.RowsDefaultCellStyle.BackColor = Color.White;
-
-            dgvLabs.AlternatingRowsDefaultCellStyle.ForeColor = Color.Black;
-            dgvLabs.AlternatingRowsDefaultCellStyle.BackColor = Color.White;
-
-            dgvLabs.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dgvLabs.MultiSelect = true;
-            dgvLabs.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithAutoHeaderText;
-
-            //        var Labs = db.Labs.AsNoTracking()
-            //            .Select(l => new
-            //            {
-            //                l.Id,
-            //                l.Name,
-            //                l.Days,
-            //                l.Price
-            //            })
-            //.ToList();
-
-
-
-
-
-            var labCtgrs = db.LabCategorys.AsNoTracking()
-                .Select(lc => new 
-                {
-                    lc.Id,
-                    lc.Name
-                })
-                .ToList();
-
-            cmbLabCat.DataSource = labCtgrs;
-            cmbLabCat.DisplayMember = "Name";
-            cmbLabCat.ValueMember = "Id";
-            cmbLabCat.SelectedIndex = -1  ;
-
-            fresh();
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (!editingMode)
-            {
-                Lab newLab = new Lab();
-
-                newLab.Name = txtName.Text;
-                newLab.Price = decimal.Parse(txtPrice.Text);
-                newLab.Days = int.Parse(txtDays.Text);
-                newLab.LabCategoryId = (int)cmbLabCat.SelectedValue;
-                newLab.IsExternal = chkExternal.Checked;
-                db.Labs.Add(newLab);
-                db.SaveChanges();
-                MessageBox.Show("تم حفظ التحليل بنجاح");
-                fresh();
-            }
-            else
-            {
-                // Fill properties
-                thelab.Name = txtName.Text;
-                thelab.Price = decimal.Parse(txtPrice.Text);
-                thelab.Days = int.Parse(txtDays.Text);
-                thelab.LabCategoryId = (int)cmbLabCat.SelectedValue;
-                thelab.IsExternal = chkExternal.Checked;
-
-                db.SaveChanges();
-                MessageBox.Show("تم تعديل بيانات التحليل بنجاح");
-                fresh();
-
-            }
-        }
-
-
-        private void fresh()
-        {
-            editingMode = false;
-            thelab = null;
-            var Labs = db.Labs.AsNoTracking()
-.Select(l => new
-{
-    l.Id,
-    l.Name,
-    l.Days,
-    l.Price,
-    l.LabCategoryId,
-    CategoryName = l.LabCategory.Name // بتجيب الاسم علطول من العلاقة
-})
-.ToList();
-
-            dgvLabs.DataSource = Labs;
-
-
-            // تفريغ النص من الحقول لتجهيزها للإدخال القادم
-            txtName.Clear();
-            txtPrice.Clear();
-            txtDays.Clear();
-
-            cmbLabCat.SelectedIndex = -1;
+            _settingsService = ServiceLocator.LabSettingsService;
+            _lookupCache = ServiceLocator.LookupCacheService;
         }
 
         private void frmSettingsLab_Load(object sender, EventArgs e)
         {
+            FormStyler.ApplyFormTheme(this, "إعدادات الفحوصات والتحاليل");
+            FormStyler.StyleButton(btnSave, ButtonStyle.Success);
+            FormStyler.StyleButton(btnNew, ButtonStyle.Secondary);
+            FormStyler.StyleButton(btnOpenParams, ButtonStyle.Primary);
 
+            FormStyler.StyleInput(txtName);
+            FormStyler.StyleInput(txtPrice);
+            FormStyler.StyleInput(txtDays);
+            FormStyler.StyleInput(cmbLabCat);
+
+            DataGridViewStyler.Apply(dgvLabs);
+            colEdit.Image = ImageHelper.LoadSafeImage("imgs/edit.png", 16, 16, Color.SteelBlue);
+
+            dgvLabs.CellDoubleClick += (s, ev) =>
+            {
+                if (ev.RowIndex >= 0) OpenSelectedLabParams();
+            };
+
+            LoadCategories();
+            LoadLabs();
         }
 
-        
-
-        private void dgvLabs_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void LoadCategories()
         {
-            if (e.RowIndex < 0) return;
-
-            if (dgvLabs.Columns[e.ColumnIndex].Name == "colEdit")
+            try
             {
-                int labId = Convert.ToInt32(dgvLabs.Rows[e.RowIndex].Cells["Id"].Value);
+                var categories = _lookupCache.GetLabCategories();
+                cmbLabCat.DataSource = categories;
+                cmbLabCat.DisplayMember = "Name";
+                cmbLabCat.ValueMember = "Id";
+                cmbLabCat.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"خطأ في تحميل أقسام التحاليل: {ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-                thelab = (Lab)db.Labs.Where(l => l.Id == labId).First();
+        private void LoadLabs()
+        {
+            try
+            {
+                var labs = _settingsService.GetAllLabs();
+                var displayList = labs.Select(l => new
+                {
+                    l.Id,
+                    l.Name,
+                    CategoryName = l.LabCategory?.Name ?? "غير محدد",
+                    Price = l.Price.ToString("0.00"),
+                    Days = l.Days.ToString(),
+                    IsExternalText = l.IsExternal ? "معمل خارجي" : "معمل داخلي",
+                    Source = l
+                }).ToList();
 
-                txtName.Text = thelab.Name;
-                txtPrice.Text = thelab.Price.ToString();
-                txtDays.Text = thelab.Days.ToString();
+                dgvLabs.DataSource = displayList;
+                ResetInputs();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"خطأ في استرجاع التحاليل: {ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-                cmbLabCat.SelectedValue = thelab.LabCategoryId;
+        private void ResetInputs()
+        {
+            _editingMode = false;
+            _selectedLab = null;
+            txtName.Clear();
+            txtPrice.Clear();
+            txtDays.Text = "1";
+            chkExternal.Checked = false;
+            if (cmbLabCat.Items.Count > 0) cmbLabCat.SelectedIndex = 0;
+            btnSave.Text = "💾 حفظ التحليل";
+        }
 
-                editingMode = true;
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            ResetInputs();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            string name = txtName.Text.Trim();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("يرجى إدخال اسم التحليل.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtName.Focus();
+                return;
+            }
+
+            if (!decimal.TryParse(txtPrice.Text.Trim(), out decimal price) || price < 0)
+            {
+                MessageBox.Show("يرجى إدخال سعر صحيح للتحليل.", "بيانات غير صحيحة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPrice.Focus();
+                return;
+            }
+
+            if (!int.TryParse(txtDays.Text.Trim(), out int days) || days < 0)
+            {
+                days = 1;
+            }
+
+            if (cmbLabCat.SelectedValue == null)
+            {
+                MessageBox.Show("يرجى اختيار قسم التحليل.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                if (!_editingMode)
+                {
+                    var newLab = new Lab
+                    {
+                        Name = name,
+                        Price = price,
+                        Days = days,
+                        LabCategoryId = (int)cmbLabCat.SelectedValue,
+                        IsExternal = chkExternal.Checked
+                    };
+
+                    _settingsService.SaveLab(newLab);
+                    MessageBox.Show("تم حفظ التحليل بنجاح.", "تم الحفظ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    if (_selectedLab != null)
+                    {
+                        _selectedLab.Name = name;
+                        _selectedLab.Price = price;
+                        _selectedLab.Days = days;
+                        _selectedLab.LabCategoryId = (int)cmbLabCat.SelectedValue;
+                        _selectedLab.IsExternal = chkExternal.Checked;
+
+                        _settingsService.SaveLab(_selectedLab);
+                        MessageBox.Show("تم تعديل التحليل بنجاح.", "تم التعديل", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+                _lookupCache.InvalidateLabs();
+                LoadLabs();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"حدث خطأ أثناء حفظ التحليل:\n{ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvLabs_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            string colName = dgvLabs.Columns[e.ColumnIndex].Name;
+            if (colName == "colEdit")
+            {
+                var rowItem = dgvLabs.Rows[e.RowIndex].DataBoundItem;
+                if (rowItem != null)
+                {
+                    dynamic dyn = rowItem;
+                    _selectedLab = dyn.Source;
+                    if (_selectedLab != null)
+                    {
+                        _editingMode = true;
+                        txtName.Text = _selectedLab.Name;
+                        txtPrice.Text = _selectedLab.Price.ToString("0.00");
+                        txtDays.Text = _selectedLab.Days.ToString();
+                        chkExternal.Checked = _selectedLab.IsExternal;
+                        cmbLabCat.SelectedValue = _selectedLab.LabCategoryId;
+                        btnSave.Text = "✏️ تعديل التحليل";
+                    }
+                }
+            }
+        }
+
+        private void btnOpenParams_Click(object? sender, EventArgs e)
+        {
+            OpenSelectedLabParams();
+        }
+
+        private void OpenSelectedLabParams()
+        {
+            if (dgvLabs.CurrentRow?.DataBoundItem != null)
+            {
+                dynamic dyn = dgvLabs.CurrentRow.DataBoundItem;
+                int labId = dyn.Id;
+                string labName = dyn.Name;
+
+                using var frm = new FrmLabParametersDialog(labId, labName);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("يرجى تحديد تحليل من القائمة أولاً لضبط الباراميترات.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

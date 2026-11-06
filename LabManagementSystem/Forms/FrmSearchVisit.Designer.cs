@@ -1,16 +1,9 @@
-﻿namespace LabManagementSystem.Forms
+namespace LabManagementSystem.Forms
 {
     partial class FrmSearchVisit
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,511 +15,441 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            label3 = new Label();
+            pnlHeader = new Panel();
+            lblHeader = new Label();
+            lblSubtitle = new Label();
+            btnNewVisit = new Button();
+            pnlFilterCard = new Panel();
+            lblCode = new Label();
+            txtSearchCode = new TextBox();
+            lblName = new Label();
+            txtSearchName = new TextBox();
+            chkSearchByDate = new CheckBox();
+            lblFrom = new Label();
+            dtSearchDateFrom = new DateTimePicker();
+            lblTo = new Label();
+            dtSearchDateTo = new DateTimePicker();
+            btnFilter = new Button();
+            lblSummary = new Label();
+            pnlGridCard = new Panel();
             dgvvisits = new DataGridView();
             colVisitId = new DataGridViewTextBoxColumn();
+            colMedicalCode = new DataGridViewTextBoxColumn();
             colPatientName = new DataGridViewTextBoxColumn();
             colVisitDate = new DataGridViewTextBoxColumn();
             colLabsCount = new DataGridViewTextBoxColumn();
             colTotalPrice = new DataGridViewTextBoxColumn();
             colDiscountValue = new DataGridViewTextBoxColumn();
-            colDiscountPercentage = new DataGridViewTextBoxColumn();
             colNetPrice = new DataGridViewTextBoxColumn();
+            colPaidAmount = new DataGridViewTextBoxColumn();
+            colRemainingAmount = new DataGridViewTextBoxColumn();
             colReport = new DataGridViewImageColumn();
             colPayment = new DataGridViewImageColumn();
             colEdit = new DataGridViewImageColumn();
             colDelete = new DataGridViewImageColumn();
-            btnSearch = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            tableLayoutPanel5 = new TableLayoutPanel();
-            dtSearchDateTo = new DateTimePicker();
-            tableLayoutPanel4 = new TableLayoutPanel();
-            label6 = new Label();
-            tableLayoutPanel3 = new TableLayoutPanel();
-            dtSearchDateFrom = new DateTimePicker();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            chkSearchByDate = new CheckBox();
-            label5 = new Label();
-            txtSearchName = new TextBox();
-            txtSearchCode = new TextBox();
-            lblSearch = new Label();
-            label2 = new Label();
-            button1 = new Button();
-            pnlSearch = new Panel();
-            label1 = new Label();
-            pnlTitle = new Panel();
-            pnlBottom = new Panel();
+            pnlHeader.SuspendLayout();
+            pnlFilterCard.SuspendLayout();
+            pnlGridCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvvisits).BeginInit();
-            tableLayoutPanel1.SuspendLayout();
-            tableLayoutPanel5.SuspendLayout();
-            tableLayoutPanel4.SuspendLayout();
-            tableLayoutPanel3.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
-            pnlSearch.SuspendLayout();
-            pnlTitle.SuspendLayout();
-            pnlBottom.SuspendLayout();
             SuspendLayout();
             // 
-            // label3
+            // pnlHeader
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(946, 11);
-            label3.Name = "label3";
-            label3.Size = new Size(123, 20);
-            label3.TabIndex = 0;
-            label3.Text = "إجمالي المرضى : 0";
+            pnlHeader.BackColor = Color.FromArgb(23, 43, 77);
+            pnlHeader.Controls.Add(btnNewVisit);
+            pnlHeader.Controls.Add(lblSubtitle);
+            pnlHeader.Controls.Add(lblHeader);
+            pnlHeader.Dock = DockStyle.Top;
+            pnlHeader.Height = 68;
+            pnlHeader.Name = "pnlHeader";
+            pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.TabIndex = 0;
+            // 
+            // lblHeader
+            // 
+            lblHeader.Dock = DockStyle.Top;
+            lblHeader.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
+            lblHeader.ForeColor = Color.White;
+            lblHeader.Height = 28;
+            lblHeader.Name = "lblHeader";
+            lblHeader.Text = "🧪 سجل ومتابعة الزيارات والفحوصات الطبية";
+            lblHeader.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblSubtitle
+            // 
+            lblSubtitle.Dock = DockStyle.Bottom;
+            lblSubtitle.Font = new Font("Segoe UI", 9F);
+            lblSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
+            lblSubtitle.Height = 18;
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Text = "استعراض الزيارات، إدخال النتائج، طباعة التقارير المجمعة، وسداد الدفعات المالية";
+            lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // btnNewVisit
+            // 
+            btnNewVisit.Dock = DockStyle.Left;
+            btnNewVisit.BackColor = Color.FromArgb(37, 99, 235);
+            btnNewVisit.FlatAppearance.BorderSize = 0;
+            btnNewVisit.FlatStyle = FlatStyle.Flat;
+            btnNewVisit.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnNewVisit.ForeColor = Color.White;
+            btnNewVisit.Name = "btnNewVisit";
+            btnNewVisit.Size = new Size(160, 48);
+            btnNewVisit.TabIndex = 2;
+            btnNewVisit.Text = "➕ تسجيل زيارة جديدة";
+            btnNewVisit.UseVisualStyleBackColor = false;
+            btnNewVisit.Click += btnNewVisit_Click;
+            // 
+            // pnlFilterCard
+            // 
+            pnlFilterCard.BackColor = Color.White;
+            pnlFilterCard.Controls.Add(lblSummary);
+            pnlFilterCard.Controls.Add(btnFilter);
+            pnlFilterCard.Controls.Add(dtSearchDateTo);
+            pnlFilterCard.Controls.Add(lblTo);
+            pnlFilterCard.Controls.Add(dtSearchDateFrom);
+            pnlFilterCard.Controls.Add(lblFrom);
+            pnlFilterCard.Controls.Add(chkSearchByDate);
+            pnlFilterCard.Controls.Add(txtSearchName);
+            pnlFilterCard.Controls.Add(lblName);
+            pnlFilterCard.Controls.Add(txtSearchCode);
+            pnlFilterCard.Controls.Add(lblCode);
+            pnlFilterCard.Dock = DockStyle.Top;
+            pnlFilterCard.Height = 58;
+            pnlFilterCard.Name = "pnlFilterCard";
+            pnlFilterCard.Padding = new Padding(12, 10, 12, 10);
+            pnlFilterCard.TabIndex = 1;
+            // 
+            // lblCode
+            // 
+            lblCode.Dock = DockStyle.Right;
+            lblCode.AutoSize = false;
+            lblCode.Width = 50;
+            lblCode.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblCode.ForeColor = Color.FromArgb(30, 41, 59);
+            lblCode.Name = "lblCode";
+            lblCode.Text = "الكود:";
+            lblCode.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // txtSearchCode
+            // 
+            txtSearchCode.Dock = DockStyle.Right;
+            txtSearchCode.Font = new Font("Segoe UI", 9.5F);
+            txtSearchCode.Name = "txtSearchCode";
+            txtSearchCode.Size = new Size(100, 24);
+            txtSearchCode.TabIndex = 0;
+            txtSearchCode.TextChanged += txtSearch_TextChanged;
+            // 
+            // lblName
+            // 
+            lblName.Dock = DockStyle.Right;
+            lblName.AutoSize = false;
+            lblName.Width = 85;
+            lblName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblName.ForeColor = Color.FromArgb(30, 41, 59);
+            lblName.Name = "lblName";
+            lblName.Text = "اسم المريض:";
+            lblName.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // txtSearchName
+            // 
+            txtSearchName.Dock = DockStyle.Right;
+            txtSearchName.Font = new Font("Segoe UI", 9.5F);
+            txtSearchName.Name = "txtSearchName";
+            txtSearchName.Size = new Size(160, 24);
+            txtSearchName.TabIndex = 1;
+            txtSearchName.TextChanged += txtSearch_TextChanged;
+            // 
+            // chkSearchByDate
+            // 
+            chkSearchByDate.Dock = DockStyle.Right;
+            chkSearchByDate.AutoSize = false;
+            chkSearchByDate.Width = 105;
+            chkSearchByDate.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            chkSearchByDate.ForeColor = Color.FromArgb(30, 41, 59);
+            chkSearchByDate.Name = "chkSearchByDate";
+            chkSearchByDate.Text = "تصفية بالتاريخ:";
+            chkSearchByDate.UseVisualStyleBackColor = true;
+            chkSearchByDate.CheckAlign = ContentAlignment.MiddleRight;
+            chkSearchByDate.TextAlign = ContentAlignment.MiddleRight;
+            chkSearchByDate.CheckedChanged += chkSearchByDate_CheckedChanged;
+            // 
+            // lblFrom
+            // 
+            lblFrom.Dock = DockStyle.Right;
+            lblFrom.AutoSize = false;
+            lblFrom.Width = 35;
+            lblFrom.Font = new Font("Segoe UI", 9F);
+            lblFrom.Name = "lblFrom";
+            lblFrom.Text = "من:";
+            lblFrom.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // dtSearchDateFrom
+            // 
+            dtSearchDateFrom.Dock = DockStyle.Right;
+            dtSearchDateFrom.Enabled = false;
+            dtSearchDateFrom.Font = new Font("Segoe UI", 9.5F);
+            dtSearchDateFrom.Format = DateTimePickerFormat.Short;
+            dtSearchDateFrom.Name = "dtSearchDateFrom";
+            dtSearchDateFrom.Size = new Size(100, 24);
+            dtSearchDateFrom.TabIndex = 3;
+            // 
+            // lblTo
+            // 
+            lblTo.Dock = DockStyle.Right;
+            lblTo.AutoSize = false;
+            lblTo.Width = 35;
+            lblTo.Font = new Font("Segoe UI", 9F);
+            lblTo.Name = "lblTo";
+            lblTo.Text = "إلى:";
+            lblTo.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // dtSearchDateTo
+            // 
+            dtSearchDateTo.Dock = DockStyle.Right;
+            dtSearchDateTo.Enabled = false;
+            dtSearchDateTo.Font = new Font("Segoe UI", 9.5F);
+            dtSearchDateTo.Format = DateTimePickerFormat.Short;
+            dtSearchDateTo.Name = "dtSearchDateTo";
+            dtSearchDateTo.Size = new Size(100, 24);
+            dtSearchDateTo.TabIndex = 4;
+            // 
+            // btnFilter
+            // 
+            btnFilter.Dock = DockStyle.Right;
+            btnFilter.BackColor = Color.FromArgb(37, 99, 235);
+            btnFilter.FlatAppearance.BorderSize = 0;
+            btnFilter.FlatStyle = FlatStyle.Flat;
+            btnFilter.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnFilter.ForeColor = Color.White;
+            btnFilter.Name = "btnFilter";
+            btnFilter.Size = new Size(80, 38);
+            btnFilter.TabIndex = 5;
+            btnFilter.Text = "🔍 بحث";
+            btnFilter.UseVisualStyleBackColor = false;
+            btnFilter.Click += btnFilter_Click;
+            // 
+            // lblSummary
+            // 
+            lblSummary.Dock = DockStyle.Left;
+            lblSummary.AutoSize = true;
+            lblSummary.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblSummary.ForeColor = Color.FromArgb(37, 99, 235);
+            lblSummary.Name = "lblSummary";
+            lblSummary.Text = "ملخص الزيارات...";
+            lblSummary.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // pnlGridCard
+            // 
+            pnlGridCard.BackColor = Color.White;
+            pnlGridCard.Controls.Add(dgvvisits);
+            pnlGridCard.Dock = DockStyle.Fill;
+            pnlGridCard.Location = new Point(16, 149);
+            pnlGridCard.Name = "pnlGridCard";
+            pnlGridCard.Padding = new Padding(12);
+            pnlGridCard.TabIndex = 2;
             // 
             // dgvvisits
             // 
             dgvvisits.AllowUserToAddRows = false;
             dgvvisits.AllowUserToDeleteRows = false;
-            dgvvisits.AllowUserToResizeRows = false;
             dgvvisits.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvvisits.BackgroundColor = SystemColors.Control;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvvisits.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvvisits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvvisits.Columns.AddRange(new DataGridViewColumn[] { colVisitId, colPatientName, colVisitDate, colLabsCount, colTotalPrice, colDiscountValue, colDiscountPercentage, colNetPrice, colReport, colPayment, colEdit, colDelete });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvvisits.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvvisits.BackgroundColor = Color.White;
+            dgvvisits.BorderStyle = BorderStyle.None;
+            dgvvisits.ColumnHeadersHeight = 40;
+            dgvvisits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvvisits.Columns.AddRange(new DataGridViewColumn[] {
+                colVisitId,
+                colMedicalCode,
+                colPatientName,
+                colVisitDate,
+                colLabsCount,
+                colTotalPrice,
+                colDiscountValue,
+                colNetPrice,
+                colPaidAmount,
+                colRemainingAmount,
+                colReport,
+                colPayment,
+                colEdit,
+                colDelete
+            });
             dgvvisits.Dock = DockStyle.Fill;
-            dgvvisits.EnableHeadersVisualStyles = false;
-            dgvvisits.Location = new Point(0, 119);
+            dgvvisits.Location = new Point(12, 12);
             dgvvisits.MultiSelect = false;
             dgvvisits.Name = "dgvvisits";
             dgvvisits.ReadOnly = true;
             dgvvisits.RowHeadersVisible = false;
-            dgvvisits.RowHeadersWidth = 51;
-            dgvvisits.RowTemplate.Height = 45;
+            dgvvisits.RowTemplate.Height = 38;
             dgvvisits.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvvisits.Size = new Size(1841, 535);
-            dgvvisits.TabIndex = 9;
-            dgvvisits.CellContentClick += dgvvisits_CellContentClick_1;
+            dgvvisits.Size = new Size(1176, 503);
+            dgvvisits.TabIndex = 0;
+            dgvvisits.CellContentClick += dgvvisits_CellContentClick;
             // 
             // colVisitId
             // 
             colVisitId.DataPropertyName = "Id";
-            colVisitId.HeaderText = "كود الزيارة";
-            colVisitId.MinimumWidth = 6;
+            colVisitId.FillWeight = 8F;
+            colVisitId.HeaderText = "#";
             colVisitId.Name = "colVisitId";
             colVisitId.ReadOnly = true;
             // 
+            // colMedicalCode
+            // 
+            colMedicalCode.DataPropertyName = "MedicalCode";
+            colMedicalCode.FillWeight = 16F;
+            colMedicalCode.HeaderText = "الكود الطبي";
+            colMedicalCode.Name = "colMedicalCode";
+            colMedicalCode.ReadOnly = true;
+            // 
             // colPatientName
             // 
-            colPatientName.DataPropertyName = "Name";
+            colPatientName.DataPropertyName = "PatientName";
+            colPatientName.FillWeight = 26F;
             colPatientName.HeaderText = "اسم المريض";
-            colPatientName.MinimumWidth = 6;
             colPatientName.Name = "colPatientName";
             colPatientName.ReadOnly = true;
             // 
             // colVisitDate
             // 
             colVisitDate.DataPropertyName = "VisitDate";
+            colVisitDate.FillWeight = 14F;
             colVisitDate.HeaderText = "تاريخ الزيارة";
-            colVisitDate.MinimumWidth = 6;
             colVisitDate.Name = "colVisitDate";
             colVisitDate.ReadOnly = true;
             // 
             // colLabsCount
             // 
             colLabsCount.DataPropertyName = "LabsCount";
-            colLabsCount.HeaderText = "عدد التحاليل";
-            colLabsCount.MinimumWidth = 6;
+            colLabsCount.FillWeight = 9F;
+            colLabsCount.HeaderText = "الفحوصات";
             colLabsCount.Name = "colLabsCount";
             colLabsCount.ReadOnly = true;
             // 
             // colTotalPrice
             // 
             colTotalPrice.DataPropertyName = "TotalPrice";
+            colTotalPrice.FillWeight = 11F;
             colTotalPrice.HeaderText = "الإجمالي";
-            colTotalPrice.MinimumWidth = 6;
             colTotalPrice.Name = "colTotalPrice";
             colTotalPrice.ReadOnly = true;
             // 
             // colDiscountValue
             // 
             colDiscountValue.DataPropertyName = "DiscountValue";
-            colDiscountValue.HeaderText = "قيمة الخصم";
-            colDiscountValue.MinimumWidth = 6;
+            colDiscountValue.FillWeight = 9F;
+            colDiscountValue.HeaderText = "الخصم";
             colDiscountValue.Name = "colDiscountValue";
             colDiscountValue.ReadOnly = true;
-            // 
-            // colDiscountPercentage
-            // 
-            colDiscountPercentage.DataPropertyName = "DiscountPercent";
-            colDiscountPercentage.HeaderText = "نسبة الخصم";
-            colDiscountPercentage.MinimumWidth = 6;
-            colDiscountPercentage.Name = "colDiscountPercentage";
-            colDiscountPercentage.ReadOnly = true;
             // 
             // colNetPrice
             // 
             colNetPrice.DataPropertyName = "NetPrice";
-            colNetPrice.HeaderText = "السعر بعد الخصم";
-            colNetPrice.MinimumWidth = 6;
+            colNetPrice.FillWeight = 11F;
+            colNetPrice.HeaderText = "المطلوب";
             colNetPrice.Name = "colNetPrice";
             colNetPrice.ReadOnly = true;
             // 
+            // colPaidAmount
+            // 
+            colPaidAmount.DataPropertyName = "PaidAmount";
+            colPaidAmount.FillWeight = 11F;
+            colPaidAmount.HeaderText = "المدفوع";
+            colPaidAmount.Name = "colPaidAmount";
+            colPaidAmount.ReadOnly = true;
+            // 
+            // colRemainingAmount
+            // 
+            colRemainingAmount.DataPropertyName = "RemainingAmount";
+            colRemainingAmount.FillWeight = 11F;
+            colRemainingAmount.HeaderText = "المتبقي";
+            colRemainingAmount.Name = "colRemainingAmount";
+            colRemainingAmount.ReadOnly = true;
+            // 
             // colReport
             // 
+            colReport.FillWeight = 7F;
             colReport.HeaderText = "تقرير";
-            colReport.MinimumWidth = 6;
             colReport.Name = "colReport";
             colReport.ReadOnly = true;
-            colReport.Resizable = DataGridViewTriState.True;
-            colReport.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // colPayment
             // 
-            colPayment.HeaderText = "دفع";
-            colPayment.MinimumWidth = 6;
+            colPayment.FillWeight = 7F;
+            colPayment.HeaderText = "سداد";
             colPayment.Name = "colPayment";
             colPayment.ReadOnly = true;
-            colPayment.Resizable = DataGridViewTriState.True;
-            colPayment.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // colEdit
             // 
+            colEdit.FillWeight = 7F;
             colEdit.HeaderText = "تعديل";
-            colEdit.MinimumWidth = 6;
             colEdit.Name = "colEdit";
             colEdit.ReadOnly = true;
-            colEdit.Resizable = DataGridViewTriState.True;
-            colEdit.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // colDelete
             // 
+            colDelete.FillWeight = 7F;
             colDelete.HeaderText = "حذف";
-            colDelete.MinimumWidth = 6;
             colDelete.Name = "colDelete";
             colDelete.ReadOnly = true;
-            colDelete.Resizable = DataGridViewTriState.True;
-            colDelete.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // btnSearch
-            // 
-            btnSearch.BackColor = Color.RoyalBlue;
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(116, 9);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(228, 35);
-            btnSearch.TabIndex = 4;
-            btnSearch.Text = "إضافة زيارة ➕  ";
-            btnSearch.UseVisualStyleBackColor = false;
-            btnSearch.Click += btnSearch_Click;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 9;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 113F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 117F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 265F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 163F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 329F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 91F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 345F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 141F));
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel5, 7, 0);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 6, 0);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 5, 0);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 4, 0);
-            tableLayoutPanel1.Controls.Add(txtSearchName, 3, 0);
-            tableLayoutPanel1.Controls.Add(txtSearchCode, 1, 0);
-            tableLayoutPanel1.Controls.Add(lblSearch, 0, 0);
-            tableLayoutPanel1.Controls.Add(label2, 2, 0);
-            tableLayoutPanel1.Controls.Add(button1, 8, 0);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(1841, 70);
-            tableLayoutPanel1.TabIndex = 2;
-            // 
-            // tableLayoutPanel5
-            // 
-            tableLayoutPanel5.ColumnCount = 1;
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.Controls.Add(dtSearchDateTo, 0, 1);
-            tableLayoutPanel5.Location = new Point(144, 3);
-            tableLayoutPanel5.Name = "tableLayoutPanel5";
-            tableLayoutPanel5.RowCount = 2;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.Size = new Size(339, 64);
-            tableLayoutPanel5.TabIndex = 10;
-            // 
-            // dtSearchDateTo
-            // 
-            dtSearchDateTo.Location = new Point(3, 35);
-            dtSearchDateTo.Name = "dtSearchDateTo";
-            dtSearchDateTo.Size = new Size(333, 27);
-            dtSearchDateTo.TabIndex = 11;
-            // 
-            // tableLayoutPanel4
-            // 
-            tableLayoutPanel4.ColumnCount = 1;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel4.Controls.Add(label6, 0, 1);
-            tableLayoutPanel4.Location = new Point(500, 3);
-            tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.RowCount = 2;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel4.Size = new Size(74, 64);
-            tableLayoutPanel4.TabIndex = 10;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.ForeColor = Color.FromArgb(55, 71, 79);
-            label6.Location = new Point(33, 32);
-            label6.Name = "label6";
-            label6.Size = new Size(38, 25);
-            label6.TabIndex = 10;
-            label6.Text = "الى";
-            // 
-            // tableLayoutPanel3
-            // 
-            tableLayoutPanel3.ColumnCount = 1;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.Controls.Add(dtSearchDateFrom, 0, 1);
-            tableLayoutPanel3.Location = new Point(597, 3);
-            tableLayoutPanel3.Name = "tableLayoutPanel3";
-            tableLayoutPanel3.RowCount = 2;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.Size = new Size(306, 64);
-            tableLayoutPanel3.TabIndex = 10;
-            // 
-            // dtSearchDateFrom
-            // 
-            dtSearchDateFrom.Location = new Point(3, 35);
-            dtSearchDateFrom.Name = "dtSearchDateFrom";
-            dtSearchDateFrom.Size = new Size(300, 27);
-            dtSearchDateFrom.TabIndex = 10;
-            dtSearchDateFrom.ValueChanged += dtSearchDateTo_ValueChanged;
-            // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.ColumnCount = 1;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Controls.Add(chkSearchByDate, 0, 0);
-            tableLayoutPanel2.Controls.Add(label5, 0, 1);
-            tableLayoutPanel2.Location = new Point(909, 3);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 2;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 56.25F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 43.75F));
-            tableLayoutPanel2.Size = new Size(157, 64);
-            tableLayoutPanel2.TabIndex = 10;
-            // 
-            // chkSearchByDate
-            // 
-            chkSearchByDate.AutoSize = true;
-            chkSearchByDate.Font = new Font("Bodoni MT Black", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chkSearchByDate.ForeColor = SystemColors.ActiveCaptionText;
-            chkSearchByDate.Location = new Point(36, 3);
-            chkSearchByDate.Name = "chkSearchByDate";
-            chkSearchByDate.Size = new Size(118, 28);
-            chkSearchByDate.TabIndex = 7;
-            chkSearchByDate.Text = "البحث بالتاريخ";
-            chkSearchByDate.UseVisualStyleBackColor = true;
-            chkSearchByDate.CheckedChanged += chkSearchByDate_CheckedChanged;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.ForeColor = Color.FromArgb(55, 71, 79);
-            label5.Location = new Point(119, 36);
-            label5.Name = "label5";
-            label5.Size = new Size(35, 25);
-            label5.TabIndex = 6;
-            label5.Text = "من";
-            // 
-            // txtSearchName
-            // 
-            txtSearchName.Location = new Point(1072, 3);
-            txtSearchName.Name = "txtSearchName";
-            txtSearchName.Size = new Size(259, 27);
-            txtSearchName.TabIndex = 5;
-            txtSearchName.TextChanged += textBox1_TextChanged;
-            // 
-            // txtSearchCode
-            // 
-            txtSearchCode.Location = new Point(1454, 3);
-            txtSearchCode.Name = "txtSearchCode";
-            txtSearchCode.Size = new Size(271, 27);
-            txtSearchCode.TabIndex = 3;
-            // 
-            // lblSearch
-            // 
-            lblSearch.AutoSize = true;
-            lblSearch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSearch.ForeColor = Color.FromArgb(55, 71, 79);
-            lblSearch.Location = new Point(1734, 0);
-            lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(104, 28);
-            lblSearch.TabIndex = 2;
-            lblSearch.Text = "بحث بالكود";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.FromArgb(55, 71, 79);
-            label2.Location = new Point(1340, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(108, 28);
-            label2.TabIndex = 4;
-            label2.Text = "بحث بالاسم";
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.RoyalBlue;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(3, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(135, 35);
-            button1.TabIndex = 5;
-            button1.Text = "بحث";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
-            // 
-            // pnlSearch
-            // 
-            pnlSearch.BackColor = Color.White;
-            pnlSearch.Controls.Add(tableLayoutPanel1);
-            pnlSearch.Dock = DockStyle.Top;
-            pnlSearch.Location = new Point(0, 49);
-            pnlSearch.Name = "pnlSearch";
-            pnlSearch.Size = new Size(1841, 70);
-            pnlSearch.TabIndex = 7;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.RoyalBlue;
-            label1.Location = new Point(656, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(252, 38);
-            label1.TabIndex = 1;
-            label1.Text = "شاشة عرض الزيارات";
-            // 
-            // pnlTitle
-            // 
-            pnlTitle.BackColor = Color.Gainsboro;
-            pnlTitle.Controls.Add(label1);
-            pnlTitle.Controls.Add(btnSearch);
-            pnlTitle.Dock = DockStyle.Top;
-            pnlTitle.Location = new Point(0, 0);
-            pnlTitle.Name = "pnlTitle";
-            pnlTitle.Size = new Size(1841, 49);
-            pnlTitle.TabIndex = 6;
-            // 
-            // pnlBottom
-            // 
-            pnlBottom.Controls.Add(label3);
-            pnlBottom.Dock = DockStyle.Bottom;
-            pnlBottom.Location = new Point(0, 654);
-            pnlBottom.Name = "pnlBottom";
-            pnlBottom.Size = new Size(1841, 40);
-            pnlBottom.TabIndex = 8;
             // 
             // FrmSearchVisit
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1841, 694);
-            Controls.Add(dgvvisits);
-            Controls.Add(pnlSearch);
-            Controls.Add(pnlTitle);
-            Controls.Add(pnlBottom);
+            BackColor = Color.FromArgb(244, 247, 251);
+            ClientSize = new Size(1200, 680);
+            Controls.Add(pnlGridCard);
+            Controls.Add(pnlFilterCard);
+            Controls.Add(pnlHeader);
+            Font = new Font("Segoe UI", 9.5F);
             Name = "FrmSearchVisit";
+            Padding = new Padding(16);
             RightToLeft = RightToLeft.Yes;
-            Text = "ا";
+            RightToLeftLayout = true;
+            Text = "سجل الزيارات";
             Load += FrmSearchVisit_Load;
+            pnlHeader.ResumeLayout(false);
+            pnlFilterCard.ResumeLayout(false);
+            pnlFilterCard.PerformLayout();
+            pnlGridCard.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvvisits).EndInit();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
-            tableLayoutPanel5.ResumeLayout(false);
-            tableLayoutPanel4.ResumeLayout(false);
-            tableLayoutPanel4.PerformLayout();
-            tableLayoutPanel3.ResumeLayout(false);
-            tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel2.PerformLayout();
-            pnlSearch.ResumeLayout(false);
-            pnlTitle.ResumeLayout(false);
-            pnlTitle.PerformLayout();
-            pnlBottom.ResumeLayout(false);
-            pnlBottom.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-        private Label label3;
-        private DataGridView dgvvisits;
-        private Button btnSearch;
-        private TableLayoutPanel tableLayoutPanel1;
+
+        private Panel pnlHeader;
+        private Label lblHeader;
+        private Label lblSubtitle;
+        private Button btnNewVisit;
+        private Panel pnlFilterCard;
+        private Label lblCode;
         private TextBox txtSearchCode;
-        private Label lblSearch;
-        private Panel pnlSearch;
-        private Label label1;
-        private Panel pnlTitle;
-        private Panel pnlBottom;
-        private Label label2;
-        private Label label5;
+        private Label lblName;
         private TextBox txtSearchName;
-        private Button button1;
-        private DateTimePicker dtSearchDateTo;
-        private DateTimePicker dtSearchDateFrom;
-        private TableLayoutPanel tableLayoutPanel2;
         private CheckBox chkSearchByDate;
-        private TableLayoutPanel tableLayoutPanel3;
-        private TableLayoutPanel tableLayoutPanel5;
-        private TableLayoutPanel tableLayoutPanel4;
-        private Label label6;
-        private DataGridViewTextBoxColumn VisitDate;
+        private Label lblFrom;
+        private DateTimePicker dtSearchDateFrom;
+        private Label lblTo;
+        private DateTimePicker dtSearchDateTo;
+        private Button btnFilter;
+        private Label lblSummary;
+        private Panel pnlGridCard;
+        private DataGridView dgvvisits;
         private DataGridViewTextBoxColumn colVisitId;
+        private DataGridViewTextBoxColumn colMedicalCode;
         private DataGridViewTextBoxColumn colPatientName;
         private DataGridViewTextBoxColumn colVisitDate;
         private DataGridViewTextBoxColumn colLabsCount;
         private DataGridViewTextBoxColumn colTotalPrice;
         private DataGridViewTextBoxColumn colDiscountValue;
-        private DataGridViewTextBoxColumn colDiscountPercentage;
         private DataGridViewTextBoxColumn colNetPrice;
+        private DataGridViewTextBoxColumn colPaidAmount;
+        private DataGridViewTextBoxColumn colRemainingAmount;
         private DataGridViewImageColumn colReport;
         private DataGridViewImageColumn colPayment;
         private DataGridViewImageColumn colEdit;

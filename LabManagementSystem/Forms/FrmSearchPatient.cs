@@ -1,156 +1,150 @@
-﻿using LabManagementSystem.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
+using LabManagementSystem.Common;
+using LabManagementSystem.Services;
+
 namespace LabManagementSystem.Forms
 {
     public partial class FrmSearchPatient : Form
     {
         public event Action? AddPatientClicked;
 
-        LabContext db = new LabContext();
+        private readonly IPatientService _patientService;
+        private readonly DebounceHelper _debouncer;
+        private LoadingOverlay _loadingOverlay = null!;
+        private CancellationTokenSource? _searchCts;
+
         public FrmSearchPatient()
         {
             InitializeComponent();
-            dgvPatients.DefaultCellStyle.ForeColor = Color.Black;
-            dgvPatients.DefaultCellStyle.BackColor = Color.White;
+            _patientService = ServiceLocator.PatientService;
+            _debouncer = new DebounceHelper(280);
 
-            dgvPatients.RowsDefaultCellStyle.ForeColor = Color.Black;
-            dgvPatients.RowsDefaultCellStyle.BackColor = Color.White;
+            FormStyler.ApplyFormTheme(this, "سجل وبحث المرضى");
+            FormStyler.StyleButton(btnAddPatient, ButtonStyle.Primary);
+            FormStyler.StyleButton(btnRefresh, ButtonStyle.Secondary);
+            FormStyler.StyleInput(txtSearch);
+            DataGridViewStyler.Apply(dgvPatients);
 
-            dgvPatients.AlternatingRowsDefaultCellStyle.ForeColor = Color.Black;
-            dgvPatients.AlternatingRowsDefaultCellStyle.BackColor = Color.White;
-
-            dgvPatients.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dgvPatients.MultiSelect = true;
-            dgvPatients.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithAutoHeaderText;
-
-
-        }
-        private void SearchPatients()
-        {
-            string search = txtSearch.Text.Trim();
-
-            var patients = db.Patients
-                .Include(p => p.Gender)
-                .Where(p => p.Name.Contains(search) || p.MedicalCode.Contains(search))
-                .Select(p => new
-                {
-                    p.Id,
-                    p.MedicalCode,
-                    p.Name,
-                    p.Phone,
-                    Gender = p.Gender.Name,
-                    p.AgeAtRecord
-                })
-                .ToList();
-
-            dgvPatients.DataSource = patients;
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            AddPatientClicked?.Invoke();
+            _loadingOverlay = LoadingOverlay.AttachTo(pnlGridCard);
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private async void FrmSearchPatient_Load(object sender, EventArgs e)
         {
-        }
+            colEdit.Image = ImageHelper.LoadSafeImage("imgs/edit.png", 16, 16, Color.SteelBlue);
+            colDelete.Image = ImageHelper.LoadSafeImage("imgs/delete.png", 16, 16, Color.Crimson);
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvPatients_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
+            await SearchPatientsAsync();
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            string search = txtSearch.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(search))
+            _debouncer.Debounce(async () =>
             {
-                dgvPatients.DataSource = null;
-                return;
+                await SearchPatientsAsync();
+            });
+        }
+
+        private async void btnRefresh_Click(object sender, EventArgs e)
+        {
+            await SearchPatientsAsync();
+        }
+
+        private void btnAddPatient_Click(object sender, EventArgs e)
+        {
+            AddPatientClicked?.Invoke();
+        }
+
+        private async Task SearchPatientsAsync()
+        {
+            _searchCts?.Cancel();
+            _searchCts?.Dispose();
+            _searchCts = new CancellationTokenSource();
+            var token = _searchCts.Token;
+
+            _loadingOverlay.ShowOverlay("جاري البحث عن المرضى...");
+            try
+            {
+                string search = txtSearch.Text.Trim();
+                var patients = await _patientService.SearchPatientsAsync(search, 150, token);
+
+                if (token.IsCancellationRequested) return;
+
+                dgvPatients.DataSource = patients;
+                lblResultsCount.Text = $"المرضى المعروضين: {patients.Count}";
             }
-            var patients = db.Patients
-                .Include(p => p.Gender)
-                .Where(p => p.Name.Contains(search) || p.MedicalCode.Contains(search))
-                .Select(p => new
-                {
-                    p.Id,
-                    p.MedicalCode,
-                    p.Name,
-                    p.Phone,
-                    Gender = p.Gender.Name,
-                    p.AgeAtRecord
-                })
-                .ToList();
-
-            dgvPatients.DataSource = patients;
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"خطأ أثناء البحث عن المرضى:\n{ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                _loadingOverlay.HideOverlay();
+            }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvPatients_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-        }
+            if (dgvPatients.Rows[e.RowIndex].Cells["colId"].Value == null) return;
 
-        private void FrmSearchPatient_Load(object sender, EventArgs e)
-        {
-            dgvPatients.AutoGenerateColumns = false;
-
-
-            /////////////////////
-            //for edit delete icons
-            colEdit.Image = Image.FromFile("imgs/edit.png");
-            colDelete.Image = Image.FromFile("imgs/delete.png");
-        }
-
-        private void pnlTitle_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void dgvPatients_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-
-        }
-
-        private void dgvPatients_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
             int patientId = Convert.ToInt32(dgvPatients.Rows[e.RowIndex].Cells["colId"].Value);
+            string colName = dgvPatients.Columns[e.ColumnIndex].Name;
 
-            Patient patient = db.Patients.Find(patientId);
-
-            if (e.RowIndex < 0) return;
-            if (dgvPatients.Columns[e.ColumnIndex].Name == "colEdit")
+            if (colName == "colEdit")
             {
-                //MessageBox.Show("Edit is clicked");
+                var patient = await _patientService.GetPatientByIdAsync(patientId);
+                if (patient == null)
+                {
+                    MessageBox.Show("لم يتم العثور على بيانات المريض.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                FrmAddPatient frm = new FrmAddPatient(patient);
-                frm.ShowDialog();
+                using var frm = new FrmAddPatient(patient);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    await SearchPatientsAsync();
+                }
             }
-            if (dgvPatients.Columns[e.ColumnIndex].Name == "colDelete")
+            else if (colName == "colDelete")
             {
-                db.Patients.Remove(patient);
-                db.SaveChanges();
-                MessageBox.Show("تم حذف المريض بنجاح");
+                if (!_patientService.CanDeletePatient(patientId, out string reason))
+                {
+                    MessageBox.Show(reason, "لا يمكن الحذف", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string patientName = dgvPatients.Rows[e.RowIndex].Cells["colName"].Value?.ToString() ?? "";
+                string patientCode = dgvPatients.Rows[e.RowIndex].Cells["colMedicalCode"].Value?.ToString() ?? "";
+
+                var confirm = MessageBox.Show(
+                    $"هل أنت متأكد تماماً من رغبتك في حذف المريض:\n({patientName}) - كود: {patientCode}؟\nلا يمكن التراجع عن هذه العملية.",
+                    "تأكيد الحذف",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (confirm == DialogResult.Yes)
+                {
+                    try
+                    {
+                        await _patientService.DeletePatientAsync(patientId);
+                        MessageBox.Show("تم حذف المريض بنجاح.", "تم الحذف", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        await SearchPatientsAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"حدث خطأ أثناء حذف المريض:\n{ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            SearchPatients();
+            _debouncer.Dispose();
+            _searchCts?.Cancel();
+            _searchCts?.Dispose();
+            base.OnFormClosed(e);
         }
     }
 }
