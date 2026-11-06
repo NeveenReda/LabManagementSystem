@@ -1,13 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Update="Common\LoadingOverlay.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Forms\FrmAddPatient.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\FrmAddVisit.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\FrmBaseExternalLabs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmDebts.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\FrmExternalLab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmFinancialReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmInventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmLabParametersDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\FrmLabResult.cs">
@@ -25,10 +46,22 @@
     <Compile Update="Forms\FrmSearchVisit.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\FrmSelectPatient.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\frmSettingsLab.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\FrmSystemSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmTasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\FrmTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Printing\DocumentViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

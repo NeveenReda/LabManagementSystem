@@ -21,7 +21,7 @@ namespace LabManagementSystem
             if (!string.IsNullOrWhiteSpace(labSettings.LabName))
                 lblLabName.Text = labSettings.LabName;
             if (!string.IsNullOrWhiteSpace(labSettings.LabSubtitle))
-                lblLabSubtitle.Text = labSettings.LabSubtitle;
+                //lblLabSubtitle.Text = labSettings.LabSubtitle;
 
             // Live clock timer
             _clockTimer = new Timer { Interval = 1000 };
@@ -42,7 +42,7 @@ namespace LabManagementSystem
                 if (!IsDisposed)
                 {
                     lblLabName.Text = settings.LabName;
-                    lblLabSubtitle.Text = settings.LabSubtitle;
+                    //lblLabSubtitle.Text = settings.LabSubtitle;
                 }
             };
 
@@ -230,6 +230,16 @@ namespace LabManagementSystem
             }
 
             base.OnFormClosed(e);
+        }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlSidebar_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

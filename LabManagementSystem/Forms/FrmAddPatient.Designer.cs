@@ -18,9 +18,12 @@ namespace LabManagementSystem.Forms
         private void InitializeComponent()
         {
             pnlHeader = new Panel();
-            lblTitle = new Label();
             lblSubtitle = new Label();
+            lblTitle = new Label();
             pnlMainCard = new Panel();
+            pnlActions = new Panel();
+            btnCancel = new Button();
+            btnSave = new Button();
             tblForm = new TableLayoutPanel();
             lblCode = new Label();
             txtPatientCode = new TextBox();
@@ -38,13 +41,10 @@ namespace LabManagementSystem.Forms
             address = new TextBox();
             lblRegDate = new Label();
             DateOFRegister = new DateTimePicker();
-            pnlActions = new Panel();
-            btnSave = new Button();
-            btnCancel = new Button();
             pnlHeader.SuspendLayout();
             pnlMainCard.SuspendLayout();
-            tblForm.SuspendLayout();
             pnlActions.SuspendLayout();
+            tblForm.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
@@ -53,30 +53,35 @@ namespace LabManagementSystem.Forms
             pnlHeader.Controls.Add(lblSubtitle);
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Height = 68;
+            pnlHeader.Location = new Point(16, 16);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.Size = new Size(788, 68);
             pnlHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            lblTitle.Dock = DockStyle.Top;
-            lblTitle.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Height = 28;
-            lblTitle.Name = "lblTitle";
-            lblTitle.Text = "👤 تسجيل مريض جديد";
-            lblTitle.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblSubtitle
             // 
             lblSubtitle.Dock = DockStyle.Bottom;
             lblSubtitle.Font = new Font("Segoe UI", 9F);
             lblSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
-            lblSubtitle.Height = 18;
+            lblSubtitle.Location = new Point(20, 40);
             lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(748, 18);
+            lblSubtitle.TabIndex = 0;
             lblSubtitle.Text = "إدخال وتحديث البيانات الشخصية والطبية للمريض وتوليد الكود الطبي المعتمد";
             lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblTitle
+            // 
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(20, 10);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(748, 28);
+            lblTitle.TabIndex = 1;
+            lblTitle.Text = "👤 تسجيل مريض جديد";
+            lblTitle.TextAlign = ContentAlignment.MiddleRight;
             // 
             // pnlMainCard
             // 
@@ -87,7 +92,49 @@ namespace LabManagementSystem.Forms
             pnlMainCard.Location = new Point(16, 84);
             pnlMainCard.Name = "pnlMainCard";
             pnlMainCard.Padding = new Padding(24);
+            pnlMainCard.Size = new Size(788, 340);
             pnlMainCard.TabIndex = 1;
+            // 
+            // pnlActions
+            // 
+            pnlActions.Controls.Add(btnCancel);
+            pnlActions.Controls.Add(btnSave);
+            pnlActions.Dock = DockStyle.Top;
+            pnlActions.Location = new Point(24, 264);
+            pnlActions.Name = "pnlActions";
+            pnlActions.Padding = new Padding(0, 16, 0, 0);
+            pnlActions.Size = new Size(740, 70);
+            pnlActions.TabIndex = 1;
+            // 
+            // btnCancel
+            // 
+            btnCancel.BackColor = Color.White;
+            btnCancel.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Segoe UI", 10F);
+            btnCancel.ForeColor = Color.FromArgb(100, 116, 139);
+            btnCancel.Location = new Point(20, 16);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(105, 44);
+            btnCancel.TabIndex = 1;
+            btnCancel.Text = "إلغاء";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // btnSave
+            // 
+            btnSave.BackColor = Color.FromArgb(22, 163, 74);
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(140, 16);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(180, 44);
+            btnSave.TabIndex = 0;
+            btnSave.Text = "💾 حفظ بيانات المريض";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
             // 
             // tblForm
             // 
@@ -113,13 +160,14 @@ namespace LabManagementSystem.Forms
             tblForm.Controls.Add(lblRegDate, 2, 3);
             tblForm.Controls.Add(DateOFRegister, 3, 3);
             tblForm.Dock = DockStyle.Top;
-            tblForm.Height = 240;
+            tblForm.Location = new Point(24, 24);
             tblForm.Name = "tblForm";
             tblForm.RowCount = 4;
             tblForm.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
             tblForm.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
             tblForm.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
             tblForm.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+            tblForm.Size = new Size(740, 240);
             tblForm.TabIndex = 0;
             // 
             // lblCode
@@ -127,8 +175,10 @@ namespace LabManagementSystem.Forms
             lblCode.Dock = DockStyle.Fill;
             lblCode.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblCode.ForeColor = Color.FromArgb(30, 41, 59);
-            lblCode.Location = new Point(660, 0);
+            lblCode.Location = new Point(613, 0);
             lblCode.Name = "lblCode";
+            lblCode.Size = new Size(124, 55);
+            lblCode.TabIndex = 0;
             lblCode.Text = "الكود الطبي:";
             lblCode.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -136,10 +186,11 @@ namespace LabManagementSystem.Forms
             // 
             txtPatientCode.Dock = DockStyle.Fill;
             txtPatientCode.Font = new Font("Segoe UI", 10.5F);
-            txtPatientCode.Location = new Point(410, 12);
+            txtPatientCode.Location = new Point(378, 12);
             txtPatientCode.Margin = new Padding(8, 12, 8, 12);
             txtPatientCode.Name = "txtPatientCode";
             txtPatientCode.ReadOnly = true;
+            txtPatientCode.Size = new Size(224, 31);
             txtPatientCode.TabIndex = 0;
             // 
             // lblName
@@ -147,8 +198,10 @@ namespace LabManagementSystem.Forms
             lblName.Dock = DockStyle.Fill;
             lblName.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblName.ForeColor = Color.FromArgb(30, 41, 59);
-            lblName.Location = new Point(272, 0);
+            lblName.Location = new Point(243, 0);
             lblName.Name = "lblName";
+            lblName.Size = new Size(124, 55);
+            lblName.TabIndex = 1;
             lblName.Text = "اسم المريض *:";
             lblName.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -159,6 +212,7 @@ namespace LabManagementSystem.Forms
             txtPatientName.Location = new Point(8, 12);
             txtPatientName.Margin = new Padding(8, 12, 8, 12);
             txtPatientName.Name = "txtPatientName";
+            txtPatientName.Size = new Size(224, 31);
             txtPatientName.TabIndex = 1;
             // 
             // lblPhone
@@ -166,8 +220,10 @@ namespace LabManagementSystem.Forms
             lblPhone.Dock = DockStyle.Fill;
             lblPhone.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblPhone.ForeColor = Color.FromArgb(30, 41, 59);
-            lblPhone.Location = new Point(660, 55);
+            lblPhone.Location = new Point(613, 55);
             lblPhone.Name = "lblPhone";
+            lblPhone.Size = new Size(124, 55);
+            lblPhone.TabIndex = 2;
             lblPhone.Text = "رقم الهاتف:";
             lblPhone.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -175,9 +231,10 @@ namespace LabManagementSystem.Forms
             // 
             txtPatienPhone.Dock = DockStyle.Fill;
             txtPatienPhone.Font = new Font("Segoe UI", 10.5F);
-            txtPatienPhone.Location = new Point(410, 67);
+            txtPatienPhone.Location = new Point(378, 67);
             txtPatienPhone.Margin = new Padding(8, 12, 8, 12);
             txtPatienPhone.Name = "txtPatienPhone";
+            txtPatienPhone.Size = new Size(224, 31);
             txtPatienPhone.TabIndex = 2;
             // 
             // lblGender
@@ -185,8 +242,10 @@ namespace LabManagementSystem.Forms
             lblGender.Dock = DockStyle.Fill;
             lblGender.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblGender.ForeColor = Color.FromArgb(30, 41, 59);
-            lblGender.Location = new Point(272, 55);
+            lblGender.Location = new Point(243, 55);
             lblGender.Name = "lblGender";
+            lblGender.Size = new Size(124, 55);
+            lblGender.TabIndex = 3;
             lblGender.Text = "النوع *:";
             lblGender.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -198,6 +257,7 @@ namespace LabManagementSystem.Forms
             cmboGender.Location = new Point(8, 67);
             cmboGender.Margin = new Padding(8, 12, 8, 12);
             cmboGender.Name = "cmboGender";
+            cmboGender.Size = new Size(224, 31);
             cmboGender.TabIndex = 3;
             // 
             // lblAge
@@ -205,8 +265,10 @@ namespace LabManagementSystem.Forms
             lblAge.Dock = DockStyle.Fill;
             lblAge.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblAge.ForeColor = Color.FromArgb(30, 41, 59);
-            lblAge.Location = new Point(660, 110);
+            lblAge.Location = new Point(613, 110);
             lblAge.Name = "lblAge";
+            lblAge.Size = new Size(124, 55);
+            lblAge.TabIndex = 4;
             lblAge.Text = "السن الحالي *:";
             lblAge.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -214,9 +276,10 @@ namespace LabManagementSystem.Forms
             // 
             txtPatientAgeOnRegister.Dock = DockStyle.Fill;
             txtPatientAgeOnRegister.Font = new Font("Segoe UI", 10.5F);
-            txtPatientAgeOnRegister.Location = new Point(410, 122);
+            txtPatientAgeOnRegister.Location = new Point(378, 122);
             txtPatientAgeOnRegister.Margin = new Padding(8, 12, 8, 12);
             txtPatientAgeOnRegister.Name = "txtPatientAgeOnRegister";
+            txtPatientAgeOnRegister.Size = new Size(224, 31);
             txtPatientAgeOnRegister.TabIndex = 4;
             txtPatientAgeOnRegister.TextChanged += txtPatientAgeOnRegister_TextChanged;
             // 
@@ -225,8 +288,10 @@ namespace LabManagementSystem.Forms
             lblDob.Dock = DockStyle.Fill;
             lblDob.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblDob.ForeColor = Color.FromArgb(30, 41, 59);
-            lblDob.Location = new Point(272, 110);
+            lblDob.Location = new Point(243, 110);
             lblDob.Name = "lblDob";
+            lblDob.Size = new Size(124, 55);
+            lblDob.TabIndex = 5;
             lblDob.Text = "تاريخ الميلاد:";
             lblDob.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -238,6 +303,7 @@ namespace LabManagementSystem.Forms
             DOB.Location = new Point(8, 122);
             DOB.Margin = new Padding(8, 12, 8, 12);
             DOB.Name = "DOB";
+            DOB.Size = new Size(224, 31);
             DOB.TabIndex = 5;
             DOB.ValueChanged += DOB_ValueChanged;
             // 
@@ -246,8 +312,10 @@ namespace LabManagementSystem.Forms
             lblAddress.Dock = DockStyle.Fill;
             lblAddress.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblAddress.ForeColor = Color.FromArgb(30, 41, 59);
-            lblAddress.Location = new Point(660, 165);
+            lblAddress.Location = new Point(613, 165);
             lblAddress.Name = "lblAddress";
+            lblAddress.Size = new Size(124, 75);
+            lblAddress.TabIndex = 6;
             lblAddress.Text = "العنوان:";
             lblAddress.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -255,9 +323,10 @@ namespace LabManagementSystem.Forms
             // 
             address.Dock = DockStyle.Fill;
             address.Font = new Font("Segoe UI", 10.5F);
-            address.Location = new Point(410, 177);
+            address.Location = new Point(378, 177);
             address.Margin = new Padding(8, 12, 8, 12);
             address.Name = "address";
+            address.Size = new Size(224, 31);
             address.TabIndex = 6;
             // 
             // lblRegDate
@@ -265,8 +334,10 @@ namespace LabManagementSystem.Forms
             lblRegDate.Dock = DockStyle.Fill;
             lblRegDate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblRegDate.ForeColor = Color.FromArgb(30, 41, 59);
-            lblRegDate.Location = new Point(272, 165);
+            lblRegDate.Location = new Point(243, 165);
             lblRegDate.Name = "lblRegDate";
+            lblRegDate.Size = new Size(124, 75);
+            lblRegDate.TabIndex = 7;
             lblRegDate.Text = "تاريخ التسجيل:";
             lblRegDate.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -279,51 +350,12 @@ namespace LabManagementSystem.Forms
             DateOFRegister.Location = new Point(8, 177);
             DateOFRegister.Margin = new Padding(8, 12, 8, 12);
             DateOFRegister.Name = "DateOFRegister";
+            DateOFRegister.Size = new Size(224, 31);
             DateOFRegister.TabIndex = 7;
-            // 
-            // pnlActions
-            // 
-            pnlActions.Controls.Add(btnCancel);
-            pnlActions.Controls.Add(btnSave);
-            pnlActions.Dock = DockStyle.Top;
-            pnlActions.Height = 70;
-            pnlActions.Name = "pnlActions";
-            pnlActions.Padding = new Padding(0, 16, 0, 0);
-            pnlActions.TabIndex = 1;
-            // 
-            // btnSave
-            // 
-            btnSave.BackColor = Color.FromArgb(22, 163, 74);
-            btnSave.FlatAppearance.BorderSize = 0;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(140, 16);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(180, 44);
-            btnSave.TabIndex = 0;
-            btnSave.Text = "💾 حفظ بيانات المريض";
-            btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += btnSave_Click;
-            // 
-            // btnCancel
-            // 
-            btnCancel.BackColor = Color.White;
-            btnCancel.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
-            btnCancel.FlatStyle = FlatStyle.Flat;
-            btnCancel.Font = new Font("Segoe UI", 10F);
-            btnCancel.ForeColor = Color.FromArgb(100, 116, 139);
-            btnCancel.Location = new Point(20, 16);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(105, 44);
-            btnCancel.TabIndex = 1;
-            btnCancel.Text = "إلغاء";
-            btnCancel.UseVisualStyleBackColor = false;
-            btnCancel.Click += btnCancel_Click;
             // 
             // FrmAddPatient
             // 
-            AutoScaleDimensions = new SizeF(8F, 19F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(244, 247, 251);
             ClientSize = new Size(820, 440);
@@ -342,9 +374,9 @@ namespace LabManagementSystem.Forms
             Load += FrmAddPatient_Load;
             pnlHeader.ResumeLayout(false);
             pnlMainCard.ResumeLayout(false);
+            pnlActions.ResumeLayout(false);
             tblForm.ResumeLayout(false);
             tblForm.PerformLayout();
-            pnlActions.ResumeLayout(false);
             ResumeLayout(false);
         }
 
