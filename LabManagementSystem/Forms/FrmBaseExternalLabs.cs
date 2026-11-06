@@ -84,7 +84,7 @@ namespace LabManagementSystem.Forms
             {
                 Dock = DockStyle.Fill,
                 RightToLeft = RightToLeft.Yes,
-                FlowDirection = FlowDirection.RightToLeft,
+                FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
                 AutoScroll = false,
                 Padding = new Padding(0)

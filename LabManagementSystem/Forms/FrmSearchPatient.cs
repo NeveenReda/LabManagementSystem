@@ -19,6 +19,7 @@ namespace LabManagementSystem.Forms
             _debouncer = new DebounceHelper(280);
 
             FormStyler.ApplyFormTheme(this, "سجل وبحث المرضى");
+            FormStyler.StyleHeaderPanel(pnlHeader, lblHeader, lblSubtitle, btnAddPatient);
             FormStyler.StyleButton(btnAddPatient, ButtonStyle.Primary);
             FormStyler.StyleButton(btnRefresh, ButtonStyle.Secondary);
             FormStyler.StyleInput(txtSearch);

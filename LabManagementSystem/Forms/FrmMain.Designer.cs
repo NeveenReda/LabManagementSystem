@@ -18,138 +18,71 @@ namespace LabManagementSystem
         private void InitializeComponent()
         {
             pnlHeader = new Panel();
-            tlpHeader = new TableLayoutPanel();
-            pnlHeaderRight = new Panel();
-            lblLabSubtitle = new Label();
-            lblLabName = new Label();
-            pnlHeaderLeft = new Panel();
-            lblClock = new Label();
-            lblCurrentSection = new Label();
+            lblOliviaLab = new Label();
             pnlSidebar = new Panel();
+            pnlFooter = new Panel();
+            lblFooter = new Label();
             pnlContent = new Panel();
             pnlHeader.SuspendLayout();
-            tlpHeader.SuspendLayout();
-            pnlHeaderRight.SuspendLayout();
-            pnlHeaderLeft.SuspendLayout();
+            pnlFooter.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
             // 
             pnlHeader.BackColor = Color.White;
-            pnlHeader.Controls.Add(tlpHeader);
+            pnlHeader.Controls.Add(lblOliviaLab);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Height = 65;
+            pnlHeader.Height = 60;
             pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
             pnlHeader.Padding = new Padding(16, 6, 16, 6);
+            pnlHeader.Size = new Size(1200, 60);
             pnlHeader.TabIndex = 0;
             // 
-            // tlpHeader
+            // lblOliviaLab
             // 
-            tlpHeader.ColumnCount = 2;
-            tlpHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
-            tlpHeader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
-            tlpHeader.Controls.Add(pnlHeaderRight, 0, 0);
-            tlpHeader.Controls.Add(pnlHeaderLeft, 1, 0);
-            tlpHeader.Dock = DockStyle.Fill;
-            tlpHeader.Location = new Point(16, 6);
-            tlpHeader.Name = "tlpHeader";
-            tlpHeader.RightToLeft = RightToLeft.Yes;
-            tlpHeader.RowCount = 1;
-            tlpHeader.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpHeader.Size = new Size(1168, 53);
-            tlpHeader.TabIndex = 0;
+            lblOliviaLab.AutoSize = false;
+            lblOliviaLab.Dock = DockStyle.Fill;
+            lblOliviaLab.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblOliviaLab.ForeColor = Color.FromArgb(23, 43, 77);
+            lblOliviaLab.Location = new Point(16, 6);
+            lblOliviaLab.Name = "lblOliviaLab";
+            lblOliviaLab.Size = new Size(1168, 48);
+            lblOliviaLab.TabIndex = 0;
+            lblOliviaLab.Text = "Olivia Lab";
+            lblOliviaLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // pnlHeaderRight
+            // pnlFooter
             // 
-            pnlHeaderRight.Controls.Add(lblLabSubtitle);
-            pnlHeaderRight.Controls.Add(lblLabName);
-            pnlHeaderRight.Dock = DockStyle.Fill;
-            pnlHeaderRight.Location = new Point(412, 0);
-            pnlHeaderRight.Name = "pnlHeaderRight";
-            pnlHeaderRight.RightToLeft = RightToLeft.Yes;
-            pnlHeaderRight.Size = new Size(756, 53);
-            pnlHeaderRight.TabIndex = 0;
+            pnlFooter.BackColor = Color.FromArgb(248, 250, 252);
+            pnlFooter.Controls.Add(lblFooter);
+            pnlFooter.Dock = DockStyle.Bottom;
+            pnlFooter.Height = 30;
+            pnlFooter.Location = new Point(0, 690);
+            pnlFooter.Name = "pnlFooter";
+            pnlFooter.Size = new Size(1200, 30);
+            pnlFooter.TabIndex = 3;
             // 
-            // lblLabName
+            // lblFooter
             // 
-            lblLabName.AutoSize = false;
-            lblLabName.Dock = DockStyle.Top;
-            lblLabName.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblLabName.ForeColor = Color.FromArgb(23, 43, 77);
-            lblLabName.Height = 28;
-            lblLabName.Location = new Point(0, 0);
-            lblLabName.Name = "lblLabName";
-            lblLabName.RightToLeft = RightToLeft.Yes;
-            lblLabName.Size = new Size(756, 28);
-            lblLabName.TabIndex = 0;
-            lblLabName.Text = "معمل الأمل للتحاليل الطبية والتشخيص المخبري";
-            lblLabName.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // lblLabSubtitle
-            // 
-            lblLabSubtitle.AutoSize = false;
-            lblLabSubtitle.Dock = DockStyle.Bottom;
-            lblLabSubtitle.Font = new Font("Segoe UI", 8.5F);
-            lblLabSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblLabSubtitle.Height = 20;
-            lblLabSubtitle.Location = new Point(0, 33);
-            lblLabSubtitle.Name = "lblLabSubtitle";
-            lblLabSubtitle.RightToLeft = RightToLeft.Yes;
-            lblLabSubtitle.Size = new Size(756, 20);
-            lblLabSubtitle.TabIndex = 1;
-            lblLabSubtitle.Text = "Al-Amal Clinical Laboratory & Diagnostic Center";
-            lblLabSubtitle.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // pnlHeaderLeft
-            // 
-            pnlHeaderLeft.Controls.Add(lblClock);
-            pnlHeaderLeft.Controls.Add(lblCurrentSection);
-            pnlHeaderLeft.Dock = DockStyle.Fill;
-            pnlHeaderLeft.Location = new Point(0, 0);
-            pnlHeaderLeft.Name = "pnlHeaderLeft";
-            pnlHeaderLeft.RightToLeft = RightToLeft.Yes;
-            pnlHeaderLeft.Size = new Size(406, 53);
-            pnlHeaderLeft.TabIndex = 1;
-            // 
-            // lblCurrentSection
-            // 
-            lblCurrentSection.AutoSize = false;
-            lblCurrentSection.Dock = DockStyle.Top;
-            lblCurrentSection.Font = new Font("Segoe UI", 11.5F, FontStyle.Bold);
-            lblCurrentSection.ForeColor = Color.FromArgb(37, 99, 235);
-            lblCurrentSection.Height = 26;
-            lblCurrentSection.Location = new Point(0, 0);
-            lblCurrentSection.Name = "lblCurrentSection";
-            lblCurrentSection.RightToLeft = RightToLeft.Yes;
-            lblCurrentSection.Size = new Size(406, 26);
-            lblCurrentSection.TabIndex = 0;
-            lblCurrentSection.Text = "لوحة التحكم والعمليات";
-            lblCurrentSection.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // lblClock
-            // 
-            lblClock.AutoSize = false;
-            lblClock.Dock = DockStyle.Bottom;
-            lblClock.Font = new Font("Segoe UI", 8.5F);
-            lblClock.ForeColor = Color.FromArgb(100, 116, 139);
-            lblClock.Height = 20;
-            lblClock.Location = new Point(0, 33);
-            lblClock.Name = "lblClock";
-            lblClock.RightToLeft = RightToLeft.Yes;
-            lblClock.Size = new Size(406, 20);
-            lblClock.TabIndex = 1;
-            lblClock.Text = "2026/11/06 --:--";
-            lblClock.TextAlign = ContentAlignment.MiddleLeft;
+            lblFooter.Dock = DockStyle.Fill;
+            lblFooter.Font = new Font("Segoe UI", 8.5F);
+            lblFooter.ForeColor = Color.FromArgb(100, 116, 139);
+            lblFooter.Location = new Point(0, 0);
+            lblFooter.Name = "lblFooter";
+            lblFooter.Size = new Size(1200, 30);
+            lblFooter.TabIndex = 0;
+            lblFooter.Text = "Powered by Tech Spot Canadian 2026";
+            lblFooter.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pnlSidebar
             // 
             pnlSidebar.AutoScroll = true;
             pnlSidebar.BackColor = Color.FromArgb(15, 23, 42);
-            pnlSidebar.Dock = DockStyle.Right; // Navigation sidebar on the physical RIGHT for Arabic RTL
-            pnlSidebar.Location = new Point(960, 65);
+            pnlSidebar.Dock = DockStyle.Left; // With RightToLeftLayout = true, DockStyle.Left positions sidebar at the physical RIGHT
+            pnlSidebar.Location = new Point(0, 65);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Size = new Size(240, 655);
+            pnlSidebar.Size = new Size(250, 625);
             pnlSidebar.TabIndex = 1;
             // 
             // pnlContent
@@ -158,7 +91,7 @@ namespace LabManagementSystem
             pnlContent.Dock = DockStyle.Fill;
             pnlContent.Location = new Point(0, 65);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(960, 655);
+            pnlContent.Size = new Size(950, 625);
             pnlContent.TabIndex = 2;
             // 
             // FrmMain
@@ -169,33 +102,26 @@ namespace LabManagementSystem
             Controls.Add(pnlContent);
             Controls.Add(pnlSidebar);
             Controls.Add(pnlHeader);
+            Controls.Add(pnlFooter);
             Font = new Font("Segoe UI", 9.5F);
             MinimumSize = new Size(1100, 650);
             Name = "FrmMain";
             RightToLeft = RightToLeft.Yes;
             RightToLeftLayout = true;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "نظام إدارة المعامل الطبية - Lab Management System";
+            Text = "Olivia Lab — نظام إدارة المعامل الطبية";
             WindowState = FormWindowState.Maximized;
             pnlHeader.ResumeLayout(false);
-            tlpHeader.ResumeLayout(false);
-            pnlHeaderRight.ResumeLayout(false);
-            pnlHeaderRight.PerformLayout();
-            pnlHeaderLeft.ResumeLayout(false);
-            pnlHeaderLeft.PerformLayout();
+            pnlFooter.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel pnlHeader;
-        private TableLayoutPanel tlpHeader;
-        private Panel pnlHeaderRight;
-        private Label lblLabName;
-        private Label lblLabSubtitle;
-        private Panel pnlHeaderLeft;
-        private Label lblCurrentSection;
-        private Label lblClock;
+        private Label lblOliviaLab;
+        private Panel pnlFooter;
+        private Label lblFooter;
         private Panel pnlSidebar;
         private Panel pnlContent;
     }

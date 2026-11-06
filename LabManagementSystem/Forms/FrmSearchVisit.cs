@@ -23,6 +23,7 @@ namespace LabManagementSystem.Forms
             _debouncer = new DebounceHelper(280);
 
             FormStyler.ApplyFormTheme(this, "سجل الزيارات والفحوصات");
+            FormStyler.StyleHeaderPanel(pnlHeader, lblHeader, lblSubtitle, btnNewVisit);
             FormStyler.StyleButton(btnNewVisit, ButtonStyle.Primary);
             FormStyler.StyleButton(btnFilter, ButtonStyle.Primary);
             FormStyler.StyleInput(txtSearchCode);

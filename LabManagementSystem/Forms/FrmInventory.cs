@@ -37,11 +37,15 @@ namespace LabManagementSystem.Forms
         private DataGridView dgvOrders = null!;
         private readonly List<Tuple<int, string, int, decimal>> _currentOrderItems = new();
 
-        public FrmInventory()
+        public FrmInventory(int initialTabIndex = 0)
         {
             _inventoryService = ServiceLocator.InventoryService;
             _lookupCache = ServiceLocator.LookupCacheService;
             InitializeUi();
+            if (initialTabIndex > 0 && tabs != null && initialTabIndex < tabs.TabCount)
+            {
+                tabs.SelectedIndex = initialTabIndex;
+            }
             Shown += (s, e) =>
             {
                 LoadLookupData();
@@ -139,7 +143,7 @@ namespace LabManagementSystem.Forms
             {
                 Dock = DockStyle.Fill,
                 RightToLeft = RightToLeft.Yes,
-                FlowDirection = FlowDirection.RightToLeft,
+                FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
                 AutoScroll = false,
                 Padding = new Padding(0)
@@ -226,7 +230,7 @@ namespace LabManagementSystem.Forms
             {
                 Dock = DockStyle.Fill,
                 RightToLeft = RightToLeft.Yes,
-                FlowDirection = FlowDirection.RightToLeft,
+                FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
                 AutoScroll = false,
                 Padding = new Padding(0)
@@ -262,7 +266,7 @@ namespace LabManagementSystem.Forms
             {
                 Dock = DockStyle.Fill,
                 RightToLeft = RightToLeft.Yes,
-                FlowDirection = FlowDirection.RightToLeft,
+                FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
                 AutoScroll = false,
                 Padding = new Padding(0)

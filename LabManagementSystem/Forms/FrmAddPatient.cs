@@ -20,6 +20,7 @@ namespace LabManagementSystem.Forms
             _patientService = ServiceLocator.PatientService;
             _lookupCache = ServiceLocator.LookupCacheService;
             lblTitle.Text = "👤 تسجيل مريض جديد";
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
         }
 
         public FrmAddPatient(Patient patient)
@@ -27,8 +28,9 @@ namespace LabManagementSystem.Forms
             InitializeComponent();
             _patientService = ServiceLocator.PatientService;
             _lookupCache = ServiceLocator.LookupCacheService;
-            _patient = patient;
             lblTitle.Text = "✏️ تعديل بيانات المريض";
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
+            _patient = patient;
 
             LoadGenders();
             txtPatientCode.Text = _patient.MedicalCode;
@@ -45,6 +47,7 @@ namespace LabManagementSystem.Forms
         private async void FrmAddPatient_Load(object sender, EventArgs e)
         {
             FormStyler.ApplyFormTheme(this, lblTitle.Text);
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
             FormStyler.StyleButton(btnSave, ButtonStyle.Success);
             FormStyler.StyleButton(btnCancel, ButtonStyle.Secondary);
 

@@ -20,6 +20,7 @@ namespace LabManagementSystem.Forms
             InitializeComponent();
             _labReportService = ServiceLocator.LabReportService;
             _visitService = ServiceLocator.VisitService;
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
         }
 
         public FrmLabResult(int visitLabId)
@@ -28,11 +29,13 @@ namespace LabManagementSystem.Forms
             _labReportService = ServiceLocator.LabReportService;
             _visitService = ServiceLocator.VisitService;
             _visitLabId = visitLabId;
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
         }
 
         private async void FrmLabResult_Load(object sender, EventArgs e)
         {
             FormStyler.ApplyFormTheme(this, "نتائج الفحص الطبي");
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
             FormStyler.StyleButton(btnSave, ButtonStyle.Success);
             FormStyler.StyleButton(btnPrintReport, ButtonStyle.Primary);
             FormStyler.StyleButton(btnClose, ButtonStyle.Secondary);

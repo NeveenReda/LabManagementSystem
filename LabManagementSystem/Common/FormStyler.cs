@@ -58,7 +58,7 @@ namespace LabManagementSystem.Common
                 Dock = DockStyle.Top,
                 Height = 28,
                 AutoSize = false,
-                RightToLeft = RightToLeft.Yes,
+                RightToLeft = RightToLeft.No,
                 TextAlign = ContentAlignment.MiddleRight
             };
 
@@ -70,7 +70,7 @@ namespace LabManagementSystem.Common
                 Dock = DockStyle.Bottom,
                 Height = 20,
                 AutoSize = false,
-                RightToLeft = RightToLeft.Yes,
+                RightToLeft = RightToLeft.No,
                 TextAlign = ContentAlignment.MiddleRight
             };
 
@@ -78,6 +78,69 @@ namespace LabManagementSystem.Common
             pnl.Controls.Add(lblSub);
 
             return pnl;
+        }
+
+        public static Panel CreateFooterPanel()
+        {
+            var pnl = new Panel
+            {
+                Dock = DockStyle.Bottom,
+                Height = 30,
+                BackColor = ColorTranslator.FromHtml("#F8FAFC"),
+                Padding = new Padding(12, 0, 12, 0)
+            };
+
+            pnl.Paint += (s, e) =>
+            {
+                using var pen = new Pen(ThemeManager.Border, 1);
+                e.Graphics.DrawLine(pen, 0, 0, pnl.Width, 0);
+            };
+
+            var lbl = new Label
+            {
+                Text = "Powered by Tech Spot Canadian 2026",
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font(ThemeManager.PreferredFontFamily, 8.5f, FontStyle.Regular),
+                ForeColor = ColorTranslator.FromHtml("#64748B")
+            };
+
+            pnl.Controls.Add(lbl);
+            return pnl;
+        }
+
+        public static void StyleHeaderPanel(Panel pnlHeader, Label lblTitle, Label? lblSubtitle = null, Button? actionButton = null)
+        {
+            pnlHeader.Height = 68;
+            pnlHeader.BackColor = ThemeManager.PrimaryNavy;
+            pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.RightToLeft = RightToLeft.Yes;
+
+            lblTitle.Font = ThemeManager.TitleFont;
+            lblTitle.ForeColor = Color.White;
+            lblTitle.TextAlign = ContentAlignment.MiddleRight;
+            lblTitle.RightToLeft = RightToLeft.No;
+            lblTitle.AutoSize = false;
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Height = 28;
+
+            if (lblSubtitle != null)
+            {
+                lblSubtitle.Font = ThemeManager.SmallFont;
+                lblSubtitle.ForeColor = ColorTranslator.FromHtml("#94A3B8");
+                lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
+                lblSubtitle.RightToLeft = RightToLeft.No;
+                lblSubtitle.AutoSize = false;
+                lblSubtitle.Dock = DockStyle.Bottom;
+                lblSubtitle.Height = 20;
+            }
+
+            if (actionButton != null)
+            {
+                actionButton.Dock = DockStyle.Left;
+                actionButton.Height = 40;
+                actionButton.Cursor = Cursors.Hand;
+            }
         }
 
         public static Panel CreateCardPanel(DockStyle dock = DockStyle.None, Padding? padding = null)

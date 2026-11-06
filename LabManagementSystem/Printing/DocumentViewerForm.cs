@@ -49,7 +49,7 @@ namespace LabManagementSystem.Printing
             pnlHeader = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 65,
+                Height = 68,
                 BackColor = ThemeManager.PrimaryNavy,
                 Padding = new Padding(16, 12, 16, 12),
                 RightToLeft = RightToLeft.Yes
@@ -58,21 +58,21 @@ namespace LabManagementSystem.Printing
             btnPrint = new Button
             {
                 Text = "🖨️ طباعة فورية",
-                Width = 140,
+                Width = 135,
                 Height = 40,
-                Dock = DockStyle.Right,
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                Margin = new Padding(4, 0, 4, 0)
             };
             FormStyler.StyleButton(btnPrint, ButtonStyle.Success);
             btnPrint.Click += BtnPrint_Click;
 
             btnSavePdf = new Button
             {
-                Text = "💾 حفظ ملف PDF",
-                Width = 145,
+                Text = "💾 حفظ PDF",
+                Width = 125,
                 Height = 40,
-                Dock = DockStyle.Right,
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                Margin = new Padding(4, 0, 4, 0)
             };
             FormStyler.StyleButton(btnSavePdf, ButtonStyle.Primary);
             btnSavePdf.Click += BtnSavePdf_Click;
@@ -82,8 +82,8 @@ namespace LabManagementSystem.Printing
                 Text = "👁️ فتح بالقارئ الخارجي",
                 Width = 160,
                 Height = 40,
-                Dock = DockStyle.Right,
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                Margin = new Padding(4, 0, 4, 0)
             };
             FormStyler.StyleButton(btnOpenPdf, ButtonStyle.Outline);
             btnOpenPdf.ForeColor = Color.White;
@@ -92,13 +92,25 @@ namespace LabManagementSystem.Printing
             btnClose = new Button
             {
                 Text = "إغلاق",
-                Width = 90,
+                Width = 85,
                 Height = 40,
-                Dock = DockStyle.Left,
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                Margin = new Padding(4, 0, 4, 0)
             };
             FormStyler.StyleButton(btnClose, ButtonStyle.Secondary);
             btnClose.Click += (s, e) => Close();
+
+            var flpActions = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Left,
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = false,
+                BackColor = Color.Transparent,
+                Margin = new Padding(0)
+            };
+            flpActions.Controls.AddRange(new Control[] { btnClose, btnOpenPdf, btnSavePdf, btnPrint });
 
             lblInfo = new Label
             {
@@ -111,10 +123,7 @@ namespace LabManagementSystem.Printing
             };
 
             pnlHeader.Controls.Add(lblInfo);
-            pnlHeader.Controls.Add(btnOpenPdf);
-            pnlHeader.Controls.Add(btnSavePdf);
-            pnlHeader.Controls.Add(btnPrint);
-            pnlHeader.Controls.Add(btnClose);
+            pnlHeader.Controls.Add(flpActions);
 
             pnlContent = new Panel
             {

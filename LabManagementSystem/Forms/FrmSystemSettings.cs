@@ -57,6 +57,7 @@ namespace LabManagementSystem.Forms
                 ForeColor = ThemeManager.PrimaryNavy,
                 Dock = DockStyle.Top,
                 Height = 36,
+                RightToLeft = RightToLeft.No,
                 TextAlign = ContentAlignment.MiddleRight
             };
 
@@ -149,7 +150,7 @@ namespace LabManagementSystem.Forms
             {
                 Dock = DockStyle.Fill,
                 RightToLeft = RightToLeft.Yes,
-                FlowDirection = FlowDirection.RightToLeft,
+                FlowDirection = FlowDirection.LeftToRight,
                 WrapContents = false,
                 AutoScroll = false,
                 Margin = new Padding(0, 10, 0, 0)

@@ -15,6 +15,7 @@ namespace LabManagementSystem.Forms
         {
             InitializeComponent();
             FormStyler.ApplyFormTheme(this);
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
             FormStyler.StyleButton(btnSave, ButtonStyle.Primary);
             FormStyler.StyleButton(btnCancel, ButtonStyle.Secondary);
             btnCancel.Click += (s, e) => { DialogResult = DialogResult.Cancel; Close(); };
@@ -45,6 +46,7 @@ namespace LabManagementSystem.Forms
 
         private void FrmExternalLab_Load(object sender, EventArgs e)
         {
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
             LoadExternalLabs();
             dtpDateReceive.Enabled = false;
             txtExpextedDays.ReadOnly = true;

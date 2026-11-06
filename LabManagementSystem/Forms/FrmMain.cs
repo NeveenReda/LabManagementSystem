@@ -1,5 +1,7 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 using LabManagementSystem.Common;
-using LabManagementSystem.Configuration;
 using LabManagementSystem.Forms;
 using Timer = System.Windows.Forms.Timer;
 
@@ -7,154 +9,82 @@ namespace LabManagementSystem
 {
     public partial class FrmMain : Form
     {
-        private Button? _activeNavButton;
-        private Button? _btnDashboard;
+        private NavigationAccordion _accordion = null!;
+        public NavigationAccordion Accordion => _accordion;
         private Form? _currentChildForm;
-        private readonly Timer _clockTimer;
 
         public FrmMain()
         {
             InitializeComponent();
+            pnlFooter.Height = 30;
 
-            // Setup lab header from config
-            var labSettings = AppConfig.GetLabSettings();
-            if (!string.IsNullOrWhiteSpace(labSettings.LabName))
-                lblLabName.Text = labSettings.LabName;
-            if (!string.IsNullOrWhiteSpace(labSettings.LabSubtitle))
-                lblLabSubtitle.Text = labSettings.LabSubtitle;
-
-            // Live clock timer
-            _clockTimer = new Timer { Interval = 1000 };
-            _clockTimer.Tick += (s, e) => UpdateClock();
-            _clockTimer.Start();
-            UpdateClock();
-
-            // Border styling on header
+            // Border styling on header and footer
             pnlHeader.Paint += (s, e) =>
             {
                 using var pen = new Pen(ThemeManager.Border, 1);
                 e.Graphics.DrawLine(pen, 0, pnlHeader.Height - 1, pnlHeader.Width, pnlHeader.Height - 1);
             };
 
-            // Header lab profile info
-            AppConfig.LabSettingsChanged += settings =>
+            pnlFooter.Paint += (s, e) =>
             {
-                if (!IsDisposed)
-                {
-                    lblLabName.Text = settings.LabName;
-                    lblLabSubtitle.Text = settings.LabSubtitle;
-                }
+                using var pen = new Pen(ThemeManager.Border, 1);
+                e.Graphics.DrawLine(pen, 0, 0, pnlFooter.Width, 0);
             };
 
             BuildSidebarNavigation();
 
-            Load += (s, e) => OpenDashboard();
-        }
-
-        private void UpdateClock()
-        {
-            lblClock.Text = $"{DateTime.Now:dddd، dd MMMM yyyy  -  HH:mm:ss}";
+            Load += (s, e) =>
+            {
+                _accordion.SelectItemByKey("dash_home");
+                OpenDashboard();
+            };
         }
 
         private void BuildSidebarNavigation()
         {
-            pnlSidebar.Controls.Clear();
-            pnlSidebar.SuspendLayout();
+            _accordion = new NavigationAccordion(pnlSidebar);
 
-            // Add navigation buttons in reverse dock order (Bottom-up dock)
-            AddNavGroupHeader("⚙️ النظام والإعدادات");
-            var btnSystemSettings = CreateNavButton("⚙️ بيانات وإعدادات المعمل", () => OpenView(new FrmSystemSettings(), "بيانات وإعدادات المعمل الرسمية"));
-            var btnExternalLabs = CreateNavButton("🏥 المعامل الخارجية", () => OpenView(new FrmBaseExternalLabs(), "المعامل والمراكز الخارجية"));
-            var btnLabSettings = CreateNavButton("📋 الفحوصات والأسعار", () => OpenView(new frmSettingsLab(), "إعدادات الفحوصات الطبية"));
+            // Group 1: لوحة التحكم
+            var grpDashboard = _accordion.AddGroup("grp_dash", "لوحة التحكم", "📊");
+            grpDashboard.AddSubItem("dash_home", "الرئيسية", () => OpenDashboard());
 
-            AddNavGroupHeader("📦 اللوجستيات والمخازن");
-            var btnInventory = CreateNavButton("📦 المخزون والمشتريات", () => OpenView(new FrmInventory(), "إدارة المخزون والمستلزمات"));
-            var btnTasks = CreateNavButton("📝 المهام والنواقص", () => OpenView(new FrmTasks(), "سجل المهام والنواقص والتنبيهات"));
+            // Group 2: إدارة المرضى
+            var grpPatients = _accordion.AddGroup("grp_patients", "إدارة المرضى", "👥");
+            grpPatients.AddSubItem("search_patient", "سجل المرضى", () => OpenSearchPatients());
+            grpPatients.AddSubItem("add_patient", "مريض جديد", () => OpenAddPatient());
 
-            AddNavGroupHeader("💰 الحسابات والتقارير");
-            var btnReports = CreateNavButton("📊 التقارير المالية", () => OpenView(new FrmFinancialReports(), "التقارير المالية والإحصائية"));
-            var btnDebts = CreateNavButton("💳 مديونيات المرضى", () => OpenView(new FrmDebts(), "إدارة مديونيات ومستحقات المرضى"));
+            // Group 3: إدارة الزيارات
+            var grpVisits = _accordion.AddGroup("grp_visits", "إدارة الزيارات", "🧪");
+            grpVisits.AddSubItem("search_visit", "سجل الزيارات", () => OpenSearchVisits());
+            grpVisits.AddSubItem("add_visit", "تسجيل زيارة جديدة", () => OpenAddVisit());
 
-            AddNavGroupHeader("🧪 الزيارات والفحوصات");
-            var btnAddVisit = CreateNavButton("➕ تسجيل زيارة جديدة", () => OpenAddVisit());
-            var btnSearchVisit = CreateNavButton("🔍 سجل الزيارات", () => OpenSearchVisits());
+            // Group 4: إدارة المعمل
+            var grpLab = _accordion.AddGroup("grp_lab", "إدارة المعمل", "🔬");
+            grpLab.AddSubItem("debts", "مدونات المرضى", () => OpenDebts());
+            grpLab.AddSubItem("results", "نتائج التحاليل", () => OpenLabResults());
+            grpLab.AddSubItem("ext_labs", "المعامل الخارجية", () => OpenExternalLabs());
 
-            AddNavGroupHeader("👥 إدارة المرضى");
-            var btnAddPatient = CreateNavButton("➕ مريض جديد", () => OpenAddPatient());
-            var btnSearchPatient = CreateNavButton("🔍 سجل المرضى", () => OpenSearchPatients());
+            // Group 5: الحسابات والتقارير
+            var grpFinance = _accordion.AddGroup("grp_finance", "الحسابات والتقارير", "💰");
+            grpFinance.AddSubItem("fin_reports", "التقارير المالية", () => OpenFinancialReports());
+            grpFinance.AddSubItem("payments", "الحسابات والتقارير", () => OpenPayments());
+            grpFinance.AddSubItem("tasks", "المهام والنواقص", () => OpenTasks());
 
-            AddNavGroupHeader("🏠 الرئيسية");
-            _btnDashboard = CreateNavButton("📈 لوحة التحكم والعمليات", () => OpenDashboard());
+            // Group 6: المخزون والمشتريات
+            var grpInventory = _accordion.AddGroup("grp_inventory", "المخزون والمشتريات", "📦");
+            grpInventory.AddSubItem("inventory_prods", "المخزون والمشتريات", () => OpenInventoryProducts());
+            grpInventory.AddSubItem("inventory_orders", "اللوجستيات والمخازن", () => OpenInventoryOrders());
 
-            pnlSidebar.ResumeLayout();
-        }
+            // Group 7: رئيس الإعدادات
+            var grpSettings = _accordion.AddGroup("grp_settings", "رئيس الإعدادات", "⚙️");
+            grpSettings.AddSubItem("lab_settings", "إعدادات التحليل", () => OpenLabSettings());
+            grpSettings.AddSubItem("system_settings", "إعدادات السيستم", () => OpenSystemSettings());
 
-        private void AddNavGroupHeader(string title)
-        {
-            var lbl = new Label
-            {
-                Text = title,
-                Dock = DockStyle.Top,
-                Height = 32,
-                Font = new Font(ThemeManager.PreferredFontFamily, 8.5f, FontStyle.Bold),
-                ForeColor = ColorTranslator.FromHtml("#64748B"),
-                TextAlign = ContentAlignment.BottomRight,
-                Padding = new Padding(14, 0, 14, 4),
-                BackColor = Color.Transparent
-            };
-            pnlSidebar.Controls.Add(lbl);
-            lbl.SendToBack();
-        }
-
-        private Button CreateNavButton(string text, Action onClick)
-        {
-            var btn = new Button
-            {
-                Text = $"  {text}",
-                Dock = DockStyle.Top,
-                Height = 44,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font(ThemeManager.PreferredFontFamily, 10f, FontStyle.Regular),
-                ForeColor = ColorTranslator.FromHtml("#E2E8F0"),
-                BackColor = ThemeManager.SidebarBackground,
-                TextAlign = ContentAlignment.MiddleRight,
-                Padding = new Padding(12, 0, 12, 0),
-                Cursor = Cursors.Hand
-            };
-            btn.FlatAppearance.BorderSize = 0;
-            btn.FlatAppearance.MouseOverBackColor = ThemeManager.SidebarHover;
-
-            btn.Click += (s, e) =>
-            {
-                SetActiveNavButton(btn);
-                onClick();
-            };
-
-            pnlSidebar.Controls.Add(btn);
-            btn.SendToBack();
-
-            return btn;
-        }
-
-        private void SetActiveNavButton(Button btn)
-        {
-            if (_activeNavButton != null && _activeNavButton != btn)
-            {
-                _activeNavButton.BackColor = ThemeManager.SidebarBackground;
-                _activeNavButton.ForeColor = ColorTranslator.FromHtml("#E2E8F0");
-                _activeNavButton.Font = new Font(ThemeManager.PreferredFontFamily, 10f, FontStyle.Regular);
-            }
-
-            _activeNavButton = btn;
-            _activeNavButton.BackColor = ThemeManager.SidebarActive;
-            _activeNavButton.ForeColor = Color.White;
-            _activeNavButton.Font = new Font(ThemeManager.PreferredFontFamily, 10f, FontStyle.Bold);
+            _accordion.Render();
         }
 
         public void OpenView(Form childForm, string sectionTitle)
         {
-            lblCurrentSection.Text = sectionTitle;
-
             pnlContent.SuspendLayout();
 
             // Safely remove and dispose old child form without triggering re-entrant event loops
@@ -178,51 +108,112 @@ namespace LabManagementSystem
 
         public void OpenDashboard()
         {
-            if (_btnDashboard != null) SetActiveNavButton(_btnDashboard);
+            _accordion.SelectItemByKey("dash_home");
             var dash = new FrmDashboard();
             dash.QuickAddVisitRequested += () => OpenAddVisit();
             dash.QuickAddPatientRequested += () => OpenAddPatient();
-            dash.QuickPaymentsRequested += () => OpenView(new FrmDebts(), "مديونيات ومستحقات المرضى");
-            dash.QuickReportsRequested += () => OpenView(new FrmFinancialReports(), "التقارير المالية والإحصائية");
+            dash.QuickPaymentsRequested += () => OpenDebts();
+            dash.QuickReportsRequested += () => OpenFinancialReports();
 
             OpenView(dash, "لوحة التحكم والعمليات اليومية");
         }
 
-        private void OpenSearchPatients()
+        public void OpenSearchPatients()
         {
+            _accordion.SelectItemByKey("search_patient");
             var frm = new FrmSearchPatient();
             frm.AddPatientClicked += () => OpenAddPatient();
             OpenView(frm, "سجل وبيانات المرضى");
         }
 
-        private void OpenAddPatient()
+        public void OpenAddPatient()
         {
+            _accordion.SelectItemByKey("add_patient");
             var frm = new FrmAddPatient();
             frm.Saved += () => OpenSearchPatients();
             frm.Cancelled += () => OpenSearchPatients();
             OpenView(frm, "تسجيل مريض جديد");
         }
 
-        private void OpenSearchVisits()
+        public void OpenSearchVisits()
         {
+            _accordion.SelectItemByKey("search_visit");
             var frm = new FrmSearchVisit();
             frm.AddvisitClicked += () => OpenAddVisit();
             OpenView(frm, "سجل وبحث الزيارات الطبية");
         }
 
-        private void OpenAddVisit()
+        public void OpenAddVisit()
         {
+            _accordion.SelectItemByKey("add_visit");
             var frm = new FrmAddVisit();
             frm.Saved += () => OpenSearchVisits();
             frm.Cancelled += () => OpenSearchVisits();
             OpenView(frm, "تسجيل زيارة وفحوصات جديدة");
         }
 
+        public void OpenDebts()
+        {
+            _accordion.SelectItemByKey("debts");
+            OpenView(new FrmDebts(), "مديونيات ومستحقات المرضى");
+        }
+
+        public void OpenLabResults()
+        {
+            _accordion.SelectItemByKey("results");
+            OpenView(new FrmLabResult(), "نتائج الفحوصات الطبية");
+        }
+
+        public void OpenExternalLabs()
+        {
+            _accordion.SelectItemByKey("ext_labs");
+            OpenView(new FrmBaseExternalLabs(), "المعامل والمراكز الخارجية");
+        }
+
+        public void OpenFinancialReports()
+        {
+            _accordion.SelectItemByKey("fin_reports");
+            OpenView(new FrmFinancialReports(), "التقارير المالية والإحصائية");
+        }
+
+        public void OpenPayments()
+        {
+            _accordion.SelectItemByKey("payments");
+            OpenView(new FrmPayments(), "خزينة وحسابات الزيارات");
+        }
+
+        public void OpenTasks()
+        {
+            _accordion.SelectItemByKey("tasks");
+            OpenView(new FrmTasks(), "سجل المهام والنواقص والتنبيهات");
+        }
+
+        public void OpenInventoryProducts()
+        {
+            _accordion.SelectItemByKey("inventory_prods");
+            OpenView(new FrmInventory(0), "إدارة الأصناف والمخزون");
+        }
+
+        public void OpenInventoryOrders()
+        {
+            _accordion.SelectItemByKey("inventory_orders");
+            OpenView(new FrmInventory(1), "سجل فواتير وطلبيات الشراء");
+        }
+
+        public void OpenLabSettings()
+        {
+            _accordion.SelectItemByKey("lab_settings");
+            OpenView(new frmSettingsLab(), "إعدادات الفحوصات الطبية");
+        }
+
+        public void OpenSystemSettings()
+        {
+            _accordion.SelectItemByKey("system_settings");
+            OpenView(new FrmSystemSettings(), "بيانات وإعدادات المعمل الرسمية");
+        }
+
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            _clockTimer.Stop();
-            _clockTimer.Dispose();
-
             if (_currentChildForm != null)
             {
                 _currentChildForm.Close();

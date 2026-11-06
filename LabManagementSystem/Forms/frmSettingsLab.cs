@@ -16,11 +16,13 @@ namespace LabManagementSystem.Forms
             InitializeComponent();
             _settingsService = ServiceLocator.LabSettingsService;
             _lookupCache = ServiceLocator.LookupCacheService;
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
         }
 
         private void frmSettingsLab_Load(object sender, EventArgs e)
         {
             FormStyler.ApplyFormTheme(this, "إعدادات الفحوصات والتحاليل");
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
             FormStyler.StyleButton(btnSave, ButtonStyle.Success);
             FormStyler.StyleButton(btnNew, ButtonStyle.Secondary);
             FormStyler.StyleButton(btnOpenParams, ButtonStyle.Primary);

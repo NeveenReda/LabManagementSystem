@@ -19,6 +19,7 @@ namespace LabManagementSystem.Forms
             InitializeComponent();
             _billingService = ServiceLocator.BillingService;
             _visitService = ServiceLocator.VisitService;
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
         }
 
         public FrmPayments(int visitId)
@@ -27,11 +28,13 @@ namespace LabManagementSystem.Forms
             _billingService = ServiceLocator.BillingService;
             _visitService = ServiceLocator.VisitService;
             _visitId = visitId;
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
         }
 
         private async void FrmPayments_Load(object sender, EventArgs e)
         {
             FormStyler.ApplyFormTheme(this, "خزينة وسداد الزيارة");
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
             FormStyler.StyleButton(btnAddPayment, ButtonStyle.Primary);
             FormStyler.StyleButton(btnPrintReceipt, ButtonStyle.Primary);
             FormStyler.StyleButton(btnPrintInvoice, ButtonStyle.Secondary);

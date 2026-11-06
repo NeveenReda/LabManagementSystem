@@ -27,6 +27,7 @@ namespace LabManagementSystem.Forms
             _patientService = ServiceLocator.PatientService;
             _lookupCache = ServiceLocator.LookupCacheService;
             lblTitle.Text = "🧪 تسجيل زيارة جديدة";
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
         }
 
         public FrmAddVisit(Visit visit)
@@ -36,6 +37,7 @@ namespace LabManagementSystem.Forms
             _patientService = ServiceLocator.PatientService;
             _lookupCache = ServiceLocator.LookupCacheService;
             lblTitle.Text = "✏️ تعديل بيانات الزيارة";
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
 
             _visit = _visitService.GetVisitById(visit.Id);
             if (_visit == null)
@@ -63,6 +65,7 @@ namespace LabManagementSystem.Forms
         private void FrmAddVisit_Load(object sender, EventArgs e)
         {
             FormStyler.ApplyFormTheme(this, lblTitle.Text);
+            FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
             FormStyler.StyleButton(btnPickPatient, ButtonStyle.Primary);
             FormStyler.StyleButton(btnAddPatient, ButtonStyle.Success);
             FormStyler.StyleButton(btnAddLab, ButtonStyle.Primary);
