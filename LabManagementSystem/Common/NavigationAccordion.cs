@@ -213,6 +213,22 @@ namespace LabManagementSystem.Common
             item.ParentGroup.Expand();
         }
 
+        public void ClearSelection()
+        {
+            if (_activeSubItem != null)
+            {
+                _activeSubItem.Button.BackColor = ThemeManager.SidebarBackground;
+                _activeSubItem.Button.ForeColor = ColorTranslator.FromHtml("#94A3B8");
+                _activeSubItem.Button.Font = new Font(ThemeManager.PreferredFontFamily, 10f, FontStyle.Regular);
+                _activeSubItem = null;
+            }
+
+            foreach (var grp in _groups)
+            {
+                grp.Collapse();
+            }
+        }
+
         public void SelectItemByKey(string itemKey)
         {
             foreach (var grp in _groups)

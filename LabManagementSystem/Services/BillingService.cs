@@ -15,45 +15,46 @@ namespace LabManagementSystem.Services
 
         public void RecordPayment(int visitId, decimal amount, DateTime paymentDate, int paymentMethod, string? notes)
         {
-            RecordPaymentInternal(visitId, amount, paymentDate, paymentMethod, notes);
+            RecordPaymentAsync(visitId, amount, paymentDate, paymentMethod, notes).GetAwaiter().GetResult();
         }
 
-        public Task RecordPaymentAsync(int visitId, decimal amount, DateTime paymentDate, int paymentMethod, string? notes, CancellationToken ct = default)
+        public async Task RecordPaymentAsync(int visitId, decimal amount, DateTime paymentDate, int paymentMethod, string? notes, CancellationToken ct = default)
         {
-            RecordPaymentInternal(visitId, amount, paymentDate, paymentMethod, notes);
-            return Task.CompletedTask;
-        }
-
-        private void RecordPaymentInternal(int visitId, decimal amount, DateTime paymentDate, int paymentMethod, string? notes)
-        {
-            if (amount <= 0)
+            decimal normalizedAmount = Math.Round(amount, 2);
+            if (normalizedAmount <= 0)
                 throw new InvalidOperationException("قيمة الدفعة يجب أن تكون أكبر من الصفر.");
 
             using var db = _contextFactory();
-            var visit = db.Visits
+            using var transaction = await db.Database.BeginTransactionAsync(ct);
+
+            var visit = await db.Visits
                 .Include(v => v.Payments)
-                .FirstOrDefault(v => v.Id == visitId && !v.IsDeleted);
+                .FirstOrDefaultAsync(v => v.Id == visitId && !v.IsDeleted, ct);
 
             if (visit == null)
                 throw new InvalidOperationException("الزيارة غير موجودة.");
 
             decimal currentPaid = visit.Payments.Sum(p => p.Amount);
-            decimal remaining = visit.NetPrice - currentPaid;
+            decimal remaining = Math.Max(0m, Math.Round(visit.NetPrice - currentPaid, 2));
 
-            if (amount > remaining)
-                throw new InvalidOperationException($"المبلغ المدفوع ({amount:0.00}) يتجاوز المبلغ المتبقي على الزيارة ({remaining:0.00}).");
+            if (remaining <= 0)
+                throw new InvalidOperationException("هذه الزيارة مسددة بالكامل ولا توجد مبالغ متبقية للسداد.");
+
+            if (normalizedAmount > remaining)
+                throw new InvalidOperationException($"المبلغ المدفوع ({normalizedAmount:0.00}) يتجاوز المبلغ المتبقي على الزيارة ({remaining:0.00}).");
 
             var payment = new Payment
             {
                 VisitId = visitId,
-                Amount = amount,
+                Amount = normalizedAmount,
                 PaymentDate = paymentDate == default ? DateTime.Now : paymentDate,
                 PaymentMethod = paymentMethod > 0 ? paymentMethod : (int)PaymentMethodEnum.Cash,
                 Notes = notes?.Trim()
             };
 
             db.Payments.Add(payment);
-            db.SaveChanges();
+            await db.SaveChangesAsync(ct);
+            await transaction.CommitAsync(ct);
         }
 
         public void CancelPayment(int paymentId)

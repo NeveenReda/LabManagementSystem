@@ -320,25 +320,22 @@ namespace LabManagementSystem.Tests
             Assert.Equal("سجل الزيارات", groups[2].SubItems[0].Text);
             Assert.Equal("تسجيل زيارة جديدة", groups[2].SubItems[1].Text);
 
-            // Group 4: إدارة المعمل -> مدونات المرضى, نتائج التحاليل, المعامل الخارجية
+            // Group 4: إدارة المعمل -> مديونات المرضى, المعامل الخارجية
             Assert.Equal("إدارة المعمل", groups[3].Title);
-            Assert.Equal(3, groups[3].SubItems.Count);
-            Assert.Equal("مدونات المرضى", groups[3].SubItems[0].Text);
-            Assert.Equal("نتائج التحاليل", groups[3].SubItems[1].Text);
-            Assert.Equal("المعامل الخارجية", groups[3].SubItems[2].Text);
+            Assert.Equal(2, groups[3].SubItems.Count);
+            Assert.Equal("مديونات المرضى", groups[3].SubItems[0].Text);
+            Assert.Equal("المعامل الخارجية", groups[3].SubItems[1].Text);
 
-            // Group 5: الحسابات والتقارير -> التقارير المالية, الحسابات والتقارير, المهام والنواقص
+            // Group 5: الحسابات والتقارير -> التقارير المالية, المهام والنواقص
             Assert.Equal("الحسابات والتقارير", groups[4].Title);
-            Assert.Equal(3, groups[4].SubItems.Count);
+            Assert.Equal(2, groups[4].SubItems.Count);
             Assert.Equal("التقارير المالية", groups[4].SubItems[0].Text);
-            Assert.Equal("الحسابات والتقارير", groups[4].SubItems[1].Text);
-            Assert.Equal("المهام والنواقص", groups[4].SubItems[2].Text);
+            Assert.Equal("المهام والنواقص", groups[4].SubItems[1].Text);
 
-            // Group 6: المخزون والمشتريات -> المخزون والمشتريات, اللوجستيات والمخازن
+            // Group 6: المخزون والمشتريات -> المخزون والمشتريات
             Assert.Equal("المخزون والمشتريات", groups[5].Title);
-            Assert.Equal(2, groups[5].SubItems.Count);
+            Assert.Single(groups[5].SubItems);
             Assert.Equal("المخزون والمشتريات", groups[5].SubItems[0].Text);
-            Assert.Equal("اللوجستيات والمخازن", groups[5].SubItems[1].Text);
 
             // Group 7: رئيس الإعدادات -> إعدادات التحليل, إعدادات السيستم
             Assert.Equal("رئيس الإعدادات", groups[6].Title);
@@ -348,31 +345,183 @@ namespace LabManagementSystem.Tests
         }
 
         [Fact]
+        public void FrmMain_Startup_ShouldOpenFrmHomeWithoutSelectingSidebarModule()
+        {
+            using var frm = new FrmMain();
+            frm.Size = new System.Drawing.Size(1200, 750);
+            frm.Show();
+            Application.DoEvents();
+
+            var pnlContent = frm.Controls.Find("pnlContent", true).FirstOrDefault() as Panel;
+            Assert.NotNull(pnlContent);
+
+            var home = pnlContent.Controls.OfType<FrmHome>().FirstOrDefault();
+            Assert.NotNull(home);
+
+            var logo = home.Controls.Find("picHomeLogo", true).FirstOrDefault() as PictureBox;
+            Assert.NotNull(logo);
+            Assert.Equal(PictureBoxSizeMode.Zoom, logo.SizeMode);
+            Assert.NotNull(logo.Image);
+
+            var lblTitle = home.Controls.Find("lblHomeTitle", true).FirstOrDefault() as Label;
+            Assert.NotNull(lblTitle);
+            Assert.Equal("معمل د/أوليفيا للتحاليل", lblTitle.Text);
+
+            Assert.All(frm.Accordion.Groups, g => Assert.False(g.IsExpanded));
+            frm.Close();
+        }
+
+        [Fact]
         public void AllForms_Headers_ShouldHaveStandardHeightAndRtl()
         {
             using var frmPatient = new FrmSearchPatient();
             var pnlH1 = frmPatient.Controls.Find("pnlHeader", true).FirstOrDefault() as Panel;
             Assert.NotNull(pnlH1);
-            Assert.Equal(68, pnlH1.Height);
+            Assert.Equal(86, pnlH1.Height);
             Assert.Equal(RightToLeft.Yes, pnlH1.RightToLeft);
 
             using var frmVisit = new FrmSearchVisit();
             var pnlH2 = frmVisit.Controls.Find("pnlHeader", true).FirstOrDefault() as Panel;
             Assert.NotNull(pnlH2);
-            Assert.Equal(68, pnlH2.Height);
+            Assert.Equal(86, pnlH2.Height);
             Assert.Equal(RightToLeft.Yes, pnlH2.RightToLeft);
 
             using var frmAddP = new FrmAddPatient();
             var pnlH3 = frmAddP.Controls.Find("pnlHeader", true).FirstOrDefault() as Panel;
             Assert.NotNull(pnlH3);
-            Assert.Equal(68, pnlH3.Height);
+            Assert.Equal(86, pnlH3.Height);
             Assert.Equal(RightToLeft.Yes, pnlH3.RightToLeft);
 
             using var frmAddV = new FrmAddVisit();
             var pnlH4 = frmAddV.Controls.Find("pnlHeader", true).FirstOrDefault() as Panel;
             Assert.NotNull(pnlH4);
-            Assert.Equal(68, pnlH4.Height);
+            Assert.Equal(86, pnlH4.Height);
             Assert.Equal(RightToLeft.Yes, pnlH4.RightToLeft);
+        }
+
+        [Fact]
+        public void FrmAddVisit_Layout_ShouldHaveRtlSearchableCombo_AndNonOverlappingActionButtons()
+        {
+            using var frm = new FrmAddVisit();
+            frm.Size = new System.Drawing.Size(1200, 720);
+            frm.CreateControl();
+
+            var lblSelectLab = frm.Controls.Find("lblSelectLab", true).FirstOrDefault() as Label;
+            var cmbolabs = frm.Controls.Find("cmbolabs", true).FirstOrDefault() as ComboBox;
+            var btnAddLab = frm.Controls.Find("btnAddLab", true).FirstOrDefault() as Button;
+            Assert.NotNull(lblSelectLab);
+            Assert.NotNull(cmbolabs);
+            Assert.NotNull(btnAddLab);
+
+            Assert.Equal("إضافة تحليل", lblSelectLab.Text);
+            Assert.Equal(ComboBoxStyle.DropDown, cmbolabs.DropDownStyle);
+            Assert.Equal(AutoCompleteMode.SuggestAppend, cmbolabs.AutoCompleteMode);
+            Assert.Equal(AutoCompleteSource.ListItems, cmbolabs.AutoCompleteSource);
+
+            var tblFinancial = frm.Controls.Find("tblFinancial", true).FirstOrDefault() as TableLayoutPanel;
+            var pnlVisitActions = frm.Controls.Find("pnlVisitActions", true).FirstOrDefault() as Panel;
+            var btnSave = frm.Controls.Find("btnSave", true).FirstOrDefault() as Button;
+            var btnPrintReceipt = frm.Controls.Find("btnPrintReceipt", true).FirstOrDefault() as Button;
+            Assert.NotNull(tblFinancial);
+            Assert.NotNull(pnlVisitActions);
+            Assert.NotNull(btnSave);
+            Assert.NotNull(btnPrintReceipt);
+            Assert.True(pnlVisitActions.Top >= tblFinancial.Bottom, $"Expected pnlVisitActions.Top ({pnlVisitActions.Top}) >= tblFinancial.Bottom ({tblFinancial.Bottom})");
+        }
+
+        [Fact]
+        public void FrmLabSettings_And_ParametersDialog_ShouldHaveBorderedForm_AndDynamicTypeToggle()
+        {
+            using var settingsFrm = new frmSettingsLab();
+            settingsFrm.CreateControl();
+            var grpLabForm = settingsFrm.Controls.Find("grpLabForm", true).FirstOrDefault() as GroupBox;
+            var btnSave = settingsFrm.Controls.Find("btnSave", true).FirstOrDefault() as Button;
+            Assert.NotNull(grpLabForm);
+            Assert.NotNull(btnSave);
+            Assert.True(grpLabForm.Contains(btnSave));
+
+            using var paramDlg = new FrmLabParametersDialog(1, "Test");
+            paramDlg.Show();
+            Application.DoEvents();
+
+            var chkIsNumeric = paramDlg.Controls.Find("chkIsNumeric", true).FirstOrDefault() as CheckBox;
+            var txtMin = paramDlg.Controls.Find("txtMin", true).FirstOrDefault() as TextBox;
+            var txtMax = paramDlg.Controls.Find("txtMax", true).FirstOrDefault() as TextBox;
+            var lblMin = paramDlg.Controls.Find("lblMin", true).FirstOrDefault() as Label;
+            var lblMax = paramDlg.Controls.Find("lblMax", true).FirstOrDefault() as Label;
+            var txtNormalText = paramDlg.Controls.Find("txtNormalText", true).FirstOrDefault() as TextBox;
+            var lblNormalText = paramDlg.Controls.Find("lblNormalText", true).FirstOrDefault() as Label;
+
+            Assert.NotNull(chkIsNumeric);
+            Assert.NotNull(txtMin);
+            Assert.NotNull(txtMax);
+            Assert.NotNull(lblMin);
+            Assert.NotNull(lblMax);
+            Assert.NotNull(txtNormalText);
+            Assert.NotNull(lblNormalText);
+
+            // Numeric mode initially
+            Assert.True(chkIsNumeric.Checked);
+            Assert.True(txtMin.Visible && txtMin.Enabled);
+            Assert.True(txtMax.Visible && txtMax.Enabled);
+            Assert.False(txtNormalText.Visible);
+
+            // Switch to Text mode -> Min/Max hidden & cleared, NormalText visible & enabled
+            txtMin.Text = "10";
+            txtMax.Text = "20";
+            chkIsNumeric.Checked = false;
+            Application.DoEvents();
+            Assert.False(txtMin.Visible);
+            Assert.False(txtMax.Visible);
+            Assert.False(lblMin.Visible);
+            Assert.False(lblMax.Visible);
+            Assert.Equal("", txtMin.Text);
+            Assert.Equal("", txtMax.Text);
+            Assert.True(txtNormalText.Visible && txtNormalText.Enabled);
+            Assert.True(lblNormalText.Visible && lblNormalText.Enabled);
+
+            // Switch back to Numeric mode -> NormalText hidden, Min/Max visible & enabled
+            txtNormalText.Text = "Negative";
+            chkIsNumeric.Checked = true;
+            Application.DoEvents();
+            Assert.True(txtMin.Visible && txtMin.Enabled);
+            Assert.True(txtMax.Visible && txtMax.Enabled);
+            Assert.False(txtNormalText.Visible);
+            Assert.Equal("", txtNormalText.Text);
+            paramDlg.Close();
+
+            // Validation helper checks
+            Assert.False(FrmLabParametersDialog.ValidateParameterInput("HB", true, "abc", "16", null).IsValid);
+            Assert.False(FrmLabParametersDialog.ValidateParameterInput("HB", true, "20", "10", null).IsValid);
+            Assert.True(FrmLabParametersDialog.ValidateParameterInput("HB", true, "12", "16", null).IsValid);
+            Assert.True(FrmLabParametersDialog.ValidateParameterInput("Widal", false, "", "", "Negative").IsValid);
+            Assert.True(FrmLabParametersDialog.ValidateParameterInput("CRP", false, "", "", "Non-Reactive").IsValid);
+        }
+
+        [Fact]
+        public void FrmPayments_UiLayout_ShouldExposeRequiredDebtLabels_AndNonOverlappingInputs()
+        {
+            using var frm = new FrmPayments();
+            frm.CreateControl();
+
+            var lblNet = frm.Controls.Find("lblNet", true).FirstOrDefault() as Label;
+            var lblPaid = frm.Controls.Find("lblPaid", true).FirstOrDefault() as Label;
+            var lblRemaining = frm.Controls.Find("lblRemaining", true).FirstOrDefault() as Label;
+            var lblNewPayPrompt = frm.Controls.Find("lblNewPayPrompt", true).FirstOrDefault() as Label;
+            var lblRemainingPreview = frm.Controls.Find("lblRemainingPreview", true).FirstOrDefault() as Label;
+            var tblPayInput = frm.Controls.Find("tblPayInput", true).FirstOrDefault() as TableLayoutPanel;
+
+            Assert.NotNull(lblNet);
+            Assert.NotNull(lblPaid);
+            Assert.NotNull(lblRemaining);
+            Assert.NotNull(lblNewPayPrompt);
+            Assert.NotNull(lblRemainingPreview);
+            Assert.NotNull(tblPayInput);
+
+            Assert.Equal("إجمالي المديونية:", lblNet.Text);
+            Assert.Equal("المبلغ المدفوع:", lblPaid.Text);
+            Assert.Equal("المبلغ المتبقي:", lblRemaining.Text);
+            Assert.Equal("المبلغ المراد سداده:", lblNewPayPrompt.Text);
         }
 
         private class DummyTestDoc : IDocument

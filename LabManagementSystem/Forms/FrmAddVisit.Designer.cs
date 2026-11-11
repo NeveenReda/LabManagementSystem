@@ -36,6 +36,7 @@ namespace LabManagementSystem.Forms
             txtNotes = new TextBox();
             pnlLabsCard = new Panel();
             pnlAddLabBar = new Panel();
+            tblAddLabBar = new TableLayoutPanel();
             lblSelectLab = new Label();
             cmbolabs = new ComboBox();
             btnAddLab = new Button();
@@ -61,15 +62,20 @@ namespace LabManagementSystem.Forms
             txtPayment = new TextBox();
             lblRemaining = new Label();
             txtRemaining = new TextBox();
+            pnlVisitActions = new Panel();
             btnSave = new Button();
+            pnlBtnSpacer = new Panel();
+            btnPrintReceipt = new Button();
             pnlHeader.SuspendLayout();
             pnlPatientCard.SuspendLayout();
             tblPatient.SuspendLayout();
             pnlLabsCard.SuspendLayout();
             pnlAddLabBar.SuspendLayout();
+            tblAddLabBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvVisitDetails).BeginInit();
             pnlFinancialCard.SuspendLayout();
             tblFinancial.SuspendLayout();
+            pnlVisitActions.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
@@ -277,46 +283,67 @@ namespace LabManagementSystem.Forms
             // 
             // pnlAddLabBar
             // 
-            pnlAddLabBar.Controls.Add(lblSelectLab);
-            pnlAddLabBar.Controls.Add(cmbolabs);
-            pnlAddLabBar.Controls.Add(btnAddLab);
+            pnlAddLabBar.Controls.Add(tblAddLabBar);
             pnlAddLabBar.Dock = DockStyle.Top;
-            pnlAddLabBar.Height = 48;
+            pnlAddLabBar.Height = 56;
             pnlAddLabBar.Name = "pnlAddLabBar";
-            pnlAddLabBar.Padding = new Padding(6);
+            pnlAddLabBar.Padding = new Padding(6, 6, 6, 8);
             pnlAddLabBar.TabIndex = 0;
+            // 
+            // tblAddLabBar
+            // 
+            tblAddLabBar.ColumnCount = 4;
+            tblAddLabBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 105F));
+            tblAddLabBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 380F));
+            tblAddLabBar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 165F));
+            tblAddLabBar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tblAddLabBar.Controls.Add(lblSelectLab, 0, 0);
+            tblAddLabBar.Controls.Add(cmbolabs, 1, 0);
+            tblAddLabBar.Controls.Add(btnAddLab, 2, 0);
+            tblAddLabBar.Dock = DockStyle.Fill;
+            tblAddLabBar.Name = "tblAddLabBar";
+            tblAddLabBar.RightToLeft = RightToLeft.Yes;
+            tblAddLabBar.RowCount = 1;
+            tblAddLabBar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tblAddLabBar.TabIndex = 0;
             // 
             // lblSelectLab
             // 
-            lblSelectLab.Dock = DockStyle.Right;
             lblSelectLab.AutoSize = false;
-            lblSelectLab.Width = 95;
+            lblSelectLab.Dock = DockStyle.Fill;
             lblSelectLab.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblSelectLab.ForeColor = Color.FromArgb(30, 41, 59);
+            lblSelectLab.Margin = new Padding(4, 0, 4, 0);
             lblSelectLab.Name = "lblSelectLab";
-            lblSelectLab.Text = "اختر التحليل:";
+            lblSelectLab.RightToLeft = RightToLeft.No;
+            lblSelectLab.Text = "إضافة تحليل";
             lblSelectLab.TextAlign = ContentAlignment.MiddleRight;
             // 
             // cmbolabs
             // 
-            cmbolabs.Dock = DockStyle.Right;
-            cmbolabs.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbolabs.Font = new Font("Segoe UI", 10F);
+            cmbolabs.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            cmbolabs.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbolabs.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbolabs.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbolabs.Font = new Font("Segoe UI", 10.5F);
+            cmbolabs.Margin = new Padding(6, 0, 6, 0);
             cmbolabs.Name = "cmbolabs";
-            cmbolabs.Size = new Size(340, 25);
+            cmbolabs.RightToLeft = RightToLeft.Yes;
+            cmbolabs.Size = new Size(368, 28);
             cmbolabs.TabIndex = 0;
             cmbolabs.SelectedIndexChanged += cmbolabs_SelectedIndexChanged;
             // 
             // btnAddLab
             // 
-            btnAddLab.Dock = DockStyle.Right;
+            btnAddLab.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             btnAddLab.BackColor = Color.FromArgb(37, 99, 235);
             btnAddLab.FlatAppearance.BorderSize = 0;
             btnAddLab.FlatStyle = FlatStyle.Flat;
             btnAddLab.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnAddLab.ForeColor = Color.White;
+            btnAddLab.Margin = new Padding(6, 0, 6, 0);
             btnAddLab.Name = "btnAddLab";
-            btnAddLab.Size = new Size(140, 36);
+            btnAddLab.Size = new Size(153, 36);
             btnAddLab.TabIndex = 1;
             btnAddLab.Text = "➕ إضافة للزيارة";
             btnAddLab.UseVisualStyleBackColor = false;
@@ -408,13 +435,13 @@ namespace LabManagementSystem.Forms
             // pnlFinancialCard
             // 
             pnlFinancialCard.BackColor = Color.White;
-            pnlFinancialCard.Controls.Add(btnSave);
+            pnlFinancialCard.Controls.Add(pnlVisitActions);
             pnlFinancialCard.Controls.Add(tblFinancial);
             pnlFinancialCard.Dock = DockStyle.Bottom;
-            pnlFinancialCard.Height = 110;
-            pnlFinancialCard.Location = new Point(16, 554);
+            pnlFinancialCard.Height = 142;
+            pnlFinancialCard.Location = new Point(16, 522);
             pnlFinancialCard.Name = "pnlFinancialCard";
-            pnlFinancialCard.Padding = new Padding(14, 10, 14, 10);
+            pnlFinancialCard.Padding = new Padding(14, 10, 14, 12);
             pnlFinancialCard.TabIndex = 3;
             // 
             // tblFinancial
@@ -439,11 +466,11 @@ namespace LabManagementSystem.Forms
             tblFinancial.Controls.Add(lblRemaining, 5, 0);
             tblFinancial.Controls.Add(txtRemaining, 5, 1);
             tblFinancial.Dock = DockStyle.Top;
-            tblFinancial.Height = 58;
+            tblFinancial.Height = 64;
             tblFinancial.Name = "tblFinancial";
             tblFinancial.RowCount = 2;
-            tblFinancial.RowStyles.Add(new RowStyle(SizeType.Absolute, 24F));
-            tblFinancial.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
+            tblFinancial.RowStyles.Add(new RowStyle(SizeType.Absolute, 26F));
+            tblFinancial.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
             tblFinancial.TabIndex = 0;
             // 
             // lblGross
@@ -557,21 +584,52 @@ namespace LabManagementSystem.Forms
             txtRemaining.Text = "0.00";
             txtRemaining.TextAlign = HorizontalAlignment.Center;
             // 
+            // pnlVisitActions
+            // 
+            pnlVisitActions.Controls.Add(btnPrintReceipt);
+            pnlVisitActions.Controls.Add(pnlBtnSpacer);
+            pnlVisitActions.Controls.Add(btnSave);
+            pnlVisitActions.Dock = DockStyle.Bottom;
+            pnlVisitActions.Height = 48;
+            pnlVisitActions.Name = "pnlVisitActions";
+            pnlVisitActions.Padding = new Padding(0, 8, 0, 0);
+            pnlVisitActions.TabIndex = 1;
+            // 
             // btnSave
             // 
-            btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             btnSave.BackColor = Color.FromArgb(22, 163, 74);
+            btnSave.Dock = DockStyle.Left;
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(14, 68);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(220, 36);
-            btnSave.TabIndex = 1;
+            btnSave.Size = new Size(210, 40);
+            btnSave.TabIndex = 0;
             btnSave.Text = "💾 حفظ الزيارة والطباعة";
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
+            // 
+            // pnlBtnSpacer
+            // 
+            pnlBtnSpacer.Dock = DockStyle.Left;
+            pnlBtnSpacer.Name = "pnlBtnSpacer";
+            pnlBtnSpacer.Size = new Size(10, 40);
+            // 
+            // btnPrintReceipt
+            // 
+            btnPrintReceipt.BackColor = Color.FromArgb(37, 99, 235);
+            btnPrintReceipt.Dock = DockStyle.Left;
+            btnPrintReceipt.FlatAppearance.BorderSize = 0;
+            btnPrintReceipt.FlatStyle = FlatStyle.Flat;
+            btnPrintReceipt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnPrintReceipt.ForeColor = Color.White;
+            btnPrintReceipt.Name = "btnPrintReceipt";
+            btnPrintReceipt.Size = new Size(165, 40);
+            btnPrintReceipt.TabIndex = 1;
+            btnPrintReceipt.Text = "🖨️ طباعة الإيصال";
+            btnPrintReceipt.UseVisualStyleBackColor = false;
+            btnPrintReceipt.Click += btnPrintReceipt_Click;
             // 
             // FrmAddVisit
             // 
@@ -597,11 +655,13 @@ namespace LabManagementSystem.Forms
             tblPatient.PerformLayout();
             pnlLabsCard.ResumeLayout(false);
             pnlAddLabBar.ResumeLayout(false);
-            pnlAddLabBar.PerformLayout();
+            tblAddLabBar.ResumeLayout(false);
+            tblAddLabBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvVisitDetails).EndInit();
             pnlFinancialCard.ResumeLayout(false);
             tblFinancial.ResumeLayout(false);
             tblFinancial.PerformLayout();
+            pnlVisitActions.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -626,6 +686,7 @@ namespace LabManagementSystem.Forms
         private TextBox txtNotes;
         private Panel pnlLabsCard;
         private Panel pnlAddLabBar;
+        private TableLayoutPanel tblAddLabBar;
         private Label lblSelectLab;
         private ComboBox cmbolabs;
         private Button btnAddLab;
@@ -651,6 +712,9 @@ namespace LabManagementSystem.Forms
         private TextBox txtPayment;
         private Label lblRemaining;
         private TextBox txtRemaining;
+        private Panel pnlVisitActions;
+        private Panel pnlBtnSpacer;
         private Button btnSave;
+        private Button btnPrintReceipt;
     }
 }

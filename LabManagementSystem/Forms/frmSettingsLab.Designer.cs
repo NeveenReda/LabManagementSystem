@@ -21,6 +21,7 @@ namespace LabManagementSystem.Forms
             lblSubtitle = new Label();
             lblTitle = new Label();
             pnlInputsCard = new Panel();
+            grpLabForm = new GroupBox();
             tblInputs = new TableLayoutPanel();
             lblLabName = new Label();
             txtName = new TextBox();
@@ -31,7 +32,9 @@ namespace LabManagementSystem.Forms
             lblDays = new Label();
             txtDays = new TextBox();
             chkExternal = new CheckBox();
+            lblValidation = new Label();
             pnlActions = new Panel();
+            flpActions = new FlowLayoutPanel();
             btnSave = new Button();
             btnNew = new Button();
             btnOpenParams = new Button();
@@ -46,8 +49,10 @@ namespace LabManagementSystem.Forms
             colEdit = new DataGridViewImageColumn();
             pnlHeader.SuspendLayout();
             pnlInputsCard.SuspendLayout();
+            grpLabForm.SuspendLayout();
             tblInputs.SuspendLayout();
             pnlActions.SuspendLayout();
+            flpActions.SuspendLayout();
             pnlGridCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLabs).BeginInit();
             SuspendLayout();
@@ -86,14 +91,28 @@ namespace LabManagementSystem.Forms
             // pnlInputsCard
             // 
             pnlInputsCard.BackColor = Color.White;
-            pnlInputsCard.Controls.Add(pnlActions);
-            pnlInputsCard.Controls.Add(tblInputs);
+            pnlInputsCard.Controls.Add(grpLabForm);
             pnlInputsCard.Dock = DockStyle.Top;
-            pnlInputsCard.Height = 165;
-            pnlInputsCard.Location = new Point(16, 81);
+            pnlInputsCard.Height = 205;
+            pnlInputsCard.Location = new Point(16, 86);
             pnlInputsCard.Name = "pnlInputsCard";
-            pnlInputsCard.Padding = new Padding(14);
+            pnlInputsCard.Padding = new Padding(12);
             pnlInputsCard.TabIndex = 1;
+            // 
+            // grpLabForm
+            // 
+            grpLabForm.Controls.Add(pnlActions);
+            grpLabForm.Controls.Add(lblValidation);
+            grpLabForm.Controls.Add(tblInputs);
+            grpLabForm.Dock = DockStyle.Fill;
+            grpLabForm.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            grpLabForm.ForeColor = Color.FromArgb(23, 43, 77);
+            grpLabForm.Name = "grpLabForm";
+            grpLabForm.Padding = new Padding(12, 8, 12, 8);
+            grpLabForm.RightToLeft = RightToLeft.Yes;
+            grpLabForm.TabIndex = 0;
+            grpLabForm.TabStop = false;
+            grpLabForm.Text = "إضافة / تعديل بيانات التحليل";
             // 
             // tblInputs
             // 
@@ -204,28 +223,48 @@ namespace LabManagementSystem.Forms
             chkExternal.Text = "تحليل خارجي (External)";
             chkExternal.UseVisualStyleBackColor = true;
             // 
+            // lblValidation
+            // 
+            lblValidation.Dock = DockStyle.Top;
+            lblValidation.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblValidation.ForeColor = Color.FromArgb(220, 38, 38);
+            lblValidation.Height = 20;
+            lblValidation.Name = "lblValidation";
+            lblValidation.RightToLeft = RightToLeft.No;
+            lblValidation.Text = "";
+            lblValidation.TextAlign = ContentAlignment.MiddleRight;
+            lblValidation.Visible = false;
+            // 
             // pnlActions
             // 
-            pnlActions.Controls.Add(btnOpenParams);
-            pnlActions.Controls.Add(btnNew);
-            pnlActions.Controls.Add(btnSave);
+            pnlActions.Controls.Add(flpActions);
             pnlActions.Dock = DockStyle.Bottom;
-            pnlActions.Height = 50;
+            pnlActions.Height = 48;
             pnlActions.Name = "pnlActions";
-            pnlActions.Padding = new Padding(0, 8, 0, 0);
+            pnlActions.Padding = new Padding(0, 6, 0, 0);
             pnlActions.TabIndex = 1;
+            // 
+            // flpActions
+            // 
+            flpActions.Dock = DockStyle.Fill;
+            flpActions.FlowDirection = FlowDirection.LeftToRight;
+            flpActions.Name = "flpActions";
+            flpActions.RightToLeft = RightToLeft.Yes;
+            flpActions.WrapContents = false;
+            flpActions.Controls.Add(btnSave);
+            flpActions.Controls.Add(btnNew);
+            flpActions.Controls.Add(btnOpenParams);
             // 
             // btnSave
             // 
-            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnSave.BackColor = Color.FromArgb(22, 163, 74);
             btnSave.FlatAppearance.BorderSize = 0;
             btnSave.FlatStyle = FlatStyle.Flat;
             btnSave.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(940, 8);
+            btnSave.Margin = new Padding(4, 2, 4, 2);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(140, 36);
+            btnSave.Size = new Size(155, 36);
             btnSave.TabIndex = 0;
             btnSave.Text = "💾 حفظ التحليل";
             btnSave.UseVisualStyleBackColor = false;
@@ -233,31 +272,29 @@ namespace LabManagementSystem.Forms
             // 
             // btnNew
             // 
-            btnNew.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnNew.BackColor = Color.White;
             btnNew.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
             btnNew.FlatStyle = FlatStyle.Flat;
             btnNew.Font = new Font("Segoe UI", 9.5F);
             btnNew.ForeColor = Color.FromArgb(30, 41, 59);
-            btnNew.Location = new Point(830, 8);
+            btnNew.Margin = new Padding(4, 2, 4, 2);
             btnNew.Name = "btnNew";
-            btnNew.Size = new Size(100, 36);
+            btnNew.Size = new Size(120, 36);
             btnNew.TabIndex = 1;
-            btnNew.Text = "➕ جديد";
+            btnNew.Text = "➕ تحليل جديد";
             btnNew.UseVisualStyleBackColor = false;
             btnNew.Click += btnNew_Click;
             // 
             // btnOpenParams
             // 
-            btnOpenParams.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnOpenParams.BackColor = Color.FromArgb(37, 99, 235);
             btnOpenParams.FlatAppearance.BorderSize = 0;
             btnOpenParams.FlatStyle = FlatStyle.Flat;
             btnOpenParams.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnOpenParams.ForeColor = Color.White;
-            btnOpenParams.Location = new Point(570, 8);
+            btnOpenParams.Margin = new Padding(4, 2, 4, 2);
             btnOpenParams.Name = "btnOpenParams";
-            btnOpenParams.Size = new Size(250, 36);
+            btnOpenParams.Size = new Size(255, 36);
             btnOpenParams.TabIndex = 2;
             btnOpenParams.Text = "⚙️ إعداد باراميترات ومعدلات التحليل";
             btnOpenParams.UseVisualStyleBackColor = false;
@@ -377,9 +414,11 @@ namespace LabManagementSystem.Forms
             Load += frmSettingsLab_Load;
             pnlHeader.ResumeLayout(false);
             pnlInputsCard.ResumeLayout(false);
+            grpLabForm.ResumeLayout(false);
             tblInputs.ResumeLayout(false);
             tblInputs.PerformLayout();
             pnlActions.ResumeLayout(false);
+            flpActions.ResumeLayout(false);
             pnlGridCard.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvLabs).EndInit();
             ResumeLayout(false);
@@ -391,7 +430,9 @@ namespace LabManagementSystem.Forms
         private Label lblTitle;
         private Label lblSubtitle;
         private Panel pnlInputsCard;
+        private GroupBox grpLabForm;
         private TableLayoutPanel tblInputs;
+        private Label lblValidation;
         private Label lblLabName;
         private TextBox txtName;
         private Label lblCategory;
@@ -402,6 +443,7 @@ namespace LabManagementSystem.Forms
         private TextBox txtDays;
         private CheckBox chkExternal;
         private Panel pnlActions;
+        private FlowLayoutPanel flpActions;
         private Button btnSave;
         private Button btnNew;
         private Button btnOpenParams;

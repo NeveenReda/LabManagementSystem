@@ -1,3 +1,4 @@
+using System.Globalization;
 using LabManagementSystem.Enums;
 using LabManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
@@ -111,6 +112,10 @@ namespace LabManagementSystem.Services
                 throw new InvalidOperationException("التحليل غير موجود.");
 
             var existingMap = visitLab.VisitLabResults.ToDictionary(r => r.LabParameterId);
+            var paramsById = db.LabParameters
+                .AsNoTracking()
+                .Where(p => p.LabId == visitLab.LabId)
+                .ToDictionary(p => p.Id);
             bool anyResultEntered = false;
 
             foreach (var item in results)
@@ -118,6 +123,14 @@ namespace LabManagementSystem.Services
                 string cleanVal = item.ResultValue?.Trim() ?? "";
                 if (string.IsNullOrEmpty(cleanVal))
                     continue;
+
+                if (paramsById.TryGetValue(item.ParameterId, out var paramDef) && paramDef.IsNumeric)
+                {
+                    if (!TryParseNumericResult(cleanVal, out _))
+                    {
+                        throw new InvalidOperationException($"القيمة المدخلة للباراميتر '{paramDef.Name}' يجب أن تكون قيمة رقمية صحيحة.");
+                    }
+                }
 
                 anyResultEntered = true;
 
@@ -260,26 +273,47 @@ namespace LabManagementSystem.Services
             return p.NormalText ?? "";
         }
 
+        public static bool TryParseNumericResult(string value, out decimal parsed)
+        {
+            string clean = value?.Trim() ?? "";
+            return decimal.TryParse(clean, NumberStyles.Number, CultureInfo.CurrentCulture, out parsed)
+                || decimal.TryParse(clean, NumberStyles.Number, CultureInfo.InvariantCulture, out parsed);
+        }
+
         private static AbnormalFlagEnum CalculateFlag(LabParameter p, string resultValue)
         {
             if (string.IsNullOrWhiteSpace(resultValue))
                 return AbnormalFlagEnum.Normal;
 
-            if (p.IsNumeric && decimal.TryParse(resultValue.Trim(), out decimal val))
+            if (p.IsNumeric)
             {
-                if (p.NormalRangeMin.HasValue && val < p.NormalRangeMin.Value)
-                    return AbnormalFlagEnum.Low;
-                if (p.NormalRangeMax.HasValue && val > p.NormalRangeMax.Value)
-                    return AbnormalFlagEnum.High;
+                if (TryParseNumericResult(resultValue, out decimal val))
+                {
+                    if (p.NormalRangeMin.HasValue && val < p.NormalRangeMin.Value)
+                        return AbnormalFlagEnum.Low;
+                    if (p.NormalRangeMax.HasValue && val > p.NormalRangeMax.Value)
+                        return AbnormalFlagEnum.High;
+                }
                 return AbnormalFlagEnum.Normal;
             }
 
+            string actual = resultValue.Trim().ToLowerInvariant();
             if (!string.IsNullOrWhiteSpace(p.NormalText))
             {
                 string expected = p.NormalText.Trim().ToLowerInvariant();
-                string actual = resultValue.Trim().ToLowerInvariant();
-                if (actual != expected && (actual.Contains("positive") || actual.Contains("إيجابي") || actual.Contains("reactive") || actual.Contains("+")))
+                if (actual == expected)
+                    return AbnormalFlagEnum.Normal;
+
+                if (actual.Contains("positive") || actual.Contains("إيجابي") || actual == "reactive" || actual.Contains("abnormal") || actual.Contains("+"))
                     return AbnormalFlagEnum.Abnormal;
+
+                if ((expected == "negative" || expected == "non-reactive" || expected == "normal" || expected == "سلبي" || expected == "طبيعي") &&
+                    !actual.Contains(expected))
+                    return AbnormalFlagEnum.Abnormal;
+            }
+            else if (actual.Contains("positive") || actual.Contains("إيجابي") || actual == "reactive" || actual.Contains("abnormal"))
+            {
+                return AbnormalFlagEnum.Abnormal;
             }
 
             return AbnormalFlagEnum.Normal;

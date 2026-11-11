@@ -52,10 +52,17 @@ namespace LabManagementSystem.Tests
             Assert.Equal("Powered by Tech Spot Canadian 2026", lblFooter.Text);
             Assert.Equal(ContentAlignment.MiddleCenter, lblFooter.TextAlign);
 
-            // Test navigation to screens
-            frm.OpenDashboard();
-            Assert.NotNull(frm.Controls.Find("pnlContent", true).FirstOrDefault());
+            // Test navigation to screens (startup home + sidebar modules)
+            frm.OpenHome();
+            var pnlContent = frm.Controls.Find("pnlContent", true).FirstOrDefault();
+            Assert.NotNull(pnlContent);
+            var homeForm = pnlContent.Controls.OfType<FrmHome>().FirstOrDefault();
+            Assert.NotNull(homeForm);
+            var homeTitle = homeForm.Controls.Find("lblHomeTitle", true).FirstOrDefault() as Label;
+            Assert.NotNull(homeTitle);
+            Assert.Equal("معمل د/أوليفيا للتحاليل", homeTitle.Text);
 
+            frm.OpenDashboard();
             frm.OpenSearchPatients();
             frm.OpenAddPatient();
             frm.OpenSearchVisits();
@@ -63,7 +70,6 @@ namespace LabManagementSystem.Tests
             frm.OpenDebts();
             frm.OpenFinancialReports();
             frm.OpenInventoryProducts();
-            frm.OpenInventoryOrders();
             frm.OpenLabSettings();
             frm.OpenSystemSettings();
         }

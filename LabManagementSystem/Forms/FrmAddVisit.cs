@@ -13,8 +13,10 @@ namespace LabManagementSystem.Forms
         private readonly ILookupCacheService _lookupCache;
 
         private Visit? _visit;
+        private int _lastSavedVisitId;
         private Patient? _selectedPatient;
         private Lab? _selectedLab;
+        private List<Lab> _availableLabs = new();
         private bool _isUpdatingDiscount = false;
 
         public event Action? Saved;
@@ -70,6 +72,9 @@ namespace LabManagementSystem.Forms
             FormStyler.StyleButton(btnAddPatient, ButtonStyle.Success);
             FormStyler.StyleButton(btnAddLab, ButtonStyle.Primary);
             FormStyler.StyleButton(btnSave, ButtonStyle.Success);
+            FormStyler.StyleButton(btnPrintReceipt, ButtonStyle.Primary);
+            btnSave.Height = 40;
+            btnPrintReceipt.Height = 40;
 
             FormStyler.StyleInput(txtPatientCode);
             FormStyler.StyleInput(txtPatientName);
@@ -92,14 +97,17 @@ namespace LabManagementSystem.Forms
         {
             try
             {
-                var labs = _lookupCache.GetLabs();
-                cmbolabs.DataSource = labs;
+                _availableLabs = _lookupCache.GetLabs();
+                cmbolabs.DataSource = _availableLabs;
                 cmbolabs.DisplayMember = "Name";
                 cmbolabs.ValueMember = "Id";
-                if (labs.Count > 0)
+                cmbolabs.DropDownStyle = ComboBoxStyle.DropDown;
+                cmbolabs.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                cmbolabs.AutoCompleteSource = AutoCompleteSource.ListItems;
+                if (_availableLabs.Count > 0)
                 {
                     cmbolabs.SelectedIndex = 0;
-                    _selectedLab = labs[0];
+                    _selectedLab = _availableLabs[0];
                 }
             }
             catch (Exception ex)
@@ -138,11 +146,26 @@ namespace LabManagementSystem.Forms
 
         private void btnAddLab_Click(object sender, EventArgs e)
         {
-            if (_selectedLab == null)
+            var labToAdd = cmbolabs.SelectedItem as Lab;
+            if (labToAdd == null && !string.IsNullOrWhiteSpace(cmbolabs.Text))
+            {
+                string typed = cmbolabs.Text.Trim();
+                labToAdd = _availableLabs.FirstOrDefault(l => l.Name.Equals(typed, StringComparison.OrdinalIgnoreCase))
+                    ?? _availableLabs.FirstOrDefault(l => l.Name.Contains(typed, StringComparison.OrdinalIgnoreCase));
+                if (labToAdd != null)
+                {
+                    cmbolabs.SelectedItem = labToAdd;
+                }
+            }
+
+            if (labToAdd == null)
             {
                 MessageBox.Show("يرجى اختيار تحليل من القائمة أولاً.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cmbolabs.Focus();
                 return;
             }
+
+            _selectedLab = labToAdd;
 
             foreach (DataGridViewRow row in dgvVisitDetails.Rows)
             {
@@ -391,6 +414,7 @@ namespace LabManagementSystem.Forms
                     };
 
                     savedVisitId = await _visitService.CreateVisitAsync(newVisit, labIds, initialPaid, (int)PaymentMethodEnum.Cash, "دفعة أولى عند التسجيل");
+                    _lastSavedVisitId = savedVisitId;
                     MessageBox.Show("تم حفظ الزيارة بنجاح.", "تم الحفظ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -403,6 +427,7 @@ namespace LabManagementSystem.Forms
 
                     await _visitService.UpdateVisitAsync(_visit, labIds);
                     savedVisitId = _visit.Id;
+                    _lastSavedVisitId = savedVisitId;
                     MessageBox.Show("تم تعديل الزيارة بنجاح.", "تم التعديل", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
@@ -415,29 +440,7 @@ namespace LabManagementSystem.Forms
 
                 if (printPrompt == DialogResult.Yes)
                 {
-                    decimal total = labItemsForReceipt.Sum(x => x.Item2);
-                    decimal net = Math.Max(0, total - discountVal);
-                    decimal remaining = Math.Max(0, net - initialPaid);
-
-                    var receiptModel = new ThermalReceiptModel
-                    {
-                        VisitId = savedVisitId,
-                        VisitDate = DateOfVisit.Value,
-                        PatientName = _selectedPatient.Name,
-                        MedicalCode = _selectedPatient.MedicalCode,
-                        DoctorName = txtDoctorName.Text.Trim(),
-                        Items = labItemsForReceipt,
-                        TotalAmount = total,
-                        DiscountAmount = discountVal,
-                        NetAmount = net,
-                        PaidAmount = initialPaid,
-                        RemainingBalance = remaining,
-                        PaymentMethodName = "نقدي",
-                        ReceiptDate = DateTime.Now
-                    };
-
-                    using var viewer = new DocumentViewerForm(new ThermalReceiptDocument(receiptModel), $"إيصال زيارة #{savedVisitId}");
-                    viewer.ShowDialog();
+                    ShowReceiptPreview(savedVisitId, labItemsForReceipt, discountVal, initialPaid);
                 }
 
                 Saved?.Invoke();
@@ -459,6 +462,58 @@ namespace LabManagementSystem.Forms
                     btnSave.Enabled = true;
                 }
             }
+        }
+
+        private void btnPrintReceipt_Click(object? sender, EventArgs e)
+        {
+            int visitId = _visit?.Id ?? _lastSavedVisitId;
+            if (visitId <= 0 || _selectedPatient == null)
+            {
+                MessageBox.Show("يرجى حفظ الزيارة أولاً لطباعة الإيصال.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var labItemsForReceipt = new List<Tuple<string, decimal>>();
+            foreach (DataGridViewRow row in dgvVisitDetails.Rows)
+            {
+                if (row.IsNewRow) continue;
+                string name = row.Cells["colName"].Value?.ToString() ?? "تحليل";
+                decimal price = Convert.ToDecimal(row.Cells["colPrice"].Value ?? 0);
+                labItemsForReceipt.Add(Tuple.Create(name, price));
+            }
+
+            decimal.TryParse(textDiscountValue.Text, out decimal discountVal);
+            decimal.TryParse(txtPayment.Text, out decimal paidVal);
+            ShowReceiptPreview(visitId, labItemsForReceipt, discountVal, paidVal);
+        }
+
+        private void ShowReceiptPreview(int visitId, List<Tuple<string, decimal>> labItemsForReceipt, decimal discountVal, decimal paidAmount)
+        {
+            if (_selectedPatient == null) return;
+
+            decimal total = labItemsForReceipt.Sum(x => x.Item2);
+            decimal net = Math.Max(0, total - discountVal);
+            decimal remaining = Math.Max(0, net - paidAmount);
+
+            var receiptModel = new ThermalReceiptModel
+            {
+                VisitId = visitId,
+                VisitDate = DateOfVisit.Value,
+                PatientName = _selectedPatient.Name,
+                MedicalCode = _selectedPatient.MedicalCode,
+                DoctorName = txtDoctorName.Text.Trim(),
+                Items = labItemsForReceipt,
+                TotalAmount = total,
+                DiscountAmount = discountVal,
+                NetAmount = net,
+                PaidAmount = paidAmount,
+                RemainingBalance = remaining,
+                PaymentMethodName = "نقدي",
+                ReceiptDate = DateTime.Now
+            };
+
+            using var viewer = new DocumentViewerForm(new ThermalReceiptDocument(receiptModel), $"إيصال زيارة #{visitId}");
+            viewer.ShowDialog();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

@@ -44,9 +44,9 @@ namespace LabManagementSystem.Common
             var pnl = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 68,
+                Height = 86,
                 BackColor = ThemeManager.PrimaryNavy,
-                Padding = new Padding(20, 10, 20, 10),
+                Padding = new Padding(22, 12, 22, 12),
                 RightToLeft = RightToLeft.Yes
             };
 
@@ -56,8 +56,9 @@ namespace LabManagementSystem.Common
                 Font = ThemeManager.TitleFont,
                 ForeColor = Color.White,
                 Dock = DockStyle.Top,
-                Height = 28,
+                Height = 32,
                 AutoSize = false,
+                AutoEllipsis = true,
                 RightToLeft = RightToLeft.No,
                 TextAlign = ContentAlignment.MiddleRight
             };
@@ -66,10 +67,11 @@ namespace LabManagementSystem.Common
             {
                 Text = subtitle,
                 Font = ThemeManager.SmallFont,
-                ForeColor = ColorTranslator.FromHtml("#94A3B8"),
+                ForeColor = ColorTranslator.FromHtml("#7DD3FC"),
                 Dock = DockStyle.Bottom,
-                Height = 20,
+                Height = 22,
                 AutoSize = false,
+                AutoEllipsis = true,
                 RightToLeft = RightToLeft.No,
                 TextAlign = ContentAlignment.MiddleRight
             };
@@ -111,9 +113,9 @@ namespace LabManagementSystem.Common
 
         public static void StyleHeaderPanel(Panel pnlHeader, Label lblTitle, Label? lblSubtitle = null, Button? actionButton = null)
         {
-            pnlHeader.Height = 68;
+            pnlHeader.Height = 86;
             pnlHeader.BackColor = ThemeManager.PrimaryNavy;
-            pnlHeader.Padding = new Padding(20, 10, 20, 10);
+            pnlHeader.Padding = new Padding(22, 12, 22, 12);
             pnlHeader.RightToLeft = RightToLeft.Yes;
 
             lblTitle.Font = ThemeManager.TitleFont;
@@ -121,18 +123,20 @@ namespace LabManagementSystem.Common
             lblTitle.TextAlign = ContentAlignment.MiddleRight;
             lblTitle.RightToLeft = RightToLeft.No;
             lblTitle.AutoSize = false;
+            lblTitle.AutoEllipsis = true;
             lblTitle.Dock = DockStyle.Top;
-            lblTitle.Height = 28;
+            lblTitle.Height = 32;
 
             if (lblSubtitle != null)
             {
                 lblSubtitle.Font = ThemeManager.SmallFont;
-                lblSubtitle.ForeColor = ColorTranslator.FromHtml("#94A3B8");
+                lblSubtitle.ForeColor = ColorTranslator.FromHtml("#7DD3FC");
                 lblSubtitle.TextAlign = ContentAlignment.MiddleRight;
                 lblSubtitle.RightToLeft = RightToLeft.No;
                 lblSubtitle.AutoSize = false;
+                lblSubtitle.AutoEllipsis = true;
                 lblSubtitle.Dock = DockStyle.Bottom;
-                lblSubtitle.Height = 20;
+                lblSubtitle.Height = 22;
             }
 
             if (actionButton != null)

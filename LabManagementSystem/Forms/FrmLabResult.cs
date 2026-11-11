@@ -95,6 +95,13 @@ namespace LabManagementSystem.Forms
             if (dgvResults.Rows[e.RowIndex].Tag is ParameterResultEntryDto dto)
             {
                 string newVal = dgvResults.Rows[e.RowIndex].Cells["colResult"].Value?.ToString() ?? "";
+                if (dto.IsNumeric && !string.IsNullOrWhiteSpace(newVal) && !LabReportService.TryParseNumericResult(newVal, out _))
+                {
+                    MessageBox.Show($"الباراميتر '{dto.ParameterName}' رقمي — يرجى إدخال قيمة رقمية صحيحة.", "قيمة غير صحيحة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dgvResults.Rows[e.RowIndex].Cells["colResult"].Value = dto.ResultValue;
+                    return;
+                }
+
                 dto.ResultValue = newVal;
 
                 var flag = CalculateFlag(dto, newVal);
@@ -138,12 +145,31 @@ namespace LabManagementSystem.Forms
         private AbnormalFlagEnum CalculateFlag(ParameterResultEntryDto p, string val)
         {
             if (string.IsNullOrWhiteSpace(val)) return AbnormalFlagEnum.Normal;
-            if (p.IsNumeric && decimal.TryParse(val.Trim(), out decimal num))
+            if (p.IsNumeric)
             {
-                if (p.NormalMin.HasValue && num < p.NormalMin.Value) return AbnormalFlagEnum.Low;
-                if (p.NormalMax.HasValue && num > p.NormalMax.Value) return AbnormalFlagEnum.High;
+                if (LabReportService.TryParseNumericResult(val, out decimal num))
+                {
+                    if (p.NormalMin.HasValue && num < p.NormalMin.Value) return AbnormalFlagEnum.Low;
+                    if (p.NormalMax.HasValue && num > p.NormalMax.Value) return AbnormalFlagEnum.High;
+                }
                 return AbnormalFlagEnum.Normal;
             }
+
+            string actual = val.Trim().ToLowerInvariant();
+            if (!string.IsNullOrWhiteSpace(p.NormalText))
+            {
+                string expected = p.NormalText.Trim().ToLowerInvariant();
+                if (actual == expected) return AbnormalFlagEnum.Normal;
+                if (actual.Contains("positive") || actual.Contains("إيجابي") || actual == "reactive" || actual.Contains("abnormal") || actual.Contains("+"))
+                    return AbnormalFlagEnum.Abnormal;
+                if ((expected == "negative" || expected == "non-reactive" || expected == "normal" || expected == "سلبي" || expected == "طبيعي") && !actual.Contains(expected))
+                    return AbnormalFlagEnum.Abnormal;
+            }
+            else if (actual.Contains("positive") || actual.Contains("إيجابي") || actual == "reactive" || actual.Contains("abnormal"))
+            {
+                return AbnormalFlagEnum.Abnormal;
+            }
+
             return AbnormalFlagEnum.Normal;
         }
 
@@ -158,6 +184,13 @@ namespace LabManagementSystem.Forms
                 int paramId = Convert.ToInt32(row.Cells["colParameterId"].Value);
                 string resVal = row.Cells["colResult"].Value?.ToString() ?? "";
                 string notes = row.Cells["colNotes"].Value?.ToString() ?? "";
+
+                if (row.Tag is ParameterResultEntryDto dto && dto.IsNumeric && !string.IsNullOrWhiteSpace(resVal) &&
+                    !LabReportService.TryParseNumericResult(resVal, out _))
+                {
+                    MessageBox.Show($"الباراميتر '{dto.ParameterName}' رقمي — يرجى إدخال قيمة رقمية صحيحة.", "بيانات غير صحيحة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 entries.Add(new ParameterResultEntryDto
                 {

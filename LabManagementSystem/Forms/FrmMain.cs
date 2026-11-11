@@ -35,8 +35,7 @@ namespace LabManagementSystem
 
             Load += (s, e) =>
             {
-                _accordion.SelectItemByKey("dash_home");
-                OpenDashboard();
+                OpenHome();
             };
         }
 
@@ -60,20 +59,17 @@ namespace LabManagementSystem
 
             // Group 4: إدارة المعمل
             var grpLab = _accordion.AddGroup("grp_lab", "إدارة المعمل", "🔬");
-            grpLab.AddSubItem("debts", "مدونات المرضى", () => OpenDebts());
-            grpLab.AddSubItem("results", "نتائج التحاليل", () => OpenLabResults());
+            grpLab.AddSubItem("debts", "مديونات المرضى", () => OpenDebts());
             grpLab.AddSubItem("ext_labs", "المعامل الخارجية", () => OpenExternalLabs());
 
             // Group 5: الحسابات والتقارير
             var grpFinance = _accordion.AddGroup("grp_finance", "الحسابات والتقارير", "💰");
             grpFinance.AddSubItem("fin_reports", "التقارير المالية", () => OpenFinancialReports());
-            grpFinance.AddSubItem("payments", "الحسابات والتقارير", () => OpenPayments());
             grpFinance.AddSubItem("tasks", "المهام والنواقص", () => OpenTasks());
 
             // Group 6: المخزون والمشتريات
             var grpInventory = _accordion.AddGroup("grp_inventory", "المخزون والمشتريات", "📦");
             grpInventory.AddSubItem("inventory_prods", "المخزون والمشتريات", () => OpenInventoryProducts());
-            grpInventory.AddSubItem("inventory_orders", "اللوجستيات والمخازن", () => OpenInventoryOrders());
 
             // Group 7: رئيس الإعدادات
             var grpSettings = _accordion.AddGroup("grp_settings", "رئيس الإعدادات", "⚙️");
@@ -104,6 +100,12 @@ namespace LabManagementSystem
             childForm.Show();
 
             pnlContent.ResumeLayout();
+        }
+
+        public void OpenHome()
+        {
+            _accordion.ClearSelection();
+            OpenView(new FrmHome(), "معمل د/أوليفيا للتحاليل");
         }
 
         public void OpenDashboard()
@@ -158,12 +160,6 @@ namespace LabManagementSystem
             OpenView(new FrmDebts(), "مديونيات ومستحقات المرضى");
         }
 
-        public void OpenLabResults()
-        {
-            _accordion.SelectItemByKey("results");
-            OpenView(new FrmLabResult(), "نتائج الفحوصات الطبية");
-        }
-
         public void OpenExternalLabs()
         {
             _accordion.SelectItemByKey("ext_labs");
@@ -176,12 +172,6 @@ namespace LabManagementSystem
             OpenView(new FrmFinancialReports(), "التقارير المالية والإحصائية");
         }
 
-        public void OpenPayments()
-        {
-            _accordion.SelectItemByKey("payments");
-            OpenView(new FrmPayments(), "خزينة وحسابات الزيارات");
-        }
-
         public void OpenTasks()
         {
             _accordion.SelectItemByKey("tasks");
@@ -192,12 +182,6 @@ namespace LabManagementSystem
         {
             _accordion.SelectItemByKey("inventory_prods");
             OpenView(new FrmInventory(0), "إدارة الأصناف والمخزون");
-        }
-
-        public void OpenInventoryOrders()
-        {
-            _accordion.SelectItemByKey("inventory_orders");
-            OpenView(new FrmInventory(1), "سجل فواتير وطلبيات الشراء");
         }
 
         public void OpenLabSettings()

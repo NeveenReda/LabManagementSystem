@@ -1,3 +1,4 @@
+using System.Globalization;
 using LabManagementSystem.Common;
 using LabManagementSystem.Models;
 using LabManagementSystem.Services;
@@ -14,8 +15,11 @@ namespace LabManagementSystem.Forms
         private TextBox txtParamName = null!;
         private TextBox txtUnit = null!;
         private CheckBox chkIsNumeric = null!;
+        private Label lblMin = null!;
         private TextBox txtMin = null!;
+        private Label lblMax = null!;
         private TextBox txtMax = null!;
+        private Label lblNormalText = null!;
         private TextBox txtNormalText = null!;
         private NumericUpDown numOrder = null!;
         private ComboBox cmbGender = null!;
@@ -24,6 +28,7 @@ namespace LabManagementSystem.Forms
         private Button btnDeleteParam = null!;
         private Button btnClose = null!;
         private LabParameter? _currentEditingParam;
+        private bool _isLoadingParam;
 
         public FrmLabParametersDialog(int labId, string labName)
         {
@@ -83,6 +88,7 @@ namespace LabManagementSystem.Forms
 
             chkIsNumeric = new CheckBox
             {
+                Name = "chkIsNumeric",
                 Text = "قيمة رقمية (Numeric)",
                 AutoSize = true,
                 Checked = true,
@@ -90,13 +96,8 @@ namespace LabManagementSystem.Forms
             };
             chkIsNumeric.CheckedChanged += (s, e) =>
             {
-                txtMin.Enabled = chkIsNumeric.Checked;
-                txtMax.Enabled = chkIsNumeric.Checked;
-                if (!chkIsNumeric.Checked)
-                {
-                    txtMin.Clear();
-                    txtMax.Clear();
-                }
+                if (!_isLoadingParam)
+                    UpdateParameterTypeMode(clearInactive: true);
             };
 
             var lblOrder = new Label { Text = "الترتيب:", AutoSize = true, Anchor = AnchorStyles.Left | AnchorStyles.Right, Font = ThemeManager.BodyBoldFont };
@@ -128,20 +129,20 @@ namespace LabManagementSystem.Forms
                 Padding = new Padding(0)
             };
 
-            var lblMin = new Label { Text = "الحد الأدنى:", AutoSize = true, Margin = new Padding(0, 8, 4, 0), Font = ThemeManager.BodyBoldFont };
-            txtMin = new TextBox { Width = 75, Font = ThemeManager.BodyFont, Margin = new Padding(4) };
+            lblMin = new Label { Name = "lblMin", Text = "الحد الأدنى:", AutoSize = true, Margin = new Padding(0, 8, 4, 0), Font = ThemeManager.BodyBoldFont };
+            txtMin = new TextBox { Name = "txtMin", Width = 85, Font = ThemeManager.BodyFont, Margin = new Padding(4), PlaceholderText = "مثال: 0" };
             FormStyler.StyleInput(txtMin);
 
-            var lblMax = new Label { Text = "الحد الأقصى:", AutoSize = true, Margin = new Padding(8, 8, 4, 0), Font = ThemeManager.BodyBoldFont };
-            txtMax = new TextBox { Width = 75, Font = ThemeManager.BodyFont, Margin = new Padding(4) };
+            lblMax = new Label { Name = "lblMax", Text = "الحد الأقصى:", AutoSize = true, Margin = new Padding(8, 8, 4, 0), Font = ThemeManager.BodyBoldFont };
+            txtMax = new TextBox { Name = "txtMax", Width = 85, Font = ThemeManager.BodyFont, Margin = new Padding(4), PlaceholderText = "مثال: 100" };
             FormStyler.StyleInput(txtMax);
 
-            var lblNormalText = new Label { Text = "نص طبيعي (Text):", AutoSize = true, Margin = new Padding(8, 8, 4, 0), Font = ThemeManager.BodyBoldFont };
-            txtNormalText = new TextBox { Width = 150, Font = ThemeManager.BodyFont, Margin = new Padding(4) };
+            lblNormalText = new Label { Name = "lblNormalText", Text = "القيمة الطبيعية النصية:", AutoSize = true, Margin = new Padding(8, 8, 4, 0), Font = ThemeManager.BodyBoldFont };
+            txtNormalText = new TextBox { Name = "txtNormalText", Width = 190, Font = ThemeManager.BodyFont, Margin = new Padding(4), PlaceholderText = "Negative / Normal / Positive..." };
             FormStyler.StyleInput(txtNormalText);
 
-            var lblGender = new Label { Text = "النوع:", AutoSize = true, Margin = new Padding(8, 8, 4, 0), Font = ThemeManager.BodyBoldFont };
-            cmbGender = new ComboBox { Width = 135, DropDownStyle = ComboBoxStyle.DropDownList, Font = ThemeManager.BodyFont, Margin = new Padding(4) };
+            var lblGender = new Label { Name = "lblGender", Text = "النوع:", AutoSize = true, Margin = new Padding(8, 8, 4, 0), Font = ThemeManager.BodyBoldFont };
+            cmbGender = new ComboBox { Name = "cmbGender", Width = 135, DropDownStyle = ComboBoxStyle.DropDownList, Font = ThemeManager.BodyFont, Margin = new Padding(4) };
             cmbGender.Items.Add(new { Text = "كلا النوعين (الكل)", Value = (int?)null });
             cmbGender.Items.Add(new { Text = "ذكور فقط (Male)", Value = (int?)1 });
             cmbGender.Items.Add(new { Text = "إناث فقط (Female)", Value = (int?)2 });
@@ -157,6 +158,8 @@ namespace LabManagementSystem.Forms
             flpRow1.Controls.Add(txtNormalText);
             flpRow1.Controls.Add(lblGender);
             flpRow1.Controls.Add(cmbGender);
+
+            UpdateParameterTypeMode(clearInactive: false);
 
             tlpInputs.SetColumnSpan(flpRow1, 8);
             tlpInputs.Controls.Add(flpRow1, 0, 1);
@@ -292,59 +295,161 @@ namespace LabManagementSystem.Forms
             ResetParamInputs();
         }
 
+        private void UpdateParameterTypeMode(bool clearInactive = true)
+        {
+            bool isNumeric = chkIsNumeric.Checked;
+
+            lblMin.Visible = isNumeric;
+            lblMin.Enabled = isNumeric;
+            txtMin.Visible = isNumeric;
+            txtMin.Enabled = isNumeric;
+
+            lblMax.Visible = isNumeric;
+            lblMax.Enabled = isNumeric;
+            txtMax.Visible = isNumeric;
+            txtMax.Enabled = isNumeric;
+
+            lblNormalText.Visible = !isNumeric;
+            lblNormalText.Enabled = !isNumeric;
+            txtNormalText.Visible = !isNumeric;
+            txtNormalText.Enabled = !isNumeric;
+
+            if (clearInactive)
+            {
+                if (isNumeric)
+                {
+                    txtNormalText.Clear();
+                }
+                else
+                {
+                    txtMin.Clear();
+                    txtMax.Clear();
+                }
+            }
+        }
+
         private void ResetParamInputs()
         {
-            _currentEditingParam = null;
-            txtParamName.Clear();
-            txtUnit.Clear();
-            txtMin.Clear();
-            txtMax.Clear();
-            txtNormalText.Clear();
-            chkIsNumeric.Checked = true;
-            numOrder.Value = dgvParams.Rows.Count + 1;
-            cmbGender.SelectedIndex = 0;
-            btnSaveParam.Text = "💾 حفظ الباراميتر";
-            FormStyler.StyleButton(btnSaveParam, ButtonStyle.Success);
+            _isLoadingParam = true;
+            try
+            {
+                _currentEditingParam = null;
+                txtParamName.Clear();
+                txtUnit.Clear();
+                txtMin.Clear();
+                txtMax.Clear();
+                txtNormalText.Clear();
+                chkIsNumeric.Checked = true;
+                UpdateParameterTypeMode(clearInactive: false);
+                numOrder.Value = dgvParams.Rows.Count + 1;
+                cmbGender.SelectedIndex = 0;
+                btnSaveParam.Text = "💾 حفظ الباراميتر";
+                FormStyler.StyleButton(btnSaveParam, ButtonStyle.Success);
+            }
+            finally
+            {
+                _isLoadingParam = false;
+            }
         }
 
         private void DgvParams_SelectionChanged(object? sender, EventArgs e)
         {
             if (dgvParams.CurrentRow?.DataBoundItem is LabParameter p)
             {
-                _currentEditingParam = p;
-                txtParamName.Text = p.Name;
-                txtUnit.Text = p.Unit ?? "";
-                chkIsNumeric.Checked = p.IsNumeric;
-                txtMin.Text = p.NormalRangeMin?.ToString() ?? "";
-                txtMax.Text = p.NormalRangeMax?.ToString() ?? "";
-                txtNormalText.Text = p.NormalText ?? "";
-                numOrder.Value = Math.Max(1, p.DisplayOrder);
+                _isLoadingParam = true;
+                try
+                {
+                    _currentEditingParam = p;
+                    txtParamName.Text = p.Name;
+                    txtUnit.Text = p.Unit ?? "";
+                    chkIsNumeric.Checked = p.IsNumeric;
+                    txtMin.Text = p.NormalRangeMin?.ToString() ?? "";
+                    txtMax.Text = p.NormalRangeMax?.ToString() ?? "";
+                    txtNormalText.Text = p.NormalText ?? "";
+                    UpdateParameterTypeMode(clearInactive: false);
+                    numOrder.Value = Math.Max(1, p.DisplayOrder);
 
-                if (p.GenderId == 1) cmbGender.SelectedIndex = 1;
-                else if (p.GenderId == 2) cmbGender.SelectedIndex = 2;
-                else cmbGender.SelectedIndex = 0;
+                    if (p.GenderId == 1) cmbGender.SelectedIndex = 1;
+                    else if (p.GenderId == 2) cmbGender.SelectedIndex = 2;
+                    else cmbGender.SelectedIndex = 0;
 
-                btnSaveParam.Text = "✏️ تحديث الباراميتر";
-                FormStyler.StyleButton(btnSaveParam, ButtonStyle.Primary);
+                    btnSaveParam.Text = "✏️ تحديث الباراميتر";
+                    FormStyler.StyleButton(btnSaveParam, ButtonStyle.Primary);
+                }
+                finally
+                {
+                    _isLoadingParam = false;
+                }
             }
         }
 
-        private void BtnSaveParam_Click(object? sender, EventArgs e)
+        public static (bool IsValid, string? ErrorMessage, decimal? Min, decimal? Max, string? NormalText) ValidateParameterInput(
+            string name,
+            bool isNumeric,
+            string? minText,
+            string? maxText,
+            string? normalText)
         {
-            string name = txtParamName.Text.Trim();
             if (string.IsNullOrWhiteSpace(name))
+                return (false, "يرجى إدخال اسم الباراميتر.", null, null, null);
+
+            if (!isNumeric)
             {
-                MessageBox.Show("يرجى إدخال اسم الباراميتر.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtParamName.Focus();
-                return;
+                string? cleanText = string.IsNullOrWhiteSpace(normalText) ? null : normalText.Trim();
+                return (true, null, null, null, cleanText);
             }
 
             decimal? min = null;
             decimal? max = null;
-            if (chkIsNumeric.Checked)
+            string minRaw = minText?.Trim() ?? "";
+            string maxRaw = maxText?.Trim() ?? "";
+
+            if (!string.IsNullOrEmpty(minRaw))
             {
-                if (decimal.TryParse(txtMin.Text.Trim(), out decimal minVal)) min = minVal;
-                if (decimal.TryParse(txtMax.Text.Trim(), out decimal maxVal)) max = maxVal;
+                if (!TryParseDecimal(minRaw, out decimal minVal))
+                    return (false, "يرجى إدخال قيمة رقمية صحيحة في حقل الحد الأدنى.", null, null, null);
+                min = minVal;
+            }
+
+            if (!string.IsNullOrEmpty(maxRaw))
+            {
+                if (!TryParseDecimal(maxRaw, out decimal maxVal))
+                    return (false, "يرجى إدخال قيمة رقمية صحيحة في حقل الحد الأقصى.", null, null, null);
+                max = maxVal;
+            }
+
+            if (!min.HasValue && !max.HasValue)
+                return (false, "يرجى إدخال الحد الأدنى أو الحد الأقصى للباراميتر الرقمي.", null, null, null);
+
+            if (min.HasValue && max.HasValue && min.Value > max.Value)
+                return (false, "الحد الأدنى يجب أن يكون أقل من أو يساوي الحد الأقصى.", null, null, null);
+
+            return (true, null, min, max, null);
+        }
+
+        private static bool TryParseDecimal(string input, out decimal value)
+        {
+            return decimal.TryParse(input, NumberStyles.Number, CultureInfo.CurrentCulture, out value)
+                || decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out value);
+        }
+
+        private void BtnSaveParam_Click(object? sender, EventArgs e)
+        {
+            var validation = ValidateParameterInput(
+                txtParamName.Text.Trim(),
+                chkIsNumeric.Checked,
+                txtMin.Text,
+                txtMax.Text,
+                txtNormalText.Text);
+
+            if (!validation.IsValid)
+            {
+                MessageBox.Show(validation.ErrorMessage, "بيانات ناقصة أو غير صحيحة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (string.IsNullOrWhiteSpace(txtParamName.Text))
+                    txtParamName.Focus();
+                else if (chkIsNumeric.Checked)
+                    txtMin.Focus();
+                return;
             }
 
             int? genderId = null;
@@ -354,12 +459,12 @@ namespace LabManagementSystem.Forms
             try
             {
                 var param = _currentEditingParam ?? new LabParameter { LabId = _labId };
-                param.Name = name;
+                param.Name = txtParamName.Text.Trim();
                 param.Unit = txtUnit.Text.Trim();
                 param.IsNumeric = chkIsNumeric.Checked;
-                param.NormalRangeMin = min;
-                param.NormalRangeMax = max;
-                param.NormalText = string.IsNullOrWhiteSpace(txtNormalText.Text) ? null : txtNormalText.Text.Trim();
+                param.NormalRangeMin = validation.Min;
+                param.NormalRangeMax = validation.Max;
+                param.NormalText = validation.NormalText;
                 param.DisplayOrder = (int)numOrder.Value;
                 param.GenderId = genderId;
 

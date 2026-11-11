@@ -23,6 +23,7 @@ namespace LabManagementSystem.Forms
         {
             FormStyler.ApplyFormTheme(this, "إعدادات الفحوصات والتحاليل");
             FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
+            FormStyler.StyleGroupBox(grpLabForm);
             FormStyler.StyleButton(btnSave, ButtonStyle.Success);
             FormStyler.StyleButton(btnNew, ButtonStyle.Secondary);
             FormStyler.StyleButton(btnOpenParams, ButtonStyle.Primary);
@@ -31,6 +32,12 @@ namespace LabManagementSystem.Forms
             FormStyler.StyleInput(txtPrice);
             FormStyler.StyleInput(txtDays);
             FormStyler.StyleInput(cmbLabCat);
+
+            pnlInputsCard.Paint += (s, ev) =>
+            {
+                using var pen = new Pen(ThemeManager.Border, 1);
+                ev.Graphics.DrawRectangle(pen, 0, 0, pnlInputsCard.Width - 1, pnlInputsCard.Height - 1);
+            };
 
             DataGridViewStyler.Apply(dgvLabs);
             colEdit.Image = ImageHelper.LoadSafeImage("imgs/edit.png", 16, 16, Color.SteelBlue);
@@ -94,7 +101,17 @@ namespace LabManagementSystem.Forms
             txtDays.Text = "1";
             chkExternal.Checked = false;
             if (cmbLabCat.Items.Count > 0) cmbLabCat.SelectedIndex = 0;
+            lblValidation.Visible = false;
+            lblValidation.Text = "";
             btnSave.Text = "💾 حفظ التحليل";
+        }
+
+        private void ShowValidationError(string message, Control? focusControl = null)
+        {
+            lblValidation.Text = $"⚠️ {message}";
+            lblValidation.Visible = true;
+            MessageBox.Show(message, "بيانات ناقصة أو غير صحيحة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            focusControl?.Focus();
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -104,29 +121,30 @@ namespace LabManagementSystem.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            lblValidation.Visible = false;
+
             string name = txtName.Text.Trim();
             if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("يرجى إدخال اسم التحليل.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtName.Focus();
+                ShowValidationError("يرجى إدخال اسم التحليل.", txtName);
                 return;
             }
 
             if (!decimal.TryParse(txtPrice.Text.Trim(), out decimal price) || price < 0)
             {
-                MessageBox.Show("يرجى إدخال سعر صحيح للتحليل.", "بيانات غير صحيحة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtPrice.Focus();
+                ShowValidationError("يرجى إدخال سعر صحيح للتحليل.", txtPrice);
                 return;
             }
 
             if (!int.TryParse(txtDays.Text.Trim(), out int days) || days < 0)
             {
-                days = 1;
+                ShowValidationError("يرجى إدخال عدد أيام استلام صحيح (0 أو أكثر).", txtDays);
+                return;
             }
 
             if (cmbLabCat.SelectedValue == null)
             {
-                MessageBox.Show("يرجى اختيار قسم التحليل.", "بيانات ناقصة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowValidationError("يرجى اختيار قسم التحليل.", cmbLabCat);
                 return;
             }
 
