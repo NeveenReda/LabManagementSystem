@@ -15,10 +15,17 @@ using Image = System.Drawing.Image;
 
 namespace LabManagementSystem.Printing
 {
+    public enum ViewerLaunchMode
+    {
+        Preview,
+        Print
+    }
+
     public class DocumentViewerForm : Form
     {
         private readonly IDocument _document;
         private readonly string _documentTitle;
+        private readonly ViewerLaunchMode _launchMode;
         private byte[]? _pdfBytes;
         private List<byte[]>? _pageImages;
         private string? _tempPdfPath;
@@ -31,12 +38,20 @@ namespace LabManagementSystem.Printing
         private Panel pnlHeader = null!;
         private Panel pnlContent = null!;
 
-        public DocumentViewerForm(IDocument document, string documentTitle)
+        public DocumentViewerForm(IDocument document, string documentTitle, ViewerLaunchMode launchMode = ViewerLaunchMode.Preview)
         {
             _document = document;
             _documentTitle = documentTitle;
+            _launchMode = launchMode;
             InitializeUi();
-            Shown += (s, e) => GenerateDocument();
+            Shown += (s, e) =>
+            {
+                GenerateDocument();
+                if (_launchMode == ViewerLaunchMode.Print)
+                {
+                    BeginInvoke(new Action(() => BtnPrint_Click(this, EventArgs.Empty)));
+                }
+            };
         }
 
         private void InitializeUi()
@@ -202,8 +217,7 @@ namespace LabManagementSystem.Printing
                     {
                         Image = img,
                         SizeMode = PictureBoxSizeMode.Zoom,
-                        Size = new Size(displayWidth, displayHeight),
-                        Margin = new Padding((pnlContent.ClientSize.Width - displayWidth) / 2, 8, 0, 16),
+                        Dock = DockStyle.Fill,
                         BackColor = Color.White
                     };
 
@@ -213,7 +227,7 @@ namespace LabManagementSystem.Printing
                         Size = new Size(displayWidth + 4, displayHeight + 4),
                         BackColor = Color.White,
                         Padding = new Padding(2),
-                        Margin = new Padding(Math.Max(10, (pnlContent.ClientSize.Width - displayWidth) / 2), 12, 0, 12)
+                        Margin = new Padding(Math.Max(10, (pnlContent.ClientSize.Width - displayWidth) / 2), 12, 10, 12)
                     };
                     pnlPageWrap.Controls.Add(pbox);
                     flowPages.Controls.Add(pnlPageWrap);
@@ -267,7 +281,7 @@ namespace LabManagementSystem.Printing
                     return;
                 }
 
-                using var pd = new PrintDocument();
+                using var pd = new PrintDocument { DocumentName = _documentTitle };
                 using var printDlg = new PrintDialog
                 {
                     Document = pd,

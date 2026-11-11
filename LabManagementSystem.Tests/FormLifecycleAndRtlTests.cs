@@ -170,12 +170,12 @@ namespace LabManagementSystem.Tests
         }
 
         [Fact]
-        public void FrmAddVisit_Initialization_ShouldNotThrow()
+        public void FrmAddVisit_Initialization_ShouldNotThrow() => StaTestRunner.Run(() =>
         {
             using var frm = new FrmAddVisit();
             Assert.NotNull(frm);
             Assert.Equal(RightToLeft.Yes, frm.RightToLeft);
-        }
+        });
 
         [Fact]
         public void FrmSelectPatient_Initialization_ShouldNotThrow()
@@ -263,14 +263,14 @@ namespace LabManagementSystem.Tests
         }
 
         [Fact]
-        public void FrmAddVisit_Events_ShouldBeSubscribable()
+        public void FrmAddVisit_Events_ShouldBeSubscribable() => StaTestRunner.Run(() =>
         {
             using var frm = new FrmAddVisit();
             bool savedInvoked = false;
             frm.Saved += () => savedInvoked = true;
             Assert.NotNull(frm);
             Assert.False(savedInvoked);
-        }
+        });
 
         [Fact]
         public void FrmMain_HeaderAndFooter_ShouldContainOliviaLabAndTechSpotFooter()
@@ -357,22 +357,88 @@ namespace LabManagementSystem.Tests
 
             var home = pnlContent.Controls.OfType<FrmHome>().FirstOrDefault();
             Assert.NotNull(home);
+            Assert.Equal(System.Drawing.ColorTranslator.FromHtml("#F5F7FA"), home.BackColor);
+
+            // Ensure no white card / rectangle container surrounds the logo
+            Assert.Empty(home.Controls.Find("pnlLogoContainer", true));
 
             var logo = home.Controls.Find("picHomeLogo", true).FirstOrDefault() as PictureBox;
             Assert.NotNull(logo);
             Assert.Equal(PictureBoxSizeMode.Zoom, logo.SizeMode);
+            Assert.Equal(System.Drawing.Color.Transparent, logo.BackColor);
+            Assert.Equal(BorderStyle.None, logo.BorderStyle);
             Assert.NotNull(logo.Image);
+            Assert.True(logo.Size.Height >= 240, $"Expected prominent logo height >= 240, got {logo.Size.Height}");
+
+            // Confirm loaded logo PNG preserves transparent background at corners
+            using (var bmpCheck = new Bitmap(logo.Image))
+            {
+                Assert.Equal(0, bmpCheck.GetPixel(0, 0).A);
+            }
+
+            double naturalRatio = (double)logo.Image.Width / logo.Image.Height;
+            double renderedRatio = (double)logo.Width / logo.Height;
+            Assert.True(Math.Abs(renderedRatio - naturalRatio) < 0.03,
+                $"Logo aspect ratio distorted: rendered={renderedRatio:F4}, natural={naturalRatio:F4}");
+
+            var accentLine = home.Controls.Find("pnlAccentLine", true).FirstOrDefault() as Panel;
+            Assert.NotNull(accentLine);
+            Assert.True(accentLine.Height <= 3 && accentLine.Width <= 140,
+                $"Expected subtle decorative separator, got {accentLine.Width}x{accentLine.Height}");
 
             var lblTitle = home.Controls.Find("lblHomeTitle", true).FirstOrDefault() as Label;
             Assert.NotNull(lblTitle);
             Assert.Equal("معمل د/أوليفيا للتحاليل", lblTitle.Text);
+            Assert.Equal(RightToLeft.Yes, lblTitle.RightToLeft);
+            Assert.False(lblTitle.UseCompatibleTextRendering);
+
+            // Visual vertical hierarchy: logo above subtle golden separator above title
+            Point logoBottom = home.PointToClient(logo.PointToScreen(new Point(0, logo.Height)));
+            Point accentTop = home.PointToClient(accentLine.PointToScreen(Point.Empty));
+            Point accentBottom = home.PointToClient(accentLine.PointToScreen(new Point(0, accentLine.Height)));
+            Point titleTop = home.PointToClient(lblTitle.PointToScreen(Point.Empty));
+            Assert.True(logoBottom.Y <= accentTop.Y);
+            Assert.True(accentBottom.Y <= titleTop.Y);
+
+            // Responsive scaling on larger / maximized resolution
+            int initialLogoHeight = logo.Size.Height;
+            frm.Size = new System.Drawing.Size(1600, 950);
+            Application.DoEvents();
+            Assert.True(logo.Size.Height >= initialLogoHeight);
 
             Assert.All(frm.Accordion.Groups, g => Assert.False(g.IsExpanded));
             frm.Close();
         }
 
         [Fact]
-        public void AllForms_Headers_ShouldHaveStandardHeightAndRtl()
+        public void FrmInventory_OrdersTab_ShouldExposeCompleteInvoiceActionButtons()
+        {
+            using var frm = new FrmInventory(1);
+            frm.CreateControl();
+            frm.Show();
+            Application.DoEvents();
+
+            var tabs = frm.Controls.Find("tabsInventory", true).FirstOrDefault() as TabControl;
+            Assert.NotNull(tabs);
+            Assert.Equal(1, tabs.SelectedIndex);
+            Assert.Equal(RightToLeft.Yes, tabs.RightToLeft);
+
+            var dgvOrders = frm.Controls.Find("dgvOrders", true).FirstOrDefault() as DataGridView;
+            var btnViewOrder = frm.Controls.Find("btnViewOrder", true).FirstOrDefault() as Button;
+            var btnPrintOrder = frm.Controls.Find("btnPrintOrder", true).FirstOrDefault() as Button;
+            var btnExportOrderPdf = frm.Controls.Find("btnExportOrderPdf", true).FirstOrDefault() as Button;
+
+            Assert.NotNull(dgvOrders);
+            Assert.NotNull(btnViewOrder);
+            Assert.NotNull(btnPrintOrder);
+            Assert.NotNull(btnExportOrderPdf);
+            Assert.Equal(RightToLeft.Yes, dgvOrders.RightToLeft);
+
+            frm.Close();
+        }
+
+        [Fact]
+        public void AllForms_Headers_ShouldHaveStandardHeightAndRtl() => StaTestRunner.Run(() =>
         {
             using var frmPatient = new FrmSearchPatient();
             var pnlH1 = frmPatient.Controls.Find("pnlHeader", true).FirstOrDefault() as Panel;
@@ -397,10 +463,10 @@ namespace LabManagementSystem.Tests
             Assert.NotNull(pnlH4);
             Assert.Equal(86, pnlH4.Height);
             Assert.Equal(RightToLeft.Yes, pnlH4.RightToLeft);
-        }
+        });
 
         [Fact]
-        public void FrmAddVisit_Layout_ShouldHaveRtlSearchableCombo_AndNonOverlappingActionButtons()
+        public void FrmAddVisit_Layout_ShouldHaveRtlSearchableCombo_AndNonOverlappingActionButtons() => StaTestRunner.Run(() =>
         {
             using var frm = new FrmAddVisit();
             frm.Size = new System.Drawing.Size(1200, 720);
@@ -427,7 +493,7 @@ namespace LabManagementSystem.Tests
             Assert.NotNull(btnSave);
             Assert.NotNull(btnPrintReceipt);
             Assert.True(pnlVisitActions.Top >= tblFinancial.Bottom, $"Expected pnlVisitActions.Top ({pnlVisitActions.Top}) >= tblFinancial.Bottom ({tblFinancial.Bottom})");
-        }
+        });
 
         [Fact]
         public void FrmLabSettings_And_ParametersDialog_ShouldHaveBorderedForm_AndDynamicTypeToggle()

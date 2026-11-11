@@ -1,5 +1,8 @@
+using System.Diagnostics;
+using System.IO;
 using LabManagementSystem.Common;
 using LabManagementSystem.Models;
+using LabManagementSystem.Printing;
 using LabManagementSystem.Services;
 
 namespace LabManagementSystem.Forms
@@ -32,6 +35,9 @@ namespace LabManagementSystem.Forms
         private TextBox txtOrderPrice = null!;
         private Button btnAddOrderItem = null!;
         private Button btnSaveOrder = null!;
+        private Button btnViewOrder = null!;
+        private Button btnPrintOrder = null!;
+        private Button btnExportOrderPdf = null!;
         private Label lblOrderTotal = null!;
         private DataGridView dgvOrderItems = null!;
         private DataGridView dgvOrders = null!;
@@ -68,7 +74,7 @@ namespace LabManagementSystem.Forms
 
             // 2. Tab Control
             var pnlTabsCard = FormStyler.CreateCardPanel(DockStyle.Fill, new Padding(8));
-            tabs = new TabControl { Dock = DockStyle.Fill, Font = ThemeManager.BodyBoldFont, RightToLeft = RightToLeft.Yes, RightToLeftLayout = true };
+            tabs = new TabControl { Name = "tabsInventory", Dock = DockStyle.Fill, Font = ThemeManager.BodyBoldFont, RightToLeft = RightToLeft.Yes, RightToLeftLayout = true };
 
             var tabProds = new TabPage { Text = "🧪 الأصناف والكيماويات والمستلزمات" };
             InitProductsTab(tabProds);
@@ -298,13 +304,13 @@ namespace LabManagementSystem.Forms
             {
                 Dock = DockStyle.Fill,
                 Orientation = Orientation.Horizontal,
-                SplitterDistance = 180,
+                SplitterDistance = 145,
                 Padding = new Padding(4),
                 RightToLeft = RightToLeft.Yes
             };
 
             var pnlTopSplit = FormStyler.CreateCardPanel(DockStyle.Fill, new Padding(8));
-            var lblCurrentItemsTitle = new Label { Text = "📋 أصناف الفاتورة الحالية قيد الإدخال", Dock = DockStyle.Top, Height = 24, Font = ThemeManager.BodyBoldFont, ForeColor = ThemeManager.PrimaryNavy };
+            var lblCurrentItemsTitle = new Label { Text = "أصناف الفاتورة الحالية قيد الإدخال", Dock = DockStyle.Top, Height = 24, Font = ThemeManager.BodyBoldFont, ForeColor = ThemeManager.PrimaryNavy };
             dgvOrderItems = new DataGridView { Dock = DockStyle.Fill, AutoGenerateColumns = false };
             DataGridViewStyler.Apply(dgvOrderItems);
             dgvOrderItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "colItemName", HeaderText = "الصنف", FillWeight = 45 });
@@ -316,8 +322,77 @@ namespace LabManagementSystem.Forms
             split.Panel1.Controls.Add(pnlTopSplit);
 
             var pnlBottomSplit = FormStyler.CreateCardPanel(DockStyle.Fill, new Padding(8));
-            var lblHistoryTitle = new Label { Text = "📜 سجل فواتير وطلبيات الشراء السابقة", Dock = DockStyle.Top, Height = 24, Font = ThemeManager.BodyBoldFont, ForeColor = ThemeManager.PrimaryNavy };
-            dgvOrders = new DataGridView { Dock = DockStyle.Fill, AutoGenerateColumns = false };
+
+            var pnlOrdersHeader = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 44,
+                Padding = new Padding(0, 0, 0, 6),
+                RightToLeft = RightToLeft.Yes
+            };
+
+            var lblHistoryTitle = new Label
+            {
+                Text = "سجل فواتير وطلبيات الشراء السابقة",
+                Dock = DockStyle.Right,
+                AutoSize = false,
+                Width = 290,
+                Font = ThemeManager.BodyBoldFont,
+                ForeColor = ThemeManager.PrimaryNavy,
+                RightToLeft = RightToLeft.No,
+                TextAlign = ContentAlignment.MiddleRight
+            };
+
+            var flpOrderHistoryActions = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                RightToLeft = RightToLeft.Yes,
+                FlowDirection = FlowDirection.RightToLeft,
+                WrapContents = false,
+                Padding = new Padding(0)
+            };
+
+            btnExportOrderPdf = new Button
+            {
+                Name = "btnExportOrderPdf",
+                Text = "تصدير PDF",
+                Width = 125,
+                Height = 36,
+                Margin = new Padding(4, 0, 4, 0)
+            };
+            FormStyler.StyleButton(btnExportOrderPdf, ButtonStyle.Outline);
+            btnExportOrderPdf.Click += BtnExportOrderPdf_Click;
+
+            btnPrintOrder = new Button
+            {
+                Name = "btnPrintOrder",
+                Text = "طباعة الفاتورة",
+                Width = 135,
+                Height = 36,
+                Margin = new Padding(4, 0, 4, 0)
+            };
+            FormStyler.StyleButton(btnPrintOrder, ButtonStyle.Success);
+            btnPrintOrder.Click += (s, e) => OpenSelectedOrderDocument(ViewerLaunchMode.Print);
+
+            btnViewOrder = new Button
+            {
+                Name = "btnViewOrder",
+                Text = "عرض الفاتورة",
+                Width = 130,
+                Height = 36,
+                Margin = new Padding(4, 0, 4, 0)
+            };
+            FormStyler.StyleButton(btnViewOrder, ButtonStyle.Primary);
+            btnViewOrder.Click += (s, e) => OpenSelectedOrderDocument(ViewerLaunchMode.Preview);
+
+            flpOrderHistoryActions.Controls.Add(btnExportOrderPdf);
+            flpOrderHistoryActions.Controls.Add(btnPrintOrder);
+            flpOrderHistoryActions.Controls.Add(btnViewOrder);
+
+            pnlOrdersHeader.Controls.Add(flpOrderHistoryActions);
+            pnlOrdersHeader.Controls.Add(lblHistoryTitle);
+
+            dgvOrders = new DataGridView { Name = "dgvOrders", Dock = DockStyle.Fill, AutoGenerateColumns = false };
             DataGridViewStyler.Apply(dgvOrders);
             dgvOrders.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOrderId", DataPropertyName = "Id", HeaderText = "رقم الفاتورة", FillWeight = 15 });
             dgvOrders.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOrderDate", DataPropertyName = "OrderDate", HeaderText = "تاريخ التوريد", FillWeight = 25 });
@@ -325,8 +400,12 @@ namespace LabManagementSystem.Forms
             dgvOrders.Columns.Add(new DataGridViewTextBoxColumn { Name = "colNotes", DataPropertyName = "Notes", HeaderText = "البيان / الملاحظات", FillWeight = 45 });
             if (dgvOrders.Columns["colOrderDate"] != null)
                 dgvOrders.Columns["colOrderDate"].DefaultCellStyle.Format = "yyyy/MM/dd";
+            dgvOrders.CellDoubleClick += (s, e) =>
+            {
+                if (e.RowIndex >= 0) OpenSelectedOrderDocument(ViewerLaunchMode.Preview);
+            };
             pnlBottomSplit.Controls.Add(dgvOrders);
-            pnlBottomSplit.Controls.Add(lblHistoryTitle);
+            pnlBottomSplit.Controls.Add(pnlOrdersHeader);
             split.Panel2.Controls.Add(pnlBottomSplit);
 
             tab.Controls.Add(split);
@@ -566,6 +645,83 @@ namespace LabManagementSystem.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"خطأ أثناء تحميل فواتير الشراء: {ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private Order? LoadSelectedOrderReadOnly()
+        {
+            var row = dgvOrders.CurrentRow ?? (dgvOrders.SelectedRows.Count > 0 ? dgvOrders.SelectedRows[0] : null);
+            if (row == null)
+            {
+                MessageBox.Show("يرجى اختيار فاتورة شراء من الجدول أولاً.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return null;
+            }
+
+            int orderId = 0;
+            if (row.DataBoundItem is Order boundOrder)
+                orderId = boundOrder.Id;
+            else if (row.Cells["colOrderId"].Value != null)
+                orderId = Convert.ToInt32(row.Cells["colOrderId"].Value);
+
+            if (orderId <= 0)
+            {
+                MessageBox.Show("تعذر تحديد رقم الفاتورة المختارة.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            var order = _inventoryService.GetOrderById(orderId);
+            if (order == null)
+            {
+                MessageBox.Show("لم يتم العثور على الفاتورة في قاعدة البيانات.", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            return order;
+        }
+
+        private void OpenSelectedOrderDocument(ViewerLaunchMode mode)
+        {
+            var order = LoadSelectedOrderReadOnly();
+            if (order == null) return;
+
+            var doc = new PurchaseInvoiceDocument(order);
+            using var viewer = new DocumentViewerForm(doc, $"فاتورة مشتريات #{order.Id}", mode);
+            viewer.ShowDialog(this);
+        }
+
+        private void BtnExportOrderPdf_Click(object? sender, EventArgs e)
+        {
+            var order = LoadSelectedOrderReadOnly();
+            if (order == null) return;
+
+            using var sfd = new SaveFileDialog
+            {
+                Filter = "ملف PDF (*.pdf)|*.pdf",
+                FileName = $"فاتورة_مشتريات_{order.Id}_{DateTime.Now:yyyyMMdd_HHmm}.pdf"
+            };
+
+            if (sfd.ShowDialog(this) != DialogResult.OK) return;
+
+            try
+            {
+                var doc = new PurchaseInvoiceDocument(order);
+                byte[] pdfBytes = doc.GeneratePdfBytes();
+                File.WriteAllBytes(sfd.FileName, pdfBytes);
+
+                var openPrompt = MessageBox.Show(
+                    "تم تصدير فاتورة المشتريات بصيغة PDF بنجاح.\n\nهل ترغب في فتح الملف الآن؟",
+                    "نجاح التصدير",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information);
+
+                if (openPrompt == DialogResult.Yes)
+                {
+                    Process.Start(new ProcessStartInfo { FileName = sfd.FileName, UseShellExecute = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"حدث خطأ أثناء تصدير ملف PDF:\n{ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

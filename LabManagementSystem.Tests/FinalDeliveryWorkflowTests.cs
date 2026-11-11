@@ -16,6 +16,7 @@ namespace LabManagementSystem.Tests
         private readonly IBillingService _billingService;
         private readonly ILabSettingsService _settingsService;
         private readonly ILabReportService _reportService;
+        private readonly IInventoryService _inventoryService;
 
         public FinalDeliveryWorkflowTests()
         {
@@ -25,6 +26,7 @@ namespace LabManagementSystem.Tests
             _billingService = new BillingService(_contextFactory);
             _settingsService = new LabSettingsService(_contextFactory);
             _reportService = new LabReportService(_contextFactory);
+            _inventoryService = new InventoryService(_contextFactory);
         }
 
         [Fact]
@@ -249,6 +251,177 @@ namespace LabManagementSystem.Tests
             finally
             {
                 CleanupTestEntities(visitId, tempLab?.Id, patient?.Id);
+            }
+        }
+
+        [Fact]
+        public void PurchaseInvoiceWorkflow_SingleMultiAndMultiPage_ShouldRenderReadOnlyWithoutMutatingStock()
+        {
+            var createdOrderIds = new List<int>();
+            var createdProductIds = new List<int>();
+
+            try
+            {
+                int catId;
+                int unitId;
+                using (var db = _contextFactory())
+                {
+                    catId = db.ProductCategorys.Select(c => c.Id).First();
+                    unitId = db.Units.Select(u => u.Id).First();
+
+                    var p1 = new Product
+                    {
+                        Name = "كيت تحليل سكر صائم (اختبار)",
+                        ProductCategoryId = catId,
+                        BaseUnitId = unitId,
+                        InitialAmount = 10,
+                        MinAmount = 2,
+                        CreateDate = DateTime.Now
+                    };
+                    var p2 = new Product
+                    {
+                        Name = "أنابيب سحب دم EDTA معقمة — عبوة 100 قطعة",
+                        ProductCategoryId = catId,
+                        BaseUnitId = unitId,
+                        InitialAmount = 25,
+                        MinAmount = 5,
+                        CreateDate = DateTime.Now
+                    };
+                    db.Products.AddRange(p1, p2);
+                    db.SaveChanges();
+                    createdProductIds.Add(p1.Id);
+                    createdProductIds.Add(p2.Id);
+                }
+
+                // 1. Single-item purchase invoice
+                var singleOrder = new Order
+                {
+                    OrderDate = DateTime.Now,
+                    ExpectedDeliveryDate = DateTime.Today.AddDays(2),
+                    Notes = "طلبية عاجلة لقسم الكيمياء"
+                };
+                var singleDetails = new List<OrderDetail>
+                {
+                    new() { ProductId = createdProductIds[0], UnitId = unitId, Quantity = 4, Price = 250m }
+                };
+                _inventoryService.SaveOrder(singleOrder, singleDetails);
+                createdOrderIds.Add(singleOrder.Id);
+                Assert.True(singleOrder.Id > 0);
+                Assert.Equal(1000m, singleOrder.TotalPrice);
+
+                // 2. Multi-item purchase invoice
+                var multiOrder = new Order
+                {
+                    OrderDate = DateTime.Now,
+                    Notes = "توريد مستلزمات المعمل الشهرية - مراجعة الاستلام قبل الإضافة"
+                };
+                var multiDetails = new List<OrderDetail>
+                {
+                    new() { ProductId = createdProductIds[0], UnitId = unitId, Quantity = 3, Price = 250m },
+                    new() { ProductId = createdProductIds[1], UnitId = unitId, Quantity = 5, Price = 180.50m },
+                    new() { ProductId = createdProductIds[0], UnitId = unitId, Quantity = 2, Price = 300m }
+                };
+                _inventoryService.SaveOrder(multiOrder, multiDetails);
+                createdOrderIds.Add(multiOrder.Id);
+                Assert.Equal(2252.50m, multiOrder.TotalPrice);
+
+                // 3. Large multi-page purchase invoice (36 line items -> guarantees 2+ A4 pages)
+                var largeOrder = new Order
+                {
+                    OrderDate = DateTime.Now,
+                    ExpectedDeliveryDate = DateTime.Today.AddDays(5),
+                    Notes = "فاتورة مشتريات مجمعة كبيرة لاختبار تعدد الصفحات وتكرار رأس الجدول وعدم انقسام الإجماليات"
+                };
+                var largeDetails = new List<OrderDetail>();
+                for (int i = 1; i <= 36; i++)
+                {
+                    largeDetails.Add(new OrderDetail
+                    {
+                        ProductId = createdProductIds[i % 2],
+                        UnitId = unitId,
+                        Quantity = (i % 5) + 1,
+                        Price = 100m + i * 2.5m
+                    });
+                }
+                _inventoryService.SaveOrder(largeOrder, largeDetails);
+                createdOrderIds.Add(largeOrder.Id);
+
+                // Snapshot DB state BEFORE read-only invoice viewing/printing/PDF generation
+                Dictionary<int, int> stockBefore;
+                int orderCountBefore;
+                using (var db = _contextFactory())
+                {
+                    stockBefore = db.Products
+                        .Where(p => createdProductIds.Contains(p.Id))
+                        .ToDictionary(p => p.Id, p => p.InitialAmount);
+                    orderCountBefore = db.Orders.Count();
+                }
+
+                // Verify GetOrderById uses read-only reload with complete graph & generates valid PDFs/images
+                var loadedSingle = _inventoryService.GetOrderById(singleOrder.Id);
+                Assert.NotNull(loadedSingle);
+                Assert.Single(loadedSingle!.OrderDetails);
+                Assert.Equal("كيت تحليل سكر صائم (اختبار)", loadedSingle.OrderDetails.First().Product?.Name);
+
+                var singleDoc = new PurchaseInvoiceDocument(loadedSingle);
+                byte[] singlePdf = singleDoc.GeneratePdfBytes();
+                Assert.StartsWith("%PDF-", Encoding.ASCII.GetString(singlePdf, 0, 5));
+                Assert.Single(singleDoc.GenerateImages());
+
+                var loadedMulti = _inventoryService.GetOrderById(multiOrder.Id);
+                Assert.NotNull(loadedMulti);
+                Assert.Equal(3, loadedMulti!.OrderDetails.Count);
+                Assert.Equal(2252.50m, loadedMulti.TotalPrice);
+                byte[] multiPdf = new PurchaseInvoiceDocument(loadedMulti).GeneratePdfBytes();
+                Assert.StartsWith("%PDF-", Encoding.ASCII.GetString(multiPdf, 0, 5));
+
+                var loadedLarge = _inventoryService.GetOrderById(largeOrder.Id);
+                Assert.NotNull(loadedLarge);
+                Assert.Equal(36, loadedLarge!.OrderDetails.Count);
+                var largeDoc = new PurchaseInvoiceDocument(loadedLarge);
+                byte[] largePdf = largeDoc.GeneratePdfBytes();
+                Assert.StartsWith("%PDF-", Encoding.ASCII.GetString(largePdf, 0, 5));
+                var largePages = largeDoc.GenerateImages().ToList();
+                Assert.True(largePages.Count >= 2, $"Expected >= 2 pages for 36-item purchase invoice, got {largePages.Count}");
+
+                // Assert zero stock or order mutations occurred during read/preview/PDF generation
+                using (var db = _contextFactory())
+                {
+                    var stockAfter = db.Products
+                        .Where(p => createdProductIds.Contains(p.Id))
+                        .ToDictionary(p => p.Id, p => p.InitialAmount);
+                    int orderCountAfter = db.Orders.Count();
+
+                    Assert.Equal(orderCountBefore, orderCountAfter);
+                    Assert.Equal(stockBefore[createdProductIds[0]], stockAfter[createdProductIds[0]]);
+                    Assert.Equal(stockBefore[createdProductIds[1]], stockAfter[createdProductIds[1]]);
+                }
+            }
+            finally
+            {
+                try
+                {
+                    using var db = _contextFactory();
+                    if (createdOrderIds.Count > 0)
+                    {
+                        var details = db.OrderDetails.Where(d => createdOrderIds.Contains(d.OrderId)).ToList();
+                        db.OrderDetails.RemoveRange(details);
+                        var orders = db.Orders.Where(o => createdOrderIds.Contains(o.Id)).ToList();
+                        db.Orders.RemoveRange(orders);
+                        db.SaveChanges();
+                    }
+
+                    if (createdProductIds.Count > 0)
+                    {
+                        var products = db.Products.Where(p => createdProductIds.Contains(p.Id)).ToList();
+                        db.Products.RemoveRange(products);
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                    // Ignore cleanup failure in test teardown
+                }
             }
         }
 

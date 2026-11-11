@@ -122,8 +122,13 @@ namespace LabManagementSystem.Services
         {
             using var db = _contextFactory();
             return db.Orders
+                .AsNoTracking()
+                .Include(o => o.OrderDetails.OrderBy(d => d.Id))
+                    .ThenInclude(d => d.Product)
+                        .ThenInclude(p => p.ProductCategory)
                 .Include(o => o.OrderDetails)
                     .ThenInclude(d => d.Product)
+                        .ThenInclude(p => p.BaseUnit)
                 .Include(o => o.OrderDetails)
                     .ThenInclude(d => d.Unit)
                 .FirstOrDefault(o => o.Id == id);

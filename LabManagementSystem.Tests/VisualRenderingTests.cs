@@ -34,7 +34,7 @@ namespace LabManagementSystem.Tests
         }
 
         [Fact]
-        public void Render_AllKeyScreens_ShouldDrawSuccessfully()
+        public void Render_AllKeyScreens_ShouldDrawSuccessfully() => StaTestRunner.Run(() =>
         {
             using var frm = new FrmMain();
             frm.Size = new Size(1280, 800);
@@ -72,6 +72,6 @@ namespace LabManagementSystem.Tests
             frm.OpenInventoryProducts();
             frm.OpenLabSettings();
             frm.OpenSystemSettings();
-        }
+        });
     }
 }
