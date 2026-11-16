@@ -207,9 +207,20 @@ namespace LabManagementSystem.Forms
                         return;
                     }
 
-                    var doc = new ConsolidatedLabReportDocument(reportModel);
-                    using var viewer = new DocumentViewerForm(doc, $"تقرير زيارة مريض - {reportModel.PatientName}");
-                    viewer.ShowDialog();
+                    if (reportModel.Tests.Count == 1)
+                    {
+                        var singleTest = reportModel.Tests[0];
+                        var doc = new ConsolidatedLabReportDocument(reportModel, singleTest);
+                        string englishName = LabReportEnglishHelper.NormalizeTestName(singleTest.TestName);
+                        using var viewer = new DocumentViewerForm(doc, $"{englishName} - {reportModel.PatientName}");
+                        viewer.ShowDialog();
+                    }
+                    else
+                    {
+                        // Multi-test visit: Open dedicated selection dialog where each test is handled separately
+                        using var selectDialog = new FrmSelectVisitTest(reportModel);
+                        selectDialog.ShowDialog();
+                    }
                 }
                 catch (Exception ex)
                 {

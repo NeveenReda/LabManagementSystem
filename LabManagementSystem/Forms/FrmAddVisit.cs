@@ -11,6 +11,7 @@ namespace LabManagementSystem.Forms
         private readonly IVisitService _visitService;
         private readonly IPatientService _patientService;
         private readonly ILookupCacheService _lookupCache;
+        private readonly IDoctorService _doctorService;
 
         private Visit? _visit;
         private int _lastSavedVisitId;
@@ -18,6 +19,11 @@ namespace LabManagementSystem.Forms
         private Lab? _selectedLab;
         private List<Lab> _availableLabs = new();
         private bool _isUpdatingDiscount = false;
+
+        private ComboBox cmbDoctor = null!;
+        private Button btnAddDoctor = null!;
+        private List<Doctor> _activeDoctors = new();
+        private int? _selectedDoctorId = null;
 
         public event Action? Saved;
         public event Action? Cancelled;
@@ -28,6 +34,7 @@ namespace LabManagementSystem.Forms
             _visitService = ServiceLocator.VisitService;
             _patientService = ServiceLocator.PatientService;
             _lookupCache = ServiceLocator.LookupCacheService;
+            _doctorService = ServiceLocator.DoctorService;
             lblTitle.Text = "🧪 تسجيل زيارة جديدة";
             FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
         }
@@ -38,6 +45,7 @@ namespace LabManagementSystem.Forms
             _visitService = ServiceLocator.VisitService;
             _patientService = ServiceLocator.PatientService;
             _lookupCache = ServiceLocator.LookupCacheService;
+            _doctorService = ServiceLocator.DoctorService;
             lblTitle.Text = "✏️ تعديل بيانات الزيارة";
             FormStyler.StyleHeaderPanel(pnlHeader, lblTitle, lblSubtitle);
 
@@ -50,6 +58,7 @@ namespace LabManagementSystem.Forms
             }
 
             _selectedPatient = _visit.Patient;
+            _selectedDoctorId = _visit.DoctorId;
             DateOfVisit.Value = _visit.VisitDate;
             txtNotes.Text = _visit.Notes ?? "";
             txtDoctorName.Text = _visit.DrName ?? "";
@@ -82,15 +91,168 @@ namespace LabManagementSystem.Forms
             FormStyler.StyleInput(txtNotes);
             FormStyler.StyleInput(cmbolabs);
 
+            InitializeDoctorControl();
+
             DataGridViewStyler.Apply(dgvVisitDetails);
             colDelete.Image = ImageHelper.LoadSafeImage("imgs/delete.png", 16, 16, Color.Crimson);
 
             LoadLabsCombo();
+            _ = LoadDoctorsComboAsync(_visit?.DoctorId, _visit?.DrName);
 
             if (_visit != null)
             {
                 LoadExistingVisitLabs();
             }
+        }
+
+        private void InitializeDoctorControl()
+        {
+            var pnlDoctor = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 2,
+                RowCount = 1,
+                Margin = new Padding(0),
+                Padding = new Padding(0),
+                RightToLeft = RightToLeft.Yes
+            };
+            pnlDoctor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            pnlDoctor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 38F));
+
+            cmbDoctor = new ComboBox
+            {
+                Dock = DockStyle.Fill,
+                Font = new Font("Segoe UI", 10F),
+                Margin = new Padding(2, 8, 4, 8),
+                DropDownStyle = ComboBoxStyle.DropDown,
+                AutoCompleteMode = AutoCompleteMode.SuggestAppend,
+                AutoCompleteSource = AutoCompleteSource.ListItems
+            };
+
+            btnAddDoctor = new Button
+            {
+                Text = "➕",
+                Dock = DockStyle.Fill,
+                Margin = new Padding(4, 7, 2, 7),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(22, 163, 74),
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                Cursor = Cursors.Hand
+            };
+            btnAddDoctor.FlatAppearance.BorderSize = 0;
+            var tt = new ToolTip();
+            tt.SetToolTip(btnAddDoctor, "إضافة طبيب جديد للسجل");
+            btnAddDoctor.Click += BtnAddDoctor_Click;
+
+            cmbDoctor.SelectedIndexChanged += CmbDoctor_SelectedIndexChanged;
+            cmbDoctor.TextChanged += (s, e) =>
+            {
+                txtDoctorName.Text = cmbDoctor.Text;
+                UpdateSelectedDoctorFromText();
+            };
+
+            pnlDoctor.Controls.Add(cmbDoctor, 0, 0);
+            pnlDoctor.Controls.Add(btnAddDoctor, 1, 0);
+
+            // Hide old standalone textbox and replace its cell in tblPatient
+            txtDoctorName.Visible = false;
+            tblPatient.Controls.Remove(txtDoctorName);
+            tblPatient.Controls.Add(pnlDoctor, 1, 1);
+        }
+
+        private async Task LoadDoctorsComboAsync(int? selectDoctorId = null, string? selectDoctorName = null)
+        {
+            try
+            {
+                _activeDoctors = await _doctorService.GetAllDoctorsAsync(true);
+                var comboItems = new List<DoctorComboItem>
+                {
+                    new DoctorComboItem { Id = null, Name = "", Display = "--- بدون طبيب محول ---" }
+                };
+
+                foreach (var d in _activeDoctors)
+                {
+                    string label = string.IsNullOrWhiteSpace(d.Specialty) ? d.Name : $"{d.Name} ({d.Specialty})";
+                    comboItems.Add(new DoctorComboItem { Id = d.Id, Name = d.Name, Display = label });
+                }
+
+                cmbDoctor.DisplayMember = "Display";
+                cmbDoctor.ValueMember = "Id";
+                cmbDoctor.DataSource = comboItems;
+
+                if (selectDoctorId.HasValue && selectDoctorId.Value > 0)
+                {
+                    var match = comboItems.FirstOrDefault(c => c.Id == selectDoctorId.Value);
+                    if (match != null)
+                    {
+                        cmbDoctor.SelectedItem = match;
+                        _selectedDoctorId = match.Id;
+                        txtDoctorName.Text = match.Name;
+                        return;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(selectDoctorName))
+                {
+                    var match = comboItems.FirstOrDefault(c => string.Equals(c.Name, selectDoctorName.Trim(), StringComparison.OrdinalIgnoreCase));
+                    if (match != null)
+                    {
+                        cmbDoctor.SelectedItem = match;
+                        _selectedDoctorId = match.Id;
+                        txtDoctorName.Text = match.Name;
+                    }
+                    else
+                    {
+                        cmbDoctor.Text = selectDoctorName;
+                        txtDoctorName.Text = selectDoctorName;
+                        _selectedDoctorId = null;
+                    }
+                    return;
+                }
+
+                cmbDoctor.SelectedIndex = 0;
+                _selectedDoctorId = null;
+            }
+            catch { }
+        }
+
+        private void CmbDoctor_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (cmbDoctor.SelectedItem is DoctorComboItem item)
+            {
+                _selectedDoctorId = item.Id;
+                txtDoctorName.Text = item.Id.HasValue ? item.Name : "";
+            }
+        }
+
+        private void UpdateSelectedDoctorFromText()
+        {
+            string text = cmbDoctor.Text.Trim();
+            if (string.IsNullOrEmpty(text) || text.StartsWith("---"))
+            {
+                _selectedDoctorId = null;
+                return;
+            }
+
+            var match = _activeDoctors.FirstOrDefault(d => string.Equals(d.Name, text, StringComparison.OrdinalIgnoreCase));
+            _selectedDoctorId = match?.Id;
+        }
+
+        private async void BtnAddDoctor_Click(object? sender, EventArgs e)
+        {
+            using var dlg = new FrmDoctorDialog();
+            if (dlg.ShowDialog(this) == DialogResult.OK && dlg.SavedDoctor != null)
+            {
+                await LoadDoctorsComboAsync(dlg.SavedDoctor.Id, dlg.SavedDoctor.Name);
+            }
+        }
+
+        private class DoctorComboItem
+        {
+            public int? Id { get; set; }
+            public string Name { get; set; } = "";
+            public string Display { get; set; } = "";
         }
 
         private void LoadLabsCombo()
@@ -407,6 +569,7 @@ namespace LabManagementSystem.Forms
                     {
                         PatientId = _selectedPatient.Id,
                         VisitDate = DateOfVisit.Value,
+                        DoctorId = _selectedDoctorId,
                         DrName = txtDoctorName.Text.Trim(),
                         Notes = txtNotes.Text.Trim(),
                         DiscountValue = discountVal > 0 ? discountVal : null,
@@ -419,6 +582,7 @@ namespace LabManagementSystem.Forms
                 }
                 else
                 {
+                    _visit.DoctorId = _selectedDoctorId;
                     _visit.DrName = txtDoctorName.Text.Trim();
                     _visit.Notes = txtNotes.Text.Trim();
                     _visit.VisitDate = DateOfVisit.Value;

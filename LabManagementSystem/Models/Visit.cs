@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace LabManagementSystem.Models;
@@ -28,6 +28,10 @@ public partial class Visit
     public int PatientId { get; set; }
 
     public virtual Patient Patient { get; set; } = null!;
+
+    public int? DoctorId { get; set; }
+
+    public virtual Doctor? Doctor { get; set; }
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 

@@ -173,6 +173,7 @@ namespace LabManagementSystem.Forms
             colFlag.HeaderText = "الحالة (Flag)";
             colFlag.Name = "colFlag";
             colFlag.ReadOnly = true;
+            colFlag.Visible = false;
             // 
             // colNotes
             // 

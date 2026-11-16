@@ -7,6 +7,7 @@ namespace LabManagementSystem.Services
     {
         public int ParameterId { get; set; }
         public string ParameterName { get; set; } = "";
+        public string? CategoryName { get; set; }
         public string? Unit { get; set; }
         public bool IsNumeric { get; set; }
         public decimal? NormalMin { get; set; }
@@ -16,6 +17,55 @@ namespace LabManagementSystem.Services
         public string ResultValue { get; set; } = "";
         public string? Notes { get; set; }
         public AbnormalFlagEnum Flag { get; set; } = AbnormalFlagEnum.Normal;
+        public bool IsBold { get; set; }
+        public string? TextColor { get; set; }
+
+        public static (bool isBold, string? colorHex, string cleanNotes) ParseStyleFromNotes(string? notes)
+        {
+            if (string.IsNullOrWhiteSpace(notes)) return (false, null, "");
+            bool isBold = false;
+            string? colorHex = null;
+            string clean = notes;
+
+            var match = System.Text.RegularExpressions.Regex.Match(notes, @"\[STYLE:(.*?)\]");
+            if (match.Success)
+            {
+                var tag = match.Groups[1].Value;
+                clean = notes.Replace(match.Value, "").Trim();
+                var parts = tag.Split(';', StringSplitOptions.RemoveEmptyEntries);
+                foreach (var p in parts)
+                {
+                    var kv = p.Split('=', StringSplitOptions.TrimEntries);
+                    if (kv.Length >= 2)
+                    {
+                        if (kv[0].Equals("bold", StringComparison.OrdinalIgnoreCase))
+                            isBold = kv[1] == "1" || kv[1].Equals("true", StringComparison.OrdinalIgnoreCase);
+                        else if (kv[0].Equals("color", StringComparison.OrdinalIgnoreCase))
+                            colorHex = kv[1];
+                    }
+                    else if (p.Equals("bold", StringComparison.OrdinalIgnoreCase))
+                    {
+                        isBold = true;
+                    }
+                }
+            }
+
+            return (isBold, colorHex, clean);
+        }
+
+        public static string BuildNotesWithStyle(string? cleanNotes, bool isBold, string? colorHex)
+        {
+            cleanNotes = (cleanNotes ?? "").Trim();
+            if (!isBold && string.IsNullOrWhiteSpace(colorHex))
+                return cleanNotes;
+
+            var parts = new List<string>();
+            if (isBold) parts.Add("bold=1");
+            if (!string.IsNullOrWhiteSpace(colorHex)) parts.Add($"color={colorHex.Trim()}");
+
+            string tag = $"[STYLE:{string.Join(";", parts)}]";
+            return string.IsNullOrEmpty(cleanNotes) ? tag : $"{tag} {cleanNotes}";
+        }
     }
 
     public class ConsolidatedTestDto

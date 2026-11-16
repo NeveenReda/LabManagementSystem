@@ -56,6 +56,7 @@ namespace LabManagementSystem
             var grpVisits = _accordion.AddGroup("grp_visits", "إدارة الزيارات", "🧪");
             grpVisits.AddSubItem("search_visit", "سجل الزيارات", () => OpenSearchVisits());
             grpVisits.AddSubItem("add_visit", "تسجيل زيارة جديدة", () => OpenAddVisit());
+            grpVisits.AddSubItem("doctors_mgmt", "إدارة الأطباء", () => OpenDoctors());
 
             // Group 4: إدارة المعمل
             var grpLab = _accordion.AddGroup("grp_lab", "إدارة المعمل", "🔬");
@@ -65,6 +66,7 @@ namespace LabManagementSystem
             // Group 5: الحسابات والتقارير
             var grpFinance = _accordion.AddGroup("grp_finance", "الحسابات والتقارير", "💰");
             grpFinance.AddSubItem("fin_reports", "التقارير المالية", () => OpenFinancialReports());
+            grpFinance.AddSubItem("doc_reports", "تقرير زيارات الأطباء", () => OpenDoctorReports());
             grpFinance.AddSubItem("tasks", "المهام والنواقص", () => OpenTasks());
 
             // Group 6: المخزون والمشتريات
@@ -152,6 +154,20 @@ namespace LabManagementSystem
             frm.Saved += () => OpenSearchVisits();
             frm.Cancelled += () => OpenSearchVisits();
             OpenView(frm, "تسجيل زيارة وفحوصات جديدة");
+        }
+
+        public void OpenDoctors()
+        {
+            _accordion.SelectItemByKey("doctors_mgmt");
+            var frm = new FrmDoctors();
+            frm.DoctorReportRequested += () => OpenDoctorReports();
+            OpenView(frm, "سجل وإدارة الأطباء المحولين");
+        }
+
+        public void OpenDoctorReports(int? doctorId = null)
+        {
+            _accordion.SelectItemByKey("doc_reports");
+            OpenView(new FrmDoctorReports(doctorId), "تقرير الزيارات حسب الطبيب المحول");
         }
 
         public void OpenDebts()

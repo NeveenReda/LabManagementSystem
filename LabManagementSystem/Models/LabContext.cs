@@ -17,6 +17,8 @@ public partial class LabContext : DbContext
 
     public virtual DbSet<Audit> Audits { get; set; }
 
+    public virtual DbSet<Doctor> Doctors { get; set; }
+
     public virtual DbSet<BaseExternalLab> BaseExternalLabs { get; set; }
 
     public virtual DbSet<ExternalLab> ExternalLabs { get; set; }
@@ -268,10 +270,26 @@ public partial class LabContext : DbContext
             entity.Property(e => e.UserName).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<Doctor>(entity =>
+        {
+            entity.ToTable("Doctors");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name).IsRequired().HasMaxLength(150);
+            entity.Property(e => e.Specialty).HasMaxLength(100);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(50);
+            entity.Property(e => e.Address).HasMaxLength(250);
+            entity.Property(e => e.Notes).HasMaxLength(500);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
+            entity.HasIndex(e => e.Name, "IX_Doctors_Name");
+            entity.HasIndex(e => e.PhoneNumber, "IX_Doctors_PhoneNumber");
+        });
+
         modelBuilder.Entity<Visit>(entity =>
         {
             entity.HasIndex(e => e.PatientId, "IX_Visits_PatientId");
             entity.HasIndex(e => e.VisitDate, "IX_Visits_VisitDate");
+            entity.HasIndex(e => e.DoctorId, "IX_Visits_DoctorId");
 
             entity.Property(e => e.DiscountPercent).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.DiscountValue).HasColumnType("decimal(18, 2)");
@@ -281,6 +299,10 @@ public partial class LabContext : DbContext
             entity.HasOne(d => d.Patient).WithMany(p => p.Visits)
                 .HasForeignKey(d => d.PatientId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Doctor).WithMany(p => p.Visits)
+                .HasForeignKey(d => d.DoctorId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<VisitLab>(entity =>

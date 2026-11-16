@@ -11,6 +11,7 @@ namespace LabManagementSystem.Services
         public VisitService(Func<LabContext> contextFactory)
         {
             _contextFactory = contextFactory;
+            DoctorService.EnsureSchema(_contextFactory);
         }
 
         public List<VisitSummaryDto> SearchVisits(VisitSearchFilter filter)
@@ -86,6 +87,7 @@ namespace LabManagementSystem.Services
             return db.Visits
                 .Include(v => v.Patient)
                     .ThenInclude(p => p.Gender)
+                .Include(v => v.Doctor)
                 .Include(v => v.Payments)
                 .Include(v => v.VisitLabs)
                     .ThenInclude(vl => vl.Lab)
@@ -106,6 +108,7 @@ namespace LabManagementSystem.Services
             return await db.Visits
                 .Include(v => v.Patient)
                     .ThenInclude(p => p.Gender)
+                .Include(v => v.Doctor)
                 .Include(v => v.Payments)
                 .Include(v => v.VisitLabs)
                     .ThenInclude(vl => vl.Lab)
@@ -157,6 +160,11 @@ namespace LabManagementSystem.Services
                 if (visit.VisitDate == default)
                     visit.VisitDate = DateTime.Now;
                 visit.CreateDate = DateTime.Now;
+
+                if (visit.DoctorId.HasValue && string.IsNullOrWhiteSpace(visit.DrName))
+                {
+                    visit.DrName = db.Doctors.Where(d => d.Id == visit.DoctorId.Value).Select(d => d.Name).FirstOrDefault();
+                }
 
                 db.Visits.Add(visit);
                 db.SaveChanges();
@@ -226,7 +234,15 @@ namespace LabManagementSystem.Services
                 if (existing == null)
                     throw new InvalidOperationException("الزيارة غير موجودة.");
 
-                existing.DrName = visit.DrName;
+                existing.DoctorId = visit.DoctorId;
+                if (visit.DoctorId.HasValue && string.IsNullOrWhiteSpace(visit.DrName))
+                {
+                    existing.DrName = db.Doctors.Where(d => d.Id == visit.DoctorId.Value).Select(d => d.Name).FirstOrDefault();
+                }
+                else
+                {
+                    existing.DrName = visit.DrName;
+                }
                 existing.Notes = visit.Notes;
                 existing.VisitDate = visit.VisitDate;
 

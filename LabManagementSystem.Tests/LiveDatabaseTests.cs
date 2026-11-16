@@ -1,8 +1,10 @@
+using System.Text;
 using LabManagementSystem.Configuration;
 using LabManagementSystem.Enums;
 using LabManagementSystem.Models;
 using LabManagementSystem.Printing;
 using LabManagementSystem.Services;
+using Microsoft.EntityFrameworkCore;
 using QuestPDF.Fluent;
 
 namespace LabManagementSystem.Tests
@@ -42,6 +44,32 @@ namespace LabManagementSystem.Tests
         {
             var patients = _patientService.SearchPatients(null);
             Assert.NotNull(patients);
+        }
+
+        [Fact]
+        public void DumpDatabaseLabsAndParametersToFile()
+        {
+            using var db = new LabContext();
+            var labs = db.Labs
+                .Include(l => l.LabCategory)
+                .Include(l => l.LabParameters)
+                    .ThenInclude(p => p.LabParametersCategory)
+                .ToList();
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"Total Labs Count: {labs.Count}");
+            foreach (var lab in labs)
+            {
+                sb.AppendLine($"=== Lab ID: {lab.Id} | Name: '{lab.Name}' | Category: '{lab.LabCategory?.Name}' ===");
+                var cats = lab.LabParameters.Select(p => p.LabParametersCategory).Distinct().ToList();
+                foreach (var param in lab.LabParameters.OrderBy(p => p.DisplayOrder).ThenBy(p => p.Id))
+                {
+                    sb.AppendLine($"   Param ID: {param.Id} | Cat: '{param.LabParametersCategory?.Name}' | Name: '{param.Name}' | Unit: '{param.Unit}' | IsNumeric: {param.IsNumeric} | Min: {param.NormalRangeMin} | Max: {param.NormalRangeMax} | NormalText: '{param.NormalText}' | Order: {param.DisplayOrder}");
+                }
+            }
+
+            string outPath = @"C:\Users\Mina AbuSeifen\.gemini\antigravity\brain\13a26a31-abc2-4024-b486-1a4ca75d59a3\db_labs_dump.txt";
+            File.WriteAllText(outPath, sb.ToString(), Encoding.UTF8);
         }
 
         [Fact]

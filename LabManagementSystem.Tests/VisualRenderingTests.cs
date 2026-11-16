@@ -21,6 +21,7 @@ namespace LabManagementSystem.Tests
             services.AddSingleton<Func<LabContext>>(sp => () => new LabContext());
             services.AddSingleton<ILookupCacheService, LookupCacheService>();
             services.AddSingleton<IPatientService, PatientService>();
+            services.AddSingleton<IDoctorService, DoctorService>();
             services.AddSingleton<IVisitService, VisitService>();
             services.AddSingleton<IBillingService, BillingService>();
             services.AddSingleton<ILabReportService, LabReportService>();

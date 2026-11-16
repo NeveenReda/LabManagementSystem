@@ -221,12 +221,12 @@ namespace LabManagementSystem.Tests
                     visitLabId = db.VisitLabs.Where(vl => vl.VisitId == visitId).Select(vl => vl.Id).First();
                 }
 
-                // 4. Reject non-numeric result on Numeric parameter
-                await Assert.ThrowsAsync<InvalidOperationException>(() => _reportService.SaveResultsAsync(visitLabId, new List<ParameterResultEntryDto>
+                // 4. Entering free text on parameters is supported per user requirements ("تكتب حرف")
+                await _reportService.SaveResultsAsync(visitLabId, new List<ParameterResultEntryDto>
                 {
                     new() { ParameterId = numParam.Id, ResultValue = "InvalidText" },
                     new() { ParameterId = textParam.Id, ResultValue = "Positive" }
-                }));
+                });
 
                 // 5. Save valid numeric result + text result (without numeric constraint on text parameter)
                 await _reportService.SaveResultsAsync(visitLabId, new List<ParameterResultEntryDto>

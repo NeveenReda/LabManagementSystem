@@ -1,3 +1,4 @@
+using LabManagementSystem.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LabManagementSystem.Services
@@ -17,6 +18,7 @@ namespace LabManagementSystem.Services
         }
 
         public static IPatientService PatientService => GetService<IPatientService>();
+        public static IDoctorService DoctorService => ServiceProvider?.GetService<IDoctorService>() ?? new DoctorService(() => ServiceProvider?.GetService<LabContext>() ?? new LabContext());
         public static IVisitService VisitService => GetService<IVisitService>();
         public static IBillingService BillingService => GetService<IBillingService>();
         public static ILabReportService LabReportService => GetService<ILabReportService>();

@@ -21,6 +21,7 @@ namespace LabManagementSystem.Tests
             services.AddSingleton<Func<LabContext>>(sp => () => new LabContext());
             services.AddSingleton<ILookupCacheService, LookupCacheService>();
             services.AddSingleton<IPatientService, PatientService>();
+            services.AddSingleton<IDoctorService, DoctorService>();
             services.AddSingleton<IVisitService, VisitService>();
             services.AddSingleton<IBillingService, BillingService>();
             services.AddSingleton<ILabReportService, LabReportService>();
@@ -314,11 +315,12 @@ namespace LabManagementSystem.Tests
             Assert.Equal("سجل المرضى", groups[1].SubItems[0].Text);
             Assert.Equal("مريض جديد", groups[1].SubItems[1].Text);
 
-            // Group 3: إدارة الزيارات -> سجل الزيارات, تسجيل زيارة جديدة
+            // Group 3: إدارة الزيارات -> سجل الزيارات, تسجيل زيارة جديدة, إدارة الأطباء
             Assert.Equal("إدارة الزيارات", groups[2].Title);
-            Assert.Equal(2, groups[2].SubItems.Count);
+            Assert.Equal(3, groups[2].SubItems.Count);
             Assert.Equal("سجل الزيارات", groups[2].SubItems[0].Text);
             Assert.Equal("تسجيل زيارة جديدة", groups[2].SubItems[1].Text);
+            Assert.Equal("إدارة الأطباء", groups[2].SubItems[2].Text);
 
             // Group 4: إدارة المعمل -> مديونات المرضى, المعامل الخارجية
             Assert.Equal("إدارة المعمل", groups[3].Title);
@@ -326,11 +328,12 @@ namespace LabManagementSystem.Tests
             Assert.Equal("مديونات المرضى", groups[3].SubItems[0].Text);
             Assert.Equal("المعامل الخارجية", groups[3].SubItems[1].Text);
 
-            // Group 5: الحسابات والتقارير -> التقارير المالية, المهام والنواقص
+            // Group 5: الحسابات والتقارير -> التقارير المالية, تقرير زيارات الأطباء, المهام والنواقص
             Assert.Equal("الحسابات والتقارير", groups[4].Title);
-            Assert.Equal(2, groups[4].SubItems.Count);
+            Assert.Equal(3, groups[4].SubItems.Count);
             Assert.Equal("التقارير المالية", groups[4].SubItems[0].Text);
-            Assert.Equal("المهام والنواقص", groups[4].SubItems[1].Text);
+            Assert.Equal("تقرير زيارات الأطباء", groups[4].SubItems[1].Text);
+            Assert.Equal("المهام والنواقص", groups[4].SubItems[2].Text);
 
             // Group 6: المخزون والمشتريات -> المخزون والمشتريات
             Assert.Equal("المخزون والمشتريات", groups[5].Title);

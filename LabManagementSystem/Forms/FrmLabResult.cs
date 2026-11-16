@@ -43,8 +43,164 @@ namespace LabManagementSystem.Forms
             DataGridViewStyler.Apply(dgvResults);
             dgvResults.CellEndEdit += DgvResults_CellEndEdit;
 
+            // Hide the Flag/Status column as requested
+            colFlag.Visible = false;
+
+            // Add the font styling and quick insertion toolbar
+            InitializeFormattingBar();
+
             await LoadVisitLabInfoAsync();
             await LoadParametersAndExistingResultsAsync();
+        }
+
+        private void InitializeFormattingBar()
+        {
+            var pnlToolbar = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Top,
+                Height = 44,
+                BackColor = Color.FromArgb(241, 245, 249),
+                Padding = new Padding(8, 6, 8, 4),
+                FlowDirection = FlowDirection.RightToLeft,
+                WrapContents = false,
+                RightToLeft = RightToLeft.Yes
+            };
+
+            var lblFormat = new Label
+            {
+                Text = "🎨 تنسيق النتيجة:",
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                ForeColor = ThemeManager.PrimaryNavy,
+                AutoSize = true,
+                Margin = new Padding(4, 6, 8, 4)
+            };
+
+            var btnBold = new Button
+            {
+                Text = "B عريض",
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Bold),
+                Width = 72,
+                Height = 30,
+                Cursor = Cursors.Hand,
+                BackColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Margin = new Padding(3, 2, 8, 2)
+            };
+            btnBold.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
+            btnBold.Click += (s, e) => ToggleSelectedBold();
+
+            var lblColor = new Label
+            {
+                Text = "اللون:",
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(71, 85, 105),
+                AutoSize = true,
+                Margin = new Padding(4, 6, 4, 4)
+            };
+
+            Button CreateColorBtn(string text, Color backColor, Color foreColor, string hexCode)
+            {
+                var btn = new Button
+                {
+                    Text = text,
+                    Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                    Width = 68,
+                    Height = 30,
+                    BackColor = backColor,
+                    ForeColor = foreColor,
+                    Cursor = Cursors.Hand,
+                    FlatStyle = FlatStyle.Flat,
+                    Margin = new Padding(2, 2, 4, 2)
+                };
+                btn.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
+                btn.Click += (s, e) => ApplySelectedColor(hexCode);
+                return btn;
+            }
+
+            var btnBlack = CreateColorBtn("⬛ عادي", Color.White, Color.FromArgb(30, 41, 59), "#111111");
+            var btnRed = CreateColorBtn("🟥 أحمر", Color.FromArgb(254, 242, 242), Color.FromArgb(220, 38, 38), "#DC2626");
+            var btnBlue = CreateColorBtn("🟦 أزرق", Color.FromArgb(239, 246, 255), Color.FromArgb(37, 99, 235), "#2563EB");
+            var btnGreen = CreateColorBtn("🟩 أخضر", Color.FromArgb(240, 253, 244), Color.FromArgb(22, 163, 74), "#16A34A");
+
+            var lblQuick = new Label
+            {
+                Text = "قيم سريعة:",
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(71, 85, 105),
+                AutoSize = true,
+                Margin = new Padding(8, 6, 4, 4)
+            };
+
+            Button CreateQuickBtn(string val)
+            {
+                var btn = new Button
+                {
+                    Text = val,
+                    Font = new Font("Segoe UI", 8.5F, FontStyle.Regular),
+                    AutoSize = true,
+                    Height = 30,
+                    BackColor = Color.White,
+                    ForeColor = Color.FromArgb(30, 41, 59),
+                    Cursor = Cursors.Hand,
+                    FlatStyle = FlatStyle.Flat,
+                    Margin = new Padding(2, 2, 2, 2)
+                };
+                btn.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
+                btn.Click += (s, e) => InsertQuickValue(val);
+                return btn;
+            }
+
+            pnlToolbar.Controls.Add(lblFormat);
+            pnlToolbar.Controls.Add(btnBold);
+            pnlToolbar.Controls.Add(lblColor);
+            pnlToolbar.Controls.Add(btnBlack);
+            pnlToolbar.Controls.Add(btnRed);
+            pnlToolbar.Controls.Add(btnBlue);
+            pnlToolbar.Controls.Add(btnGreen);
+            pnlToolbar.Controls.Add(lblQuick);
+            pnlToolbar.Controls.Add(CreateQuickBtn("+"));
+            pnlToolbar.Controls.Add(CreateQuickBtn("++"));
+            pnlToolbar.Controls.Add(CreateQuickBtn("+++"));
+            pnlToolbar.Controls.Add(CreateQuickBtn("Nil"));
+            pnlToolbar.Controls.Add(CreateQuickBtn("Negative"));
+            pnlToolbar.Controls.Add(CreateQuickBtn("Clear"));
+            pnlToolbar.Controls.Add(CreateQuickBtn("Turbid"));
+
+            pnlGridCard.Controls.Add(pnlToolbar);
+            pnlToolbar.BringToFront();
+        }
+
+        private void ToggleSelectedBold()
+        {
+            if (dgvResults.CurrentRow?.Tag is ParameterResultEntryDto dto)
+            {
+                dto.IsBold = !dto.IsBold;
+                var currentFont = dgvResults.CurrentRow.Cells["colResult"].Style.Font ?? dgvResults.Font;
+                var newFont = new Font(currentFont, dto.IsBold ? FontStyle.Bold : FontStyle.Regular);
+                dgvResults.CurrentRow.Cells["colResult"].Style.Font = newFont;
+            }
+        }
+
+        private void ApplySelectedColor(string hexCode)
+        {
+            if (dgvResults.CurrentRow?.Tag is ParameterResultEntryDto dto)
+            {
+                dto.TextColor = hexCode;
+                try
+                {
+                    dgvResults.CurrentRow.Cells["colResult"].Style.ForeColor = ColorTranslator.FromHtml(hexCode);
+                }
+                catch { }
+            }
+        }
+
+        private void InsertQuickValue(string val)
+        {
+            if (dgvResults.CurrentRow?.Tag is ParameterResultEntryDto dto)
+            {
+                dgvResults.CurrentRow.Cells["colResult"].Value = val;
+                dto.ResultValue = val;
+            }
         }
 
         private async Task LoadVisitLabInfoAsync()
@@ -95,20 +251,13 @@ namespace LabManagementSystem.Forms
             if (dgvResults.Rows[e.RowIndex].Tag is ParameterResultEntryDto dto)
             {
                 string newVal = dgvResults.Rows[e.RowIndex].Cells["colResult"].Value?.ToString() ?? "";
-                if (dto.IsNumeric && !string.IsNullOrWhiteSpace(newVal) && !LabReportService.TryParseNumericResult(newVal, out _))
-                {
-                    MessageBox.Show($"الباراميتر '{dto.ParameterName}' رقمي — يرجى إدخال قيمة رقمية صحيحة.", "قيمة غير صحيحة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    dgvResults.Rows[e.RowIndex].Cells["colResult"].Value = dto.ResultValue;
-                    return;
-                }
-
+                // Relaxed: Allow numbers, letters, symbols (e.g. +, ++, +++, Nil, Turbid, etc.) freely
                 dto.ResultValue = newVal;
 
                 var flag = CalculateFlag(dto, newVal);
                 dto.Flag = flag;
 
-                dgvResults.Rows[e.RowIndex].Cells["colFlag"].Value = flag.ToArabic();
-                ApplyRowFormatting(dgvResults.Rows[e.RowIndex], flag);
+                ApplyRowFormatting(dgvResults.Rows[e.RowIndex], dto);
             }
         }
 
@@ -119,26 +268,42 @@ namespace LabManagementSystem.Forms
                 if (row.IsNewRow) continue;
                 if (row.Tag is ParameterResultEntryDto dto)
                 {
-                    ApplyRowFormatting(row, dto.Flag);
+                    ApplyRowFormatting(row, dto);
                 }
             }
         }
 
-        private void ApplyRowFormatting(DataGridViewRow row, AbnormalFlagEnum flag)
+        private void ApplyRowFormatting(DataGridViewRow row, ParameterResultEntryDto dto)
         {
-            if (flag == AbnormalFlagEnum.High || flag == AbnormalFlagEnum.Low || flag == AbnormalFlagEnum.Abnormal)
+            // Custom text color
+            if (!string.IsNullOrWhiteSpace(dto.TextColor))
+            {
+                try
+                {
+                    row.Cells["colResult"].Style.ForeColor = ColorTranslator.FromHtml(dto.TextColor);
+                }
+                catch
+                {
+                    row.Cells["colResult"].Style.ForeColor = ThemeManager.MainText;
+                }
+            }
+            else if (dto.Flag == AbnormalFlagEnum.High || dto.Flag == AbnormalFlagEnum.Low || dto.Flag == AbnormalFlagEnum.Abnormal)
             {
                 row.Cells["colResult"].Style.ForeColor = ThemeManager.Danger;
-                row.Cells["colResult"].Style.Font = ThemeManager.BodyBoldFont;
-                row.Cells["colFlag"].Style.ForeColor = ThemeManager.Danger;
-                row.Cells["colFlag"].Style.Font = ThemeManager.BodyBoldFont;
             }
             else
             {
                 row.Cells["colResult"].Style.ForeColor = ThemeManager.MainText;
+            }
+
+            // Custom bold
+            if (dto.IsBold || dto.Flag == AbnormalFlagEnum.High || dto.Flag == AbnormalFlagEnum.Low || dto.Flag == AbnormalFlagEnum.Abnormal)
+            {
+                row.Cells["colResult"].Style.Font = ThemeManager.BodyBoldFont;
+            }
+            else
+            {
                 row.Cells["colResult"].Style.Font = ThemeManager.BodyFont;
-                row.Cells["colFlag"].Style.ForeColor = ThemeManager.Success;
-                row.Cells["colFlag"].Style.Font = ThemeManager.BodyFont;
             }
         }
 
@@ -185,18 +350,21 @@ namespace LabManagementSystem.Forms
                 string resVal = row.Cells["colResult"].Value?.ToString() ?? "";
                 string notes = row.Cells["colNotes"].Value?.ToString() ?? "";
 
-                if (row.Tag is ParameterResultEntryDto dto && dto.IsNumeric && !string.IsNullOrWhiteSpace(resVal) &&
-                    !LabReportService.TryParseNumericResult(resVal, out _))
+                bool isBold = false;
+                string? textColor = null;
+                if (row.Tag is ParameterResultEntryDto dto)
                 {
-                    MessageBox.Show($"الباراميتر '{dto.ParameterName}' رقمي — يرجى إدخال قيمة رقمية صحيحة.", "بيانات غير صحيحة", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    isBold = dto.IsBold;
+                    textColor = dto.TextColor;
                 }
 
                 entries.Add(new ParameterResultEntryDto
                 {
                     ParameterId = paramId,
                     ResultValue = resVal,
-                    Notes = notes
+                    Notes = notes,
+                    IsBold = isBold,
+                    TextColor = textColor
                 });
             }
 
@@ -240,8 +408,12 @@ namespace LabManagementSystem.Forms
             try
             {
                 var reportModel = await _labReportService.GetConsolidatedReportAsync(_visitLab.VisitId);
-                var doc = new ConsolidatedLabReportDocument(reportModel);
-                using var viewer = new DocumentViewerForm(doc, $"تقرير نتائج المريض - {reportModel.PatientName}");
+                var currentTest = reportModel.Tests.FirstOrDefault(t => t.VisitLabId == _visitLabId);
+                var doc = new ConsolidatedLabReportDocument(reportModel, currentTest);
+                string title = currentTest != null
+                    ? $"{LabReportEnglishHelper.NormalizeTestName(currentTest.TestName)} - {reportModel.PatientName}"
+                    : $"تقرير نتائج المريض - {reportModel.PatientName}";
+                using var viewer = new DocumentViewerForm(doc, title);
                 viewer.ShowDialog();
             }
             catch (Exception ex)
